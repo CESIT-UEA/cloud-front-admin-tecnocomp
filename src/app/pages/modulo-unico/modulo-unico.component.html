@@ -2,36 +2,54 @@
 <div class="detalhes-modulo-container">
   <div class="box-container" *ngIf="modulo; else carregando">
     <div class="modulo">
-      <div class="box-modulo">
-        <h2>{{ modulo.nome_modulo }}</h2>
-        <div class="informacoes">
-          <p class="paragrafo">
+      <div class="box-modulo-border">
+        <div class="box-modulo">
+          <h2>{{ modulo.nome_modulo }}</h2>
+          <div class="informacoes">
+            <p class="paragrafo">
               <strong>Status: </strong>
               <span
                 [ngClass]="
-                  modulo.publicado
-                    ? 'status-publicado'
-                    : 'status-nao-publicado'
+                  modulo.publicado ? 'status-publicado' : 'status-nao-publicado'
                 "
               >
                 {{ modulo.publicado ? "Publicado" : "Não Publicado" }}
               </span>
             </p>
             <div class="publicacoes-e-templates">
-              <button [ngClass]="modulo.publicado ? 'nao-publicado' : 'publicado'" class="btn btn-publicar"  (click)="alterarPublicacao()">
-                {{ modulo.publicado ? "Módulo publicado" : "Módulo não publicado" }}
+              <button
+                [ngClass]="modulo.publicado ? 'nao-publicado' : 'publicado'"
+                class="btn btn-publicar"
+                (click)="alterarPublicacao()"
+              >
+                {{
+                  modulo.publicado ? "Módulo publicado" : "Módulo não publicado"
+                }}
               </button>
-              <button [ngClass]="modulo.template ? 'nao-publicado' : 'publicado'" class="btn btn-publicar" (click)="templateModulo()">
-                {{ modulo.template ? "Template ativado" :  "Template desativado"}}
+              <button
+                [ngClass]="modulo.template ? 'nao-publicado' : 'publicado'"
+                class="btn btn-publicar"
+                (click)="templateModulo()"
+              >
+                {{
+                  modulo.template ? "Template ativado" : "Template desativado"
+                }}
               </button>
             </div>
-            <p class="paragrafo"><strong>Nome:</strong> {{ modulo.nome_modulo }}</p>
+            <p class="paragrafo">
+              <strong>Nome:</strong> {{ modulo.nome_modulo }}
+            </p>
             <!-- <p class="paragrafo"><strong>URL: </strong> {{ modulo?.nome_url }}</p> -->
-            
-            
+
             <!-- <p class="paragrafo"><strong>Id: </strong> {{ modulo?.id }}</p> -->
-            <p class="paragrafo"><a target="_blank" [href]="modulo.ebookUrlGeral">Ebook Completo</a></p>
-            <p class="paragrafo"><a target="_blank" [href]="modulo.video_inicial">Vídeo Inicial</a></p>
+            <p class="paragrafo">
+              <a target="_blank" [href]="modulo.ebookUrlGeral"
+                >Ebook Completo</a
+              >
+            </p>
+            <p class="paragrafo">
+              <a target="_blank" [href]="modulo.video_inicial">Vídeo Inicial</a>
+            </p>
             <p class="paragrafo">
               <strong>UUID:</strong> {{ modulo.uuid }}
               <button mat-icon-button (click)="copiarUUID()">
@@ -39,26 +57,45 @@
               </button>
             </p>
             <div class="coluna-gerenciar">
-              <button routerLink="gerenciar-ficha-tecnica">Gerenciar Ficha Técnica</button>
-              <button routerLink="/modulo/clonar-ficha-tecnica/{{modulo?.id}}">Clonar Ficha Técnica</button>
+              <button routerLink="gerenciar-ficha-tecnica">
+                Gerenciar Ficha Técnica
+              </button>
+              <button
+                routerLink="/modulo/clonar-ficha-tecnica/{{ modulo?.id }}"
+              >
+                Clonar Ficha Técnica
+              </button>
             </div>
-          <div class="coluna-gerenciar">
-            <button routerLink="gerenciar-referencias">Gerenciar Referências</button>
-            <button routerLink="gerenciar-alunos">Gerenciar Alunos</button>
+            <div class="coluna-gerenciar">
+              <button routerLink="gerenciar-referencias">
+                Gerenciar Referências
+              </button>
+              <button routerLink="gerenciar-alunos">Gerenciar Alunos</button>
+            </div>
           </div>
-          </div>
-          <a 
-            routerLink="/modulo/topicos" 
-            class="botao-vizualizar-topicos" 
-            [queryParams]="{ id_modulo: modulo.id}"
+          <a
+            routerLink="/modulo/topicos"
+            class="botao-vizualizar-topicos"
+            [queryParams]="{ id_modulo: modulo.id }"
           >
             Vizualizar tópicos
           </a>
+        </div>
       </div>
     </div>
   </div>
   <ng-template #carregando>
-    <h1 class="mensagem-carregando">Carregando...</h1>
-    
+    <div class="loading-container">
+      <div class="icon-loading">
+        <img
+          src="../../../assets/icons/Carregamento-logo.svg"
+          alt="logo de carregamento tecnocomp"
+        />
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+    </div>
   </ng-template>
 </div>

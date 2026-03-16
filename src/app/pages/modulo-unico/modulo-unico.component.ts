@@ -16,6 +16,8 @@ export class ModuloUnicoComponent implements OnInit {
   topicos: Topico[] = [];
   idModulo!: number;
 
+  progress = 0;
+
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiAdmService,
@@ -27,7 +29,7 @@ export class ModuloUnicoComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      
+
       this.carregarModulo(+id);
       // this.carregarTopicos(+id);
       console.log('teste', this.modulo?.ebookUrlGeral)
@@ -107,7 +109,7 @@ export class ModuloUnicoComponent implements OnInit {
               } else {
                 this.apiService.message("O módulo não está publicado")
               }
-        
+
             },
             (error) => {
               console.error('Erro ao alterar status de publicação:', error);
@@ -132,7 +134,7 @@ export class ModuloUnicoComponent implements OnInit {
               } else {
                 this.apiService.message(`O módulo não está como template para ser clonado`)
               }
-              
+
             },
             (error) => {
               console.error(
