@@ -1,10 +1,10 @@
 
 export const environment = {
   production: true,
-  baseUrl:'https://tecnocomp.uea.edu.br:8001',
+  baseUrl:'https://apiadmin.tecnocomp.cloud',
 };
 
 export const environmentFrontEnd = {
   production: true,
-  baseUrl: 'http://localhost:3001'
+  baseUrl: 'https://apiadmin.tecnocomp.cloud'
 }

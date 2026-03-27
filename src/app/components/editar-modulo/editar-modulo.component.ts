@@ -26,7 +26,7 @@ export class EditarModuloComponent {
   renamedFile!: File;
   selectedFile: File | null = null;
   moduloAtual!: Modulo;
-  baseUrlFile: string = `https://tecnocomp.uea.edu.br/ebooks`;
+  baseUrlFile: string = `https://apiadmin.tecnocomp.cloud/ebooks`;
   urlApiRag: string = 'https://tecnocomp.uea.edu.br:5678/webhook/upload-file'
   nomeArquivo: string | undefined = ''
 

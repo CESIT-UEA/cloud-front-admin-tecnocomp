@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ApiAdmService } from 'src/app/services/api-adm.service';
 import { ExercicioService } from 'src/app/services/exercicio.service';
+import { UploadService } from 'src/app/services/upload.service';
+import { Modulo } from 'src/interfaces/modulo/Modulo';
 import { Topico } from 'src/interfaces/topico/Topico';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-editar-topico',
@@ -20,13 +24,23 @@ export class EditarTopicoComponent implements OnInit{
   letras: string[] = ['A','B','C','D']
   idTopico!: number;
   isQuestaoAberta!: boolean;
+  
+  // relacionados a arquivo
+  selectedFile: File | null = null
+  nomeArquivo: string | undefined = ''
+  renamedFile!: File;
+  pastaModulo: string | null = null;
+  baseUrlFile: string = `https://apiadmin.tecnocomp.cloud/ebooks`;
+
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private apiService: ApiAdmService,
     private router: Router,
-    private exercicioService: ExercicioService
+    private exercicioService: ExercicioService,
+    private authService: AuthService,
+    private uploadService: UploadService
   ) {
     this.dadosBasicosFormGroup = this.fb.group({
       nome_topico: ['', Validators.required],
@@ -75,9 +89,27 @@ export class EditarTopicoComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.idTopico = +params['id'];
+
       this.carregarDadosDoTopico(this.idTopico);
     });
+
+    this.route.queryParams.subscribe((params) => {
+      this.idModulo = +params['id_modulo'];
+      if (!this.idModulo) {
+        this.apiService.message('ID do módulo não encontrado!')
+        this.router.navigate([this.voltar()])
+      }
+    });
   }
+
+  voltar(){
+      const isAdmin = this.authService.isAdmin()
+      if (isAdmin){
+        return "/tecnocomp/modulos"
+      } else {
+        return "/tecnocomp/meus-modulos"
+      }
+    }
 
   get videoUrls(): FormArray {
     return this.videoUrlsFormGroup.get('videoUrls') as FormArray;
@@ -104,9 +136,12 @@ export class EditarTopicoComponent implements OnInit{
       (topico: Topico) => {
         this.dadosBasicosFormGroup.patchValue({
           nome_topico: topico.nome_topico,
-          textoApoio: topico.textoApoio,
-          ebookUrlGeral: topico.ebookUrlGeral,
+          textoApoio: topico.textoApoio
         });
+
+        if (topico.ebookUrlGeral){
+          this.nomeArquivo = topico.ebookUrlGeral.split('/').pop();
+        }
 
         this.setVideoUrls(topico.VideoUrls);
         this.setSaibaMais(topico.SaibaMais);
@@ -121,13 +156,14 @@ export class EditarTopicoComponent implements OnInit{
           this.isQuestaoAberta = true
           this.setExerciciosAberto(topico.Exercicios)
         }
-        
+         
       },
       (error) => {
         console.error('Erro ao carregar tópico:', error);
         this.apiService.message('Erro ao carregar os dados do tópico.')
       }
     );
+   
   }
 
   setVideoUrls(videoUrls: any[]): void {
@@ -275,17 +311,47 @@ export class EditarTopicoComponent implements OnInit{
       exercicios: this.exercicios.value,
     };
 
-    this.apiService.editarTopico(this.idTopico, topicoEditado).subscribe(
-      (response) => {
-        this.apiService.message('Tópico atualizado com sucesso!')
-        const idModulo = response.id_modulo;
-        this.router.navigate(['/modulos', idModulo]);
-      },
-      (error) => {
-        console.error('Erro ao atualizar tópico:', error);
-        this.apiService.message('Erro ao atualizar tópico.')
+    if (!this.selectedFile) {
+      alert("Selecione um ebook antes de cadastrar o tópico.");
+      return;
+    }
+
+    const originalName = this.selectedFile.name;
+    const extension = originalName.substring(originalName.lastIndexOf('.'));
+    const uuid = uuidv4();
+
+    const sanitizedOriginalName = originalName
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')    
+                .replace(/\s+/g, '_')
+                .replace(/[^a-zA-Z0-9_-]/g, ''); 
+
+    const uniqueFileName = `${sanitizedOriginalName}-${uuid}${extension}`
+    this.renamedFile = new File([this.selectedFile], uniqueFileName, { type: this.selectedFile.type })
+
+    this.apiService.obterModuloPorId(this.idModulo).subscribe({
+      next: (modulo: Modulo) => {
+        this.pastaModulo = modulo.filesDoModulo!;
+        topicoEditado.ebookUrlGeral = `${this.baseUrlFile}/${this.pastaModulo}/${this.renamedFile.name}`;
+
+        this.apiService.editarTopico(this.idTopico, topicoEditado).subscribe(
+        (response) => {
+          this.uploadService.uploadFile(this.renamedFile, this.pastaModulo!, `${this.uploadService.baseURL}/api/modulos/upload`).
+            subscribe({
+              next: () => {
+                this.apiService.message('Tópico atualizado com sucesso!')
+                const idModulo = response.id_modulo;
+                this.router.navigate(['/modulos', idModulo]);
+              }
+            })
+        },
+        (error) => {
+          console.error('Erro ao atualizar tópico:', error);
+          this.apiService.message('Erro ao atualizar tópico.')
+        }
+      );
       }
-    );
+    })
   }
 
 
@@ -334,4 +400,12 @@ export class EditarTopicoComponent implements OnInit{
   }
 
 
+
+  onSelectedFile(event: any){
+    const file = event.target.files[0];
+    if (file){
+      this.selectedFile = file
+    }
+
+  }
 }

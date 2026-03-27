@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class RegistroModuloComponent implements OnInit {
   renamedFile!: File;
   nomePasta!: string;
-  baseUrlFile: string = `https://tecnocomp.uea.edu.br/ebooks`;
+  baseUrlFile: string = `https://apiadmin.tecnocomp.cloud/ebooks`;
   urlApiRag: string = 'https://tecnocomp.uea.edu.br:5678/webhook/upload-file'
   tentouSubmeter = false
 

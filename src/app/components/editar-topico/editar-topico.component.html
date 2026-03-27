@@ -20,10 +20,16 @@
                 required
               >
             </div>
-
-            <div class="mat-form-field">
-              <mat-label>Ebook Geral</mat-label>
-              <input matInput formControlName="ebookUrlGeral" />
+           <!-- Botão de uplod de arquivos  -->
+            <div class="cadastro-modulo-campo file-field">
+            <label for="ebookUrlGeral" class="cadastro-modulo-label upload-btn file-bnt">
+              Ebook Geral<span> *</span>
+            </label>
+            <div class="file-input-wrapper">
+              <!-- <mat-label>Ebook do Tópico</mat-label> -->
+              <input type="file" id="ebookUrlGeral"  (change)="onSelectedFile($event)" class="cadastro-modulo-input"  required />
+              <span class="file-status-text">{{ selectedFile?.name || nomeArquivo || 'Nenhum arquivo selecionado' }}</span>
+            </div>
             </div>
 
             <div class="botoes passo1-botao-proximo">

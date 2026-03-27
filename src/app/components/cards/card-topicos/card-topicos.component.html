@@ -15,7 +15,7 @@
   </mat-card-content>
   <div class="icons-btn">
     <div class="icons">
-        <div class="box-icon" [routerLink]="['/editar-topico', topico.id]">
+        <div class="box-icon" [routerLink]="['/editar-topico', topico.id]" [queryParams]="{ id_modulo: idModulo}">
           <mat-icon class="card-icon">border_color</mat-icon>
         </div>
         <div class="box-icon" (click)="abrirConfirmacaoExcluir()">

@@ -34,7 +34,7 @@ export class CadastroTopicoComponent {
 
   selectedFile: File | null = null
   renamedFile!: File;
-  baseUrlFile: string = `https://tecnocomp.uea.edu.br/ebooks`;
+  baseUrlFile: string = `https://apiadmin.tecnocomp.cloud/ebooks`;
   pastaModulo: string | null = null;
 
   idModulo!: number;
@@ -52,7 +52,7 @@ export class CadastroTopicoComponent {
     this.dadosBasicosFormGroup = this.fb.group({
       nome_topico: ['', Validators.required],
       textoApoio: [''],
-     
+      
     });
 
     this.videoUrlsFormGroup = this.fb.group({
