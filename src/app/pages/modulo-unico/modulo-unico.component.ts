@@ -5,6 +5,7 @@ import { Modulo } from 'src/interfaces/modulo/Modulo';
 import { Topico } from 'src/interfaces/topico/Topico';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UploadService } from 'src/app/services/upload.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-modulo-unico',
@@ -23,7 +24,8 @@ export class ModuloUnicoComponent implements OnInit {
     private apiService: ApiAdmService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -50,9 +52,14 @@ export class ModuloUnicoComponent implements OnInit {
         console.log(response)
       },
       (error) => {
-        console.error('Erro ao carregar módulo:', error);
-        this.router.navigate(['/modulos']);
-      }
+         if (error.status === 404) {
+             this.apiService.message('Módulo não encontrado ou você não tem acesso.');
+          if (this.authService.isAdmin()){
+              this.router.navigate(['tecnocomp/modulos']);
+            } else {
+              this.router.navigate(['/tecnocomp/meus-modulos'])
+            }
+      }}
     );
   }
 

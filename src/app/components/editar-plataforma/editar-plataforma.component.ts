@@ -55,12 +55,17 @@ export class EditarPlataformaComponent implements OnInit {
         this.plataformaForm.patchValue(plataforma);
       },
       (error) => {
+         if (error.status === 404) {
+             this.apiService.message('Plataforma não encontrada ou você não tem acesso.');
+         } else{
+            this.apiService.message('Erro ao carregar os dados da plataforma.')
+          }
         console.error('Erro ao carregar a plataforma:', error);
-        this.apiService.message('Erro ao carregar os dados da plataforma.')
+        
         this.navegarPlataforma()
-      }
-    );
-  }
+      
+      })
+    }
 
   salvarAlteracoes(): void {
     if (this.plataformaForm.invalid) {

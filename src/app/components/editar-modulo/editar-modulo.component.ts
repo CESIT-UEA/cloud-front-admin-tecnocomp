@@ -68,7 +68,19 @@ export class EditarModuloComponent {
           this.nomeArquivo = modulo.ebookUrlGeral.split('/').pop();
       }
       },
-      (error) => console.error('Erro ao carregar módulo:', error)
+      (error) => {
+        if (error.status === 404) {
+             this.apiService.message('Módulo não encontrado ou você não tem acesso.');
+          if (this.authService.isAdmin()){
+              this.router.navigate(['tecnocomp/modulos']);
+            } else {
+              this.router.navigate(['/tecnocomp/meus-modulos'])
+            }
+          
+      } else {
+        this.apiService.message('Erro ao carregar módulo.');
+      }
+      }
     );
   }
 
@@ -133,7 +145,17 @@ export class EditarModuloComponent {
           this.router.navigate(['/tecnocomp/meus-modulos']);
         }
       },
-      (error) => console.error('Erro ao atualizar módulo:', error)
+      (error) => {
+        if (error.status === 404) {
+          this.apiService.message('Módulo não encontrado ou você não tem permissão.');
+        } else if (error.status === 401) {
+          this.apiService.message('Sessão expirada. Faça login novamente.');
+        } else if (error.status === 403) {
+          this.apiService.message('Você não tem permissão para essa ação.');
+        } else {
+          this.apiService.message('Erro ao atualizar módulo.');
+        }
+      }
     );
 }
 

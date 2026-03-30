@@ -1,6 +1,6 @@
 export const environment = {
   production:false,
-  baseUrl:'https://apiadmin.tecnocomp.cloud',
+  baseUrl:'http://localhost:8001',
 };
 
 export const environmentFrontEnd = {
