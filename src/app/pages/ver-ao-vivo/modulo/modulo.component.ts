@@ -52,9 +52,14 @@ export class ModuloComponent implements OnInit {
         this.verAoVivo.setDadosCompletos(response);
       },
       (error) => {
-        console.error('Erro ao carregar módulo:', error);
-        this.apiService.message('Erro ao carregar módulo:')
+        if (error.status === 404){
+          this.apiService.message('Módulo não encontrado ou você não possui acesso!')
+        } else {
+          console.error('Erro ao carregar módulo:', error);
+          this.apiService.message('Erro ao carregar módulo:')
+        }
         this.router.navigate([this.voltar()])
+        
       }
     );
   }
@@ -68,38 +73,5 @@ export class ModuloComponent implements OnInit {
         return "/tecnocomp/meus-modulos"
       }
     }
-  // carregarTopicos(moduloId: number): void {
-  //   this.apiService.obterTopicoCompleto(moduloId).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       this.topicos = response.map((topico) => ({
-  //         ...topico,
-  //         videoUrls: [],
-  //         saibaMais: [],
-  //         referencias: [],
-  //         exercicios: [],
-  //       }));
-
-  //       // Para cada tópico, buscar os dados completos
-  //       this.topicos.forEach((topico, index) => {
-  //         if (topico.id != null) {
-  //           this.apiService.obterTopicoCompleto(topico.id,).subscribe(
-  //             (topicoCompleto) => {
-  //               this.topicos[index] = {
-  //                 ...this.topicos[index],
-  //                 ...topicoCompleto,
-  //               };
-  //             },
-  //             (error) =>
-  //               console.error(
-  //                 'Erro ao carregar dados completos do tópico:',
-  //                 error
-  //               )
-  //           );
-  //         }
-  //       });
-  //     },
-  //     (error) => console.error('Erro ao carregar tópicos:', error)
-  //   );
-  // }
+  
 }
