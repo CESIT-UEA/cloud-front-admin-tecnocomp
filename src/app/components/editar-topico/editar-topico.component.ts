@@ -61,14 +61,7 @@ export class EditarTopicoComponent implements OnInit{
       ]),
     });
 
-    // this.referenciasFormGroup = this.fb.group({
-    //   referencias: this.fb.array([
-    //     this.fb.group({
-    //       caminhoDaImagem: ['', Validators.required],
-    //       referencia: ['', Validators.required],
-    //     }),
-    //   ]),
-    // });
+
 
     this.exerciciosFormGroup = this.fb.group({
       exercicios: this.fb.array([
@@ -159,8 +152,17 @@ export class EditarTopicoComponent implements OnInit{
          
       },
       (error) => {
+        if (error.status === 404) {
+           this.apiService.message('Tópico não encontrado ou você não tem acesso.');
+           if (this.authService.isAdmin()){
+              this.router.navigate(['tecnocomp/modulos']);
+            } else {
+              this.router.navigate(['/tecnocomp/meus-modulos'])
+            }
+        } 
+
         console.error('Erro ao carregar tópico:', error);
-        this.apiService.message('Erro ao carregar os dados do tópico.')
+
       }
     );
    
@@ -221,7 +223,6 @@ export class EditarTopicoComponent implements OnInit{
   setExerciciosAberto(exercicios: any[]): void {
     this.exercicios.clear();
     exercicios.forEach((exercicios) => {
-      console.log('teste',exercicios)
       this.exercicios.push(
         this.fb.group({
           questao: [exercicios.questao, Validators.required],
@@ -283,20 +284,6 @@ export class EditarTopicoComponent implements OnInit{
     }
   }
 
-  // adicionarReferencia(): void {
-  //   this.referencias.push(
-  //     this.fb.group({
-  //       caminhoDaImagem: ['', Validators.required],
-  //       referencia: ['', Validators.required],
-  //     })
-  //   );
-  // }
-
-  // removerReferencia(index: number): void {
-  //   if (this.referencias.length > 1) {
-  //     this.referencias.removeAt(index);
-  //   }
-  // }
 
   limparAlternativa(exercicioIndex: number, alternativaIndex: number): void {
     const alternativa = this.alternativas(exercicioIndex).at(alternativaIndex);
@@ -312,7 +299,7 @@ export class EditarTopicoComponent implements OnInit{
     };
 
     if (!this.selectedFile) {
-      alert("Selecione um ebook antes de cadastrar o tópico.");
+      this.apiService.message("Selecione um ebook antes de cadastrar o tópico.");
       return;
     }
 
@@ -342,6 +329,9 @@ export class EditarTopicoComponent implements OnInit{
                 this.apiService.message('Tópico atualizado com sucesso!')
                 const idModulo = response.id_modulo;
                 this.router.navigate(['/modulos', idModulo]);
+              },
+              error: (error) => {
+                 this.apiService.message('Erro ao atualizar tópico.')
               }
             })
         },
@@ -350,6 +340,10 @@ export class EditarTopicoComponent implements OnInit{
           this.apiService.message('Erro ao atualizar tópico.')
         }
       );
+      error: (error: any) => {
+        console.log(error)
+        this.apiService.message('Erro ao atualizar tópico.')
+      }
       }
     })
   }

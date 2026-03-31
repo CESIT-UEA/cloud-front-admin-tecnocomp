@@ -2,8 +2,9 @@ import { ApiAdmService } from 'src/app/services/api-adm.service';
 import { Component, OnInit } from '@angular/core';
 import { Modulo } from 'src/interfaces/modulo/Modulo';
 import { Topico } from 'src/interfaces/topico/Topico';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationService, PaginationState } from 'src/app/services/pagination.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-topicos-modulo-unico',
@@ -18,7 +19,9 @@ export class TopicosModuloUnicoComponent implements OnInit {
   constructor(
     private apiService: ApiAdmService,
     private route: ActivatedRoute,
-    private paginationService: PaginationService
+    private paginationService: PaginationService,
+    private authService: AuthService,
+    private router: Router
   ){
     this.pagination = this.paginationService.createPaginationState();
   }
@@ -28,6 +31,7 @@ export class TopicosModuloUnicoComponent implements OnInit {
     if (id) {
       this.carregarTopicos(+id, this.pagination.currentPage);
       this.idModulo = +id;
+      console.log('front idModulo', this.idModulo)
     }
   }
 
@@ -48,23 +52,23 @@ export class TopicosModuloUnicoComponent implements OnInit {
         }));
 
         // Para cada tópico, buscar os dados completos
-        this.topicos.forEach((topico, index) => {
-          if (topico.id != null) {
-            this.apiService.obterTopicoCompleto(topico.id, page).subscribe(
-              (topicoCompleto) => {
-                this.topicos[index] = {
-                  ...this.topicos[index],
-                  ...topicoCompleto,
-                };
-              },
-              (error) =>
-                console.error(
-                  'Erro ao carregar dados completos do tópico:',
-                  error
-                )
-            );
-          }
-        });
+        // this.topicos.forEach((topico, index) => {
+        //   if (topico.id != null) {
+        //     this.apiService.obterTopicoCompleto(topico.id, page).subscribe(
+        //       (topicoCompleto) => {
+        //         this.topicos[index] = {
+        //           ...this.topicos[index],
+        //           ...topicoCompleto,
+        //         };
+        //       },
+        //       (error) =>
+        //         console.error(
+        //           'Erro ao carregar dados completos do tópico:',
+        //           error
+        //         )
+        //     );
+        //   }
+        // });
         
         // Atualizar o estado de paginação
         this.paginationService.updatePaginationState(
@@ -73,7 +77,17 @@ export class TopicosModuloUnicoComponent implements OnInit {
           response.infoTopicosPorModulos.totalRegistros
         );
       },
-      (error) => console.error('Erro ao carregar tópicos:', error)
+      (error) => {
+        if (error.status === 404) {
+           this.apiService.message('Módulo não encontrado ou você não tem acesso.');
+           if (this.authService.isAdmin()){
+              this.router.navigate(['tecnocomp/modulos']);
+            } else {
+              this.router.navigate(['/tecnocomp/meus-modulos'])
+            }
+        } 
+        
+      }
     );
   }
 
