@@ -17,7 +17,7 @@ export class TemplatesComponent implements OnInit {
         console.log(response);
       },
       (error) => {
-        console.error('Erro ao carregar módulos:', error);
+        console.error('Erro ao carregar templates:', error);
       }
     );
   }

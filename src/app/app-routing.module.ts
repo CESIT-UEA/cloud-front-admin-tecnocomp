@@ -97,7 +97,7 @@ const routes: Routes = [
         path: 'templates',
         canActivate: [roleGuard],
         component: TemplatesComponent,
-        data: { title: 'Usuários', roles: ['professor'] },
+        data: { title: 'Templates', roles: ['professor', 'adm'] },
       },
       {
         path: 'usuarios',

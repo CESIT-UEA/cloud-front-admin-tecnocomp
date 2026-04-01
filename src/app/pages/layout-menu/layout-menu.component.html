@@ -20,6 +20,10 @@
         <mat-icon svgIcon="perfil"></mat-icon>
         Meu perfil
       </a>
+      <a routerLink="/tecnocomp/templates" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        Templates
+      </a>
       <!-- Administrador -->
       <a *ngIf="isAdmin" routerLink="/tecnocomp/usuarios" routerLinkActive="active">
         <mat-icon>person</mat-icon>
@@ -35,10 +39,7 @@
       </a>
 
       <!-- Professor -->
-      <a *ngIf="isProfessor" routerLink="/tecnocomp/templates" routerLinkActive="active">
-        <mat-icon>person</mat-icon>
-        Templates
-      </a>
+      
       <a *ngIf="isProfessor" routerLink="/tecnocomp/meus-modulos" routerLinkActive="active">
         <mat-icon svgIcon="modulos"></mat-icon>
         Módulos
