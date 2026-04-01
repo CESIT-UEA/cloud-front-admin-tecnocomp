@@ -42,27 +42,6 @@
   padding-right: 8.8125rem;
 }
 
-.header form input {
-  background-color: transparent;
-  width: clamp(29rem, 31.75rem + 2vh, 31.8rem);
-  height: clamp(.5rem, 2.18rem + 2vh, 2.2rem);
-  border: 2px solid var(--0-color);
-  border-radius: 30px;
-  background-image: url(../../../assets/icons/lupa_plataformas.svg);
-  background-repeat: no-repeat;
-  background-position: 14px 50%;
-  padding-left: 40px;
-  color: var(--0-color);
-}
-
-input::placeholder {
-  color: var(--0-color);
-  opacity: 70%;
-  font-family: '';
-  font-weight: 400;
-  font-size: 1rem;
-}
-
 .titulo {
   width: 90%;
   margin: 0 auto;

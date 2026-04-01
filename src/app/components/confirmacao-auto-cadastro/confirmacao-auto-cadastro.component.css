@@ -89,6 +89,7 @@
   background: #424147;
   padding: 0 16px;
   box-sizing: border-box;
+  caret-color: #ffffff;
   color: #ffffff;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -126,11 +127,6 @@
   font-weight: 600;
   cursor: pointer;
   transition: filter 0.2s ease, transform 0.1s ease;
-}
-
-.btn-enviar:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
 }
 
 .btn-cancelar {

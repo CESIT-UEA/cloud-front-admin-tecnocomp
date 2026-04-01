@@ -128,11 +128,6 @@
   transition: filter 0.2s ease, transform 0.1s ease;
 }
 
-.btn-enviar:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
-}
-
 .btn-cancelar {
   background: none;
   border: none;

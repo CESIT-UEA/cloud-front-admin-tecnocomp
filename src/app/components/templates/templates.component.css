@@ -3,10 +3,25 @@
   background: linear-gradient(112deg, rgba(18, 0, 96, 0.10) 16.83%, rgba(0, 0, 0, 0.09) 47.11%, rgba(66, 0, 146, 0.05) 81.73%, rgba(95, 0, 211, 0.05) 95.21%), #131313;
 }
 
+.h1_selecionar {
+  width: 95%;
+}
+
+.h1_selecionar h1 {
+  font-size: 22px;
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  margin-left: 78px;
+  padding-top: 51px;
+  padding-bottom: 53px;
+  border-bottom: solid 2px #767676;
+  color: white;
+}
+
 .container-modulos {
   width: 100%;
   margin: 0 auto;
-  padding-top: 40px;
+  margin-top: 55px;
   color: white;
 }
 

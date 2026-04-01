@@ -104,6 +104,8 @@ input.ng-invalid.ng-touched {
 }
 
 #botao-um {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
   background-color: transparent;
   border: 3px solid #7C4CC6;
   color: #7C4CC6 !important;
@@ -116,6 +118,8 @@ input.ng-invalid.ng-touched {
 
 
 #botao-dois {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
   border-radius: 10px;
   background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
 }
