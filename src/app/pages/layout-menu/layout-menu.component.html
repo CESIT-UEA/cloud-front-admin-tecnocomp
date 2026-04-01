@@ -53,7 +53,7 @@
       
       <div class="texto">
         <p [title]="getUsuarioDados().username">{{ getUsuarioDados().username | truncate:15}}</p>
-        <p style="color: #a3a3a3"[title]="getUsuarioDados().email">{{ getUsuarioDados().email | truncate:15}}</p>
+        <p style="color: #a3a3a3"[title]="getUsuarioDados().email">{{ getUsuarioDados().email | truncate:14}}</p>
       </div>
       <mat-icon [matMenuTriggerFor]="menu" style="cursor: pointer;" xPosition="before" yPosition="below">more_vert</mat-icon>
 
