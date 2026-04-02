@@ -9,7 +9,7 @@
           <div class="cadastro-modulo-campo">
             <label for="nome_modulo" class="cadastro-modulo-label">Nome do Módulo<span> *</span></label>
             <input id="nome_modulo"  class="cadastro-modulo-input"
-              formControlName="nome_modulo" (input)="gerarUrlAmigavel()" />
+              formControlName="nome_modulo" (input)="gerarUrlAmigavel()" maxlength="40" />
               <div
             *ngIf="
               moduloForm.get('nome_modulo')?.invalid &&
@@ -21,7 +21,7 @@
           </div>
           <div class="cadastro-modulo-campo">
             <label for="nome_url" class="cadastro-modulo-label">URL do Módulo<span> *</span></label>
-            <input id="nome_url" class="cadastro-modulo-input" formControlName="nome_url" readonly />
+            <input id="nome_url" class="cadastro-modulo-input" formControlName="nome_url" readonly maxlength="40" />
           </div>
         </div>
         <div class="cadastro-modulo-campo file-field">

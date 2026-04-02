@@ -22,8 +22,8 @@ export class RegistroModuloComponent implements OnInit {
   tentouSubmeter = false
 
   moduloForm = new FormGroup({
-    nome_modulo: new FormControl('', Validators.required),
-    nome_url: new FormControl('', Validators.required),
+    nome_modulo: new FormControl('', [Validators.required, Validators.maxLength(40)]),
+    nome_url: new FormControl('', [Validators.required, Validators.maxLength(40)]),
     ebookUrlGeral: new FormControl(''),
     video_inicial: new FormControl('', Validators.required)
   });
