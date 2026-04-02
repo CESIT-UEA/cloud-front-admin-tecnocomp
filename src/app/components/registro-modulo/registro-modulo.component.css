@@ -9,10 +9,17 @@
 .cadastro-modulo-container {
   background: linear-gradient(112deg, rgba(18, 0, 96, 0.10) 0%, rgba(0, 0, 0, 0.09) 32.21%, rgba(19, 0, 41, 0.09) 55.29%, rgba(95, 0, 211, 0.05) 95.21%, rgba(66, 0, 146, 0.05) 100%), #2B2A2E;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.25));
-  width: 50%;
+  width: 100%;
   border-radius: 40px;
-  padding: 0 2.5rem;
-  border-top: 8px solid #7C4CC6;
+  padding: 1.25rem 2.5rem 2.5rem 2.5rem;
+  box-sizing: border-box;
+}
+
+.cadastro-modulo-border {
+  border-radius: 40px;
+  background: linear-gradient(90deg, #7C4CC6 0%, #5300F9 100%), #7C4CC6;
+  padding-top: 8px;
+  width: 50%;
 }
 
 .mensagem-validacao {

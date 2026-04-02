@@ -55,7 +55,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  
+
 
 }
 
@@ -84,7 +84,7 @@ h3 {
   cursor: pointer;
   margin-right: 10px;
   height: 38px;
-  
+
 }
 
 .file-field #ebookUrlGeral::file-selector-button:hover {
@@ -107,7 +107,7 @@ h3 {
   align-items: center;
   background-color: #3F3F40;
   border-radius: 10px;
-  
+
   gap: 10px;
 }
 
@@ -181,7 +181,7 @@ textarea {
 
 .adicionar {
   display: flex;
-} 
+}
 
 .passo1-botao-proximo .proximo, .proximo, .voltar, .remover, .adicionar, .anterior {
   display: flex;
@@ -215,7 +215,7 @@ textarea {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  
+
 }
 
 
@@ -234,7 +234,7 @@ textarea {
 
 
 
- 
+
 .botao-remover
 .botao-adicionar {
   position: relative;
@@ -248,7 +248,7 @@ textarea {
 }
 
 
-.botao-remover, 
+.botao-remover,
 .botao-adicionar{
   top: -20px;
 }
@@ -260,7 +260,7 @@ textarea {
 
 .icone-remover {
   background-color: #ff5722 !important;
-} 
+}
 
 .icone-adicionar{
    border-radius: 50%;
@@ -394,6 +394,8 @@ a{
   height: 150px;
   border: none;
   color: white;
+  resize: none;
+  padding: 5px 10px;
 }
 
 .questao-aberta-resposta-esperada:focus {
@@ -405,10 +407,12 @@ a{
   width: 153px;
   height: 35px;
   background-color: transparent;
-  border: 2px solid #7C4CC6;
+  border: 3px solid #7C4CC6;
   border-radius: 10px;
-
   color: #7C4CC6;
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .txt-secao-um {
@@ -492,10 +496,10 @@ ul {
 
 .salvar-edicao {
 
-  position: initial !important; 
+  position: initial !important;
     left: 0 !important;
     transform: none !important;
-    
+
 }
 
 

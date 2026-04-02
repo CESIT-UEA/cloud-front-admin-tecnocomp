@@ -24,7 +24,7 @@ export class EditarTopicoComponent implements OnInit{
   letras: string[] = ['A','B','C','D']
   idTopico!: number;
   isQuestaoAberta!: boolean;
-  
+
   // relacionados a arquivo
   selectedFile: File | null = null
   nomeArquivo: string | undefined = ''
@@ -73,7 +73,7 @@ export class EditarTopicoComponent implements OnInit{
             this.criarAlternativa(),
             this.criarAlternativa(),
           ]),
-          
+
         }),
       ]),
     });
@@ -139,17 +139,17 @@ export class EditarTopicoComponent implements OnInit{
         this.setVideoUrls(topico.VideoUrls);
         this.setSaibaMais(topico.SaibaMais);
         // this.setReferencias(topico.Referencias);
-      
+
 
         if (!topico.Exercicios[0].aberta) {
           this.isQuestaoAberta = false
           this.setExercicios(topico.Exercicios);
-          
+
         } else {
           this.isQuestaoAberta = true
           this.setExerciciosAberto(topico.Exercicios)
         }
-         
+
       },
       (error) => {
         if (error.status === 404) {
@@ -159,13 +159,13 @@ export class EditarTopicoComponent implements OnInit{
             } else {
               this.router.navigate(['/tecnocomp/meus-modulos'])
             }
-        } 
+        }
 
         console.error('Erro ao carregar tópico:', error);
 
       }
     );
-   
+
   }
 
   setVideoUrls(videoUrls: any[]): void {
@@ -290,6 +290,14 @@ export class EditarTopicoComponent implements OnInit{
     alternativa.reset({ descricao: '', explicacao: '', correta: false });
   }
 
+  limparResposta(exercicioIndex: number): void {
+  const exercicio = this.exercicios.at(exercicioIndex);
+
+  exercicio.patchValue({
+    resposta_esperada: ''
+  });
+}
+
   onSubmit(): void {
     const topicoEditado = {
       ...this.dadosBasicosFormGroup.value,
@@ -309,9 +317,9 @@ export class EditarTopicoComponent implements OnInit{
 
     const sanitizedOriginalName = originalName
                 .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')    
+                .replace(/[\u0300-\u036f]/g, '')
                 .replace(/\s+/g, '_')
-                .replace(/[^a-zA-Z0-9_-]/g, ''); 
+                .replace(/[^a-zA-Z0-9_-]/g, '');
 
     const uniqueFileName = `${sanitizedOriginalName}-${uuid}${extension}`
     this.renamedFile = new File([this.selectedFile], uniqueFileName, { type: this.selectedFile.type })
@@ -376,7 +384,7 @@ export class EditarTopicoComponent implements OnInit{
       ])
     });
     }
-  
+
   }
 
   criarQuestaoDiscursiva(index: number){

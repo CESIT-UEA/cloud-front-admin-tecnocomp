@@ -1,143 +1,358 @@
 <app-header-voltar texto="Cadastrar Módulo"></app-header-voltar>
 <div class="container-background">
   <main class="container">
-  <form [formGroup]="moduloForm" (ngSubmit)="onSubmit()" class="forms">
-    <div class="forms-container">
-      <div class="section-titulo">
-        <h1>Cadastro de Módulo</h1>
-        <p class="obrigatorio">* Indica uma pergunta obrigatória</p>
-      </div>
-      <div class="campos-input">
-        <div class="forms-campo">
-          <label for="nome_modulo">Nome do Módulo <span class="obrigatorio">*</span></label>
-          <input id="nome_modulo" type="text" formControlName="nome_modulo" class="input" placeholder="Digite o nome do modulo">
+    <form [formGroup]="moduloForm" (ngSubmit)="onSubmit()" class="forms">
+      <div class="forms-container">
+        <div class="section-titulo">
+          <h1>Cadastro de Módulo</h1>
+          <p class="obrigatorio">* Indica uma pergunta obrigatória</p>
         </div>
-        <div class="forms-campo">
-          <label for="nome_url">Url do Modulo<span class="obrigatorio">*</span></label>
-          <input id="nome_url" type="text" formControlName="nome_url" class="input" placeholder="Digite a url do modulo">
-        </div>
-        <div class="forms-campo">
-          <label for="ebookUrlGeral">Url do Ebook Geral do Modulo<span class="obrigatorio">*</span></label>
-          <input id="ebookUrlGeral" type="text" formControlName="ebookUrlGeral" class="input" placeholder="Digite a url do ebook geral">
-        </div>
-        <section class="campos">
+        <div class="campos-input">
           <div class="forms-campo">
-            <label for="video_inicial">Url do Vídeo Inicial <span class="obrigatorio">*</span></label>
-            <input id="video_inicial" type="text" formControlName="video_inicial" class="input" placeholder="Digite a url do video inicial">
+            <label for="nome_modulo"
+              >Nome do Módulo <span class="obrigatorio">*</span></label
+            >
+            <input
+              id="nome_modulo"
+              type="text"
+              formControlName="nome_modulo"
+              class="input"
+              placeholder="Digite o nome do modulo"
+            />
           </div>
           <div class="forms-campo">
-            <label for="plataforma_id">ID da Plataforma <span class="obrigatorio">*</span></label>
-            <input id="plataforma_id" type="text" formControlName="plataforma_id" class="input" placeholder="Digitar...">
+            <label for="nome_url"
+              >Url do Modulo<span class="obrigatorio">*</span></label
+            >
+            <input
+              id="nome_url"
+              type="text"
+              formControlName="nome_url"
+              class="input"
+              placeholder="Digite a url do modulo"
+            />
           </div>
-        </section>
-        <section class="add-topicos">
-           <p>Adicione tópicos para este módulo <span class="obrigatorio">*</span></p>
-        </section>
-    </div>
-
-      <div formArrayName="topicos"class="topicos">
-        <div *ngFor="let topico of topicos.controls; let i = index" [formGroupName]="i">
-          <div class="campos-input">
-            <div class="add-topicos">
-                <h3 class="titulo-topico">Tópico {{ i + 1 }}</h3>
+          <div class="forms-campo">
+            <label for="ebookUrlGeral"
+              >Url do Ebook Geral do Modulo<span class="obrigatorio"
+                >*</span
+              ></label
+            >
+            <input
+              id="ebookUrlGeral"
+              type="text"
+              formControlName="ebookUrlGeral"
+              class="input"
+              placeholder="Digite a url do ebook geral"
+            />
+          </div>
+          <section class="campos">
+            <div class="forms-campo">
+              <label for="video_inicial"
+                >Url do Vídeo Inicial <span class="obrigatorio">*</span></label
+              >
+              <input
+                id="video_inicial"
+                type="text"
+                formControlName="video_inicial"
+                class="input"
+                placeholder="Digite a url do video inicial"
+              />
             </div>
             <div class="forms-campo">
-              <label for="nome_topico">Nome do Tópico</label>
-              <input id="nome_topico" type="text" formControlName="nome_topico" class="input" placeholder="Digitar...">
+              <label for="plataforma_id"
+                >ID da Plataforma <span class="obrigatorio">*</span></label
+              >
+              <input
+                id="plataforma_id"
+                type="text"
+                formControlName="plataforma_id"
+                class="input"
+                placeholder="Digitar..."
+              />
             </div>
-            <section class="campos">
+          </section>
+          <section class="add-topicos">
+            <p>
+              Adicione tópicos para este módulo
+              <span class="obrigatorio">*</span>
+            </p>
+          </section>
+        </div>
+
+        <div formArrayName="topicos" class="topicos">
+          <div
+            *ngFor="let topico of topicos.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="campos-input">
+              <div class="add-topicos">
+                <h3 class="titulo-topico">Tópico {{ i + 1 }}</h3>
+              </div>
+              <div class="forms-campo">
+                <label for="nome_topico">Nome do Tópico</label>
+                <input
+                  id="nome_topico"
+                  type="text"
+                  formControlName="nome_topico"
+                  class="input"
+                  placeholder="Digitar..."
+                />
+              </div>
+              <section class="campos">
                 <div class="forms-campo">
                   <label for="ebookUrlGeral">URL do Ebook</label>
-                  <input id="ebookUrlGeral" type="text" formControlName="ebookUrlGeral" class="input" placeholder="Digite a url do ebook">
+                  <input
+                    id="ebookUrlGeral"
+                    type="text"
+                    formControlName="ebookUrlGeral"
+                    class="input"
+                    placeholder="Digite a url do ebook"
+                  />
                 </div>
                 <div class="forms-campo">
                   <label for="textoApoio">Texto de Apoio</label>
-                  <input id="textoApoio" type="text" formControlName="textoApoio" class="input" placeholder="Digite a url do texto de apoio">
+                  <input
+                    id="textoApoio"
+                    type="text"
+                    formControlName="textoApoio"
+                    class="input"
+                    placeholder="Digite a url do texto de apoio"
+                  />
                 </div>
-            </section>
-          </div>
-          <div formArrayName="videoUrls">
-            <div class="url-container">
-                <h4>Urls de vídeos <span class="obrigatorio">*</span></h4>
-                <div *ngFor="let urlCtrl of getFormArrayControls(topico, 'videoUrls'); let j = index" class="urlVideo">
-                  <p>{{ j + 1 }} - </p>
-                  <input [formControlName]="j" type="text" class="input-url" placeholder="Digite a url do video">
-                  <button type="button" (click)="removeVideoUrl(i, j)"><img src="../../../assets/Botão apagar referencia.svg" alt="botão de remover url" class="remove-referencia"></button>
-                </div>
-                <button type="button" (click)="addVideoUrl(i)" class="button-video">Adicionar Vídeo</button>
+              </section>
             </div>
-          </div>
+            <div formArrayName="videoUrls">
+              <div class="url-container">
+                <h4>Urls de vídeos <span class="obrigatorio">*</span></h4>
+                <div
+                  *ngFor="
+                    let urlCtrl of getFormArrayControls(topico, 'videoUrls');
+                    let j = index
+                  "
+                  class="urlVideo"
+                >
+                  <p>{{ j + 1 }} -</p>
+                  <input
+                    [formControlName]="j"
+                    type="text"
+                    class="input-url"
+                    placeholder="Digite a url do video"
+                  />
+                  <button type="button" (click)="removeVideoUrl(i, j)">
+                    <img
+                      src="../../../assets/Botão apagar referencia.svg"
+                      alt="botão de remover url"
+                      class="remove-referencia"
+                    />
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  (click)="addVideoUrl(i)"
+                  class="button-video"
+                >
+                  Adicionar Vídeo
+                </button>
+              </div>
+            </div>
 
-          <div formArrayName="saibaMais">
+            <div formArrayName="saibaMais">
               <div class="saiba-mais-container">
                 <h4>Saiba Mais</h4>
-                <div *ngFor="let saibaCtrl of getFormArrayControls(topico, 'saibaMais'); let j = index" [formGroupName]="j">
+                <div
+                  *ngFor="
+                    let saibaCtrl of getFormArrayControls(topico, 'saibaMais');
+                    let j = index
+                  "
+                  [formGroupName]="j"
+                >
                   <div class="inputs">
                     <p>{{ j + 1 }}</p>
                     <p>-</p>
-                    <input formControlName="descricao" type="text" class="input-url" placeholder="descrição">
-                    <input formControlName="url" type="text" class="input-url" placeholder="url">
-                    <button type="button" (click)="removeSaibaMais(i, j)" ><img src="../../../assets/Botão apagar referencia.svg" alt="" class="remove-referencia"></button>
+                    <input
+                      formControlName="descricao"
+                      type="text"
+                      class="input-url"
+                      placeholder="descrição"
+                    />
+                    <input
+                      formControlName="url"
+                      type="text"
+                      class="input-url"
+                      placeholder="url"
+                    />
+                    <button type="button" (click)="removeSaibaMais(i, j)">
+                      <img
+                        src="../../../assets/Botão apagar referencia.svg"
+                        alt=""
+                        class="remove-referencia"
+                      />
+                    </button>
                   </div>
                 </div>
-                <button type="button" (click)="addSaibaMais(i)" class="button-video">Adicionar</button>
-            </div>
-        </div>
-          <div formArrayName="referencias">
-            <div class="url-container">
-              <h4>Referências</h4>
-              <div *ngFor="let refCtrl of getFormArrayControls(topico, 'referencias'); let j = index" [formGroupName]="j">
-                <div class="inputs">
-                  <p>{{ j + 1 }}</p>
-                  <p>-</p>
-                  <input formControlName="caminhoDaImagem" type="text" class="input-url" placeholder="url da imagem">
-                  <input formControlName="referencia" type="text" class="input-url" placeholder="referÊncia em ABNT">
-                  <button type="button" (click)="removeReferencia(i, j)" ><img src="../../../assets/Botão apagar referencia.svg" alt="" class="remove-referencia"></button>
+                <button
+                  type="button"
+                  (click)="addSaibaMais(i)"
+                  class="button-video"
+                >
+                  Adicionar
+                </button>
               </div>
+            </div>
+            <div formArrayName="referencias">
+              <div class="url-container">
+                <h4>Referências</h4>
+                <div
+                  *ngFor="
+                    let refCtrl of getFormArrayControls(topico, 'referencias');
+                    let j = index
+                  "
+                  [formGroupName]="j"
+                >
+                  <div class="inputs">
+                    <p>{{ j + 1 }}</p>
+                    <p>-</p>
+                    <input
+                      formControlName="caminhoDaImagem"
+                      type="text"
+                      class="input-url"
+                      placeholder="url da imagem"
+                    />
+                    <input
+                      formControlName="referencia"
+                      type="text"
+                      class="input-url"
+                      placeholder="referÊncia em ABNT"
+                    />
+                    <button type="button" (click)="removeReferencia(i, j)">
+                      <img
+                        src="../../../assets/Botão apagar referencia.svg"
+                        alt=""
+                        class="remove-referencia"
+                      />
+                    </button>
+                  </div>
                 </div>
-            <button type="button" (click)="addReferencia(i)" class="button-video">Adicionar</button>
-          </div>
-          </div>
+                <button
+                  type="button"
+                  (click)="addReferencia(i)"
+                  class="button-video"
+                >
+                  Adicionar
+                </button>
+              </div>
+            </div>
 
-          <div formArrayName="exercicios">
-            <div class="exercicio-container">
-              <h4>Exercícios</h4>
-              <div *ngFor="let exCtrl of getFormArrayControls(topico, 'exercicios'); let j = index" [formGroupName]="j">
-                <input formControlName="questao" type="text" class="input-exercicio-pergunta" placeholder="Enunciado do exercício...">
-                <div formArrayName="alternativas">
-                  <h5>Alternativas</h5>
-                  <div *ngFor="let altCtrl of getFormArrayControls(exCtrl, 'alternativas'); let k = index" [formGroupName]="k">
-                    <div class="inputs">
-                      <input formControlName="descricao" type="text" class="input-exercicio" placeholder="descrição do exercício...">
-                      <input formControlName="explicacao" type="text" class="input-exercicio" placeholder="explicação do exercício...">
-                      <input formControlName="correta" type="checkbox" class="input-checkbox">
+            <div formArrayName="exercicios">
+              <div class="exercicio-container">
+                <h4>Exercícios</h4>
+                <div
+                  *ngFor="
+                    let exCtrl of getFormArrayControls(topico, 'exercicios');
+                    let j = index
+                  "
+                  [formGroupName]="j"
+                >
+                  <input
+                    formControlName="questao"
+                    type="text"
+                    class="input-exercicio-pergunta"
+                    placeholder="Enunciado do exercício..."
+                  />
+                  <div formArrayName="alternativas">
+                    <h5>Alternativas</h5>
+                    <div
+                      *ngFor="
+                        let altCtrl of getFormArrayControls(
+                          exCtrl,
+                          'alternativas'
+                        );
+                        let k = index
+                      "
+                      [formGroupName]="k"
+                    >
+                      <div class="inputs">
+                        <input
+                          formControlName="descricao"
+                          type="text"
+                          class="input-exercicio"
+                          placeholder="descrição do exercício..."
+                        />
+                        <input
+                          formControlName="explicacao"
+                          type="text"
+                          class="input-exercicio"
+                          placeholder="explicação do exercício..."
+                        />
+                        <input
+                          formControlName="correta"
+                          type="checkbox"
+                          class="input-checkbox"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        (click)="removeAlternativa(i, j, k)"
+                        class="buttons-exercicio"
+                      >
+                        Remover Alternativa
+                      </button>
                     </div>
-                      <button type="button" (click)="removeAlternativa(i, j, k)" class="buttons-exercicio">Remover Alternativa</button>
+                    <button
+                      type="button"
+                      (click)="addAlternativa(i, j)"
+                      class="buttons-exercicio"
+                    >
+                      Adicionar Alternativa
+                    </button>
                   </div>
-                  <button type="button" (click)="addAlternativa(i, j)" class="buttons-exercicio">Adicionar Alternativa</button>
-                </div>
 
-                <button type="button" (click)="removeExercicio(i, j)" class="buttons-exercicio">Remover Exercício</button>
+                  <button
+                    type="button"
+                    (click)="removeExercicio(i, j)"
+                    class="buttons-exercicio"
+                  >
+                    Remover Exercício
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  (click)="addExercicio(i)"
+                  class="buttons-exercicio"
+                >
+                  Adicionar Exercício
+                </button>
               </div>
-              <button type="button" (click)="addExercicio(i)" class="buttons-exercicio">Adicionar Exercício</button>
-            </div>
-            <div class="button-remover">
-              <button type="button" (click)="removeTopico(i)" class="button-remover-topico">Remover Tópico</button>
+              <div class="button-remover">
+                <button
+                  type="button"
+                  (click)="removeTopico(i)"
+                  class="button-remover-topico"
+                >
+                  Remover Tópico
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="button-add">
-              <button type="button" (click)="addTopico()" class="button-add-topico">Adicionar Tópico</button>
+          <div class="button-add">
+            <button
+              type="button"
+              (click)="addTopico()"
+              class="button-add-topico"
+            >
+              Adicionar Tópico
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="buttons">
-      <button routerLink="/tecnocomp/cadastros" class="button-one">Home</button>
-      <button type="submit" class="button-two">Cadastrar</button>
-    </div>
-  </form>
-
-</main>
-
+      <div class="buttons">
+        <button routerLink="/tecnocomp/cadastros" class="button-one">
+          Home
+        </button>
+        <button type="submit" class="button-two">Cadastrar</button>
+      </div>
+    </form>
+  </main>
 </div>

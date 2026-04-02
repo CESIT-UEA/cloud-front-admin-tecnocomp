@@ -52,7 +52,7 @@ export class CadastroTopicoComponent {
     this.dadosBasicosFormGroup = this.fb.group({
       nome_topico: ['', Validators.required],
       textoApoio: [''],
-      
+
     });
 
     this.videoUrlsFormGroup = this.fb.group({
@@ -99,15 +99,15 @@ export class CadastroTopicoComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.idModulo = +params['id_modulo'];
-      
+
       if (!this.idModulo) {
         this.apiService.message('ID do módulo não encontrado!')
         this.router.navigate([this.voltar()])
       }
     });
     this.abrirPopUp()
-    
-    
+
+
   }
 
   verificarFormulario() {
@@ -173,7 +173,7 @@ export class CadastroTopicoComponent {
         return "/tecnocomp/meus-modulos"
       }
     }
-  
+
 
   getDadosBasicosFormStorage(idModulo: number){
     const storageKey = `dadosBasicosFormGroup_${idModulo}`
@@ -212,7 +212,7 @@ export class CadastroTopicoComponent {
      const saibaMais = localStorage.getItem(storageKey);
     if (saibaMais){
       const dados = JSON.parse(saibaMais);
-      
+
       this.saibaMais.clear()
 
       dados.saibaMais.forEach((item: any) => {
@@ -259,7 +259,7 @@ export class CadastroTopicoComponent {
       }));
     }
     this.exerciciosFormGroup.patchValue(dados);
-  
+
     this.isQuestaoAberta = !isObjetiva;
   }
 
@@ -318,7 +318,7 @@ export class CadastroTopicoComponent {
       })
     );
   }
-  
+
 
   setAlternativaCorreta(exercicioIndex: number, alternativaIndex: number): void {
     const alternativasArray = this.alternativas(exercicioIndex);
@@ -344,6 +344,13 @@ export class CadastroTopicoComponent {
     alternativa.reset({ descricao: '', explicacao: '', correta: false });
   }
 
+  limparResposta(exercicioIndex: number): void {
+  const exercicio = this.exercicios.at(exercicioIndex);
+
+  exercicio.patchValue({
+    respostaEsperada: ''  });
+  }
+
   onSubmit(): void {
     const topicoCompleto = {
       ...this.dadosBasicosFormGroup.value,
@@ -352,13 +359,13 @@ export class CadastroTopicoComponent {
       exercicios: this.exerciciosFormGroup.value.exercicios,
       id_modulo: this.idModulo
     };
-    
+
     if (!this.selectedFile) {
     alert("Selecione um ebook antes de cadastrar o tópico.");
     return;
   }
     // referencias: this.referenciasFormGroup.value.referencias,
-    
+
     if (this.selectedFile){
             const originalName = this.selectedFile.name;
             const extension = originalName.substring(originalName.lastIndexOf('.'));
@@ -366,9 +373,9 @@ export class CadastroTopicoComponent {
 
             const sanitizedOriginalName = originalName
                 .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')    
+                .replace(/[\u0300-\u036f]/g, '')
                 .replace(/\s+/g, '_')
-                .replace(/[^a-zA-Z0-9_-]/g, ''); 
+                .replace(/[^a-zA-Z0-9_-]/g, '');
 
             const uniqueFileName = `${sanitizedOriginalName}-${uuid}${extension}`
 
@@ -411,7 +418,7 @@ export class CadastroTopicoComponent {
 
     this.isQuestaoAberta = false;
 
-    
+
     // this.removerExercicio(index)
 
     // this.exercicios.push(this.fb.group({
@@ -450,7 +457,7 @@ export class CadastroTopicoComponent {
         )
       )
     }))
-    
+
   }
 
 
@@ -524,11 +531,11 @@ export class CadastroTopicoComponent {
           localStorage.removeItem(`saibaMais_${this.idModulo}`);
           localStorage.removeItem(`exerciciosFormGroup_${this.idModulo}`);
           this.dadosBasicosFormGroup.reset();
-         
-          
+
+
           this.videoUrls.clear()
           this.videoUrls.push(this.fb.control('', Validators.required));
-          
+
           this.saibaMais.clear()
           this.saibaMais.push(
           this.fb.group({
@@ -554,7 +561,7 @@ export class CadastroTopicoComponent {
         }
       }
     );
-    
+
 
     }}
 

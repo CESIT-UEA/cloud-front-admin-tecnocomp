@@ -71,7 +71,7 @@
             </button>
             <div class="botoes passo1-botao-proximo">
               <button class="anterior" matStepperPrevious>
-                <img src="../../../assets/icons/voltar.png"> Anterior 
+                <img src="../../../assets/icons/voltar.png"> Anterior
               </button>
               <button mat-button class="salvar" (click)="onSubmit()">Salvar Edição</button>
               <button class="proximo" matStepperNext>Próximo <img src="../../../assets/icons/proximo.svg" alt="icone de próximo"></button>
@@ -165,17 +165,17 @@
                   <mat-label>Questão do Exercício</mat-label>
                   <input formControlName="questao" required />
                 </div>
-                
+
                 <div class="botoes-tipo-questao">
-                  <button 
-                    class="botao-questao-objetiva" 
+                  <button
+                    class="botao-questao-objetiva"
                     [ngClass]="{'botao-questao-ativa': isQuestaoAberta === false}"
                     (click)="criarQuestaoObjetiva(i)"
                   >
                     <img src="../../../assets/icons/icone-questao-objetiva.svg"> Questão objetiva
                   </button>
-                  <button 
-                    class="botao-questao-discursiva" 
+                  <button
+                    class="botao-questao-discursiva"
                     [ngClass]="{'botao-questao-ativa': isQuestaoAberta}"
                     (click)="criarQuestaoDiscursiva(i)"
                   >
@@ -186,6 +186,9 @@
                 <div class="questao-aberta" *ngIf="this.isQuestaoAberta">
                   <label>Resposta esperada</label>
                   <textarea class="questao-aberta-resposta-esperada" formControlName="resposta_esperada"></textarea>
+
+                  <button  class="limpar-dados" (click)="limparResposta(i)">Limpar Dados</button>
+
                 </div>
 
                 <div formArrayName="alternativas" *ngIf="!this.isQuestaoAberta">
@@ -232,7 +235,7 @@
               Próximo
               <img src="../../../assets/icons/proximo.svg">
               </button>
-              
+
             </div>
           </form>
         </div>
@@ -254,7 +257,7 @@
             <a class="txt-caixa" [href]="dadosBasicosFormGroup.value.textoApoio">Link</a>
             <p>
               <strong class="txt-secao-um">Ebook Geral:</strong>
-              
+
             </p>
             <a class="txt-caixa" [href]="dadosBasicosFormGroup.value.ebookUrlGeral">Link</a>
           </div>
@@ -310,7 +313,7 @@
                   <li class="caixa-exercicio" *ngFor="let alternativa of exercicio.alternativas; let i = index">
                     <div class="letra" [ngClass]="{'correto': alternativa.correta == true}">
                       <h3>{{letras[i]}}</h3>
-                    </div> 
+                    </div>
                     <div class="textos-exercicio">
                       <p>Descrição: {{ alternativa.descricao }}</p>
                       <p class="explicacao" [ngClass]="{'explicacao-correta': alternativa.correta == true}">Explicação: {{ alternativa.explicacao }}</p>

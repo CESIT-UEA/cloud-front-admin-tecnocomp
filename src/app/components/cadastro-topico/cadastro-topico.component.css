@@ -257,7 +257,7 @@ a {
   min-height: 12px;
 }
 
-input.ng-invalid.ng-touched {
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
   border: 1px solid #ff4d4f;
   outline: none;
 }
@@ -315,8 +315,9 @@ input.ng-invalid.ng-touched:focus {
 
 .questao-aberta-resposta-esperada {
   height: 150px;
-  border: none;
   color: white;
+  resize: none;
+  padding: 5px 10px;
 }
 
 .questao-aberta-resposta-esperada:focus {
@@ -335,10 +336,11 @@ input.ng-invalid.ng-touched:focus {
   width: 153px;
   height: 35px;
   background-color: transparent;
-  border: 2px solid #7C4CC6;
+  border: 3px solid #7C4CC6;
   border-radius: 10px;
-
   color: #7C4CC6;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 
@@ -429,7 +431,7 @@ ul {
   cursor: pointer;
   margin-right: 10px;
   height: 38px;
-  
+
 }
 
 .file-field #ebookUrlGeral::file-selector-button:hover {
@@ -452,7 +454,7 @@ ul {
   align-items: center;
   background-color: #3F3F40;
   border-radius: 10px;
-  
+
   gap: 10px;
 }
 
