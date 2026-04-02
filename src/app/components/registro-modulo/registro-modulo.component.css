@@ -184,32 +184,34 @@ button[disabled] {
 
 
 /* Estilização do Input do Ebook */
-.file-field #ebookUrlGeral::file-selector-button {
-  background-color: transparent;
-  color: rgba(124, 76, 198, 1);
-  border: 2.5px solid rgba(124, 76, 198, 1);
-  font-family: Inter, sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 8px;
-  padding: 4px 15px;
-  cursor: pointer;
-  margin-right: 10px;
-}
+.file-field #ebookUrlGeral {
+  margin-left: 15px;
+  color: transparent !important;
+  width: 145px;
+  background-color: transparent !important;
+  padding: 0 !important;
 
-.file-field #ebookUrlGeral::file-selector-button:hover {
-  background-color: rgba(124, 76, 198, 1);
-  color: #fff;
+  &::file-selector-button {
+    background-color: transparent;
+    color: rgba(124, 76, 198, 1);
+    border: 2.5px solid rgba(124, 76, 198, 1);
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 3px 12px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  &:hover::file-selector-button {
+    background-color: rgba(124, 76, 198, 1);
+    color: #fff;
+  }
 }
 
 /* Oculta o texto nativo e remove o fundo individual para usar o do wrapper */
-#ebookUrlGeral {
-  margin-left: 15px;
-  color: transparent !important;
-  width: 160px;
-  background-color: transparent !important;
-  padding: 0 !important;
-}
+
 
 /* Container que mantém o fundo cinza atrás do botão e do texto */
 .file-input-wrapper {
@@ -232,5 +234,5 @@ button[disabled] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: calc(100% - 175px);
+  max-width: calc(100% - 160px);
 }

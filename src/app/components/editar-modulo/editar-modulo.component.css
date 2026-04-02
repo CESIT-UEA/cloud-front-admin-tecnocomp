@@ -26,18 +26,20 @@ span {
   color: #C64C4C;
 }
 
-.titulo-formulario h1 {
-  text-align: center;
-  padding: 20px 0 20px 0;
-  border-bottom: 2px solid #9665DF;
-  font-size: 20px;
-  font-weight: 700;
-  font-family: Inter;
-}
+.titulo-formulario {
+  h1 {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 2px solid #9665DF;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: Inter;
+  }
 
-.titulo-formulario p {
-  font-size: 16px;
-  color: #ff4d4f;
+  p {
+    font-size: 16px;
+    color: #ff4d4f;
+  }
 }
 
 .form-conteudo-editar {
@@ -45,32 +47,39 @@ span {
   flex-direction: column;
   padding: 5px 0;
   width: 100%;
-}
 
+  label {
+    padding: 10px 0;
+  }
+
+  input {
+    height: 35px;
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+    background-image: linear-gradient(#3F3F40, #3F3F40), 
+                      linear-gradient(0deg, #7C4CC6, #7C4CC6),
+                      linear-gradient(90deg, rgba(124, 76, 198, 0.5) 0%, rgba(83, 0, 249, 0.5) 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box, border-box;
+    color: #FFFFFF;
+    padding-left: 10px;
+
+    &:focus {
+      box-shadow: 0 0 0 0;
+      outline: 0;
+    }
+
+    &.ng-invalid.ng-touched {
+      border: 1px solid #ff4d4f;
+      border-image-source: none;
+      outline: none;
+    }
+  }
+}
 
 .form-conteudo {
   display: flex;
-  gap: 35px
-}
-
-.form-conteudo-editar label {
-  padding: 10px 0;
-}
-
-
-.form-conteudo-editar input {
-  height: 35px;
-  border: none;
-  border-radius: 10px;
-  background-color: #3F3F40;
-  color: #FFFFFF;
-  padding-left: 10px;
-
-}
-
-.form-conteudo-editar input:focus {
-  box-shadow: 0 0 0 0;
-  outline: 0;
+  gap: 35px;
 }
 
 .botoes {
@@ -78,90 +87,91 @@ span {
   justify-content: flex-end;
   gap: 20px;
   padding: 30px 0;
-}
 
-.btn-cancelar,
-.btn-salvar {
-  padding: 7px;
-  width: 25%;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  color: #FFFFFF;
-}
+  .btn-cancelar,
+  .btn-salvar {
+    padding: 7px;
+    width: 25%;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #FFFFFF;
+  }
 
-.btn-cancelar {
-  background-color: transparent;
-  border: 3px solid #7C4CC6;
-  color: #7C4CC6 !important;
-}
+  .btn-cancelar {
+    background-color: transparent;
+    border: 3px solid #7C4CC6;
+    color: #7C4CC6 !important;
 
-.btn-cancelar:hover {
-  background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
-  color: #fff !important;
-}
+    &:hover {
+      background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
+      color: #fff !important;
+    }
+  }
 
-.btn-salvar {
-  background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
-}
+  .btn-salvar {
+    background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
 
-.btn-salvar:hover {
-  opacity: 50%;
+    &:hover {
+      opacity: 50%;
+    }
+  }
 }
 
 
 .mensagem-validacao {
   font-size: 11px;
   color: #ff4d4f;
-  margin-top: -6px; /* puxa a mensagem para cima */
+  margin-top: -6px; 
   line-height: 1;
   min-height: 12px;
 }
 
-input.ng-invalid.ng-touched {
-  border: 1px solid #ff4d4f;
-  outline: none;
-}
-
 /* Estilização do Campo de Upload (Ebook Editar) */
-.file-input-wrapper #ebook_url_Geral::file-selector-button {
-  background-color: transparent;
-  color: rgba(124, 76, 198, 1);
-  border: 2.5px solid rgba(124, 76, 198, 1);
-  font-family: Inter, sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 8px;
-  padding: 4px 15px;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-.file-input-wrapper #ebook_url_Geral::file-selector-button:hover {
-  background-color: rgba(124, 76, 198, 1);
-  color: #fff;
-}
-
-/* Oculta o texto nativo e usa o wrapper */
-#ebook_url_Geral {
-  margin-left: 15px;
-  color: transparent !important;
-  width: 160px;
-  background-color: transparent !important;
-  padding: 0 !important;
-}
-
-/* Container Wrapper com fundo cinza */
 .file-input-wrapper {
   display: flex;
   align-items: center;
-  background-color: #3F3F40;
+  background-color: #333;
   border-radius: 10px;
-  height: 48px;
-  /* Ajustado para bater com o padrão dos outros inputs da tela */
+  height: 35px;
   gap: 10px;
+  border: 1.5px solid transparent;
+  background-image: linear-gradient(#3F3F40, #3F3F40), 
+                    linear-gradient(0deg, #7C4CC6, #7C4CC6),
+                    linear-gradient(90deg, rgba(124, 76, 198, 0.5) 0%, rgba(83, 0, 249, 0.5) 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box, border-box;
+
+  #ebook_url_Geral {
+    margin-left: 15px;
+    margin-top: 8px;
+    color: transparent !important;
+    width: 145px;
+    background-color: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    background-image: none !important;
+
+    &::file-selector-button {
+      background-color: transparent;
+      color: rgba(124, 76, 198, 1);
+      border: 2.5px solid rgba(124, 76, 198, 1);
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 8px;
+      padding: 3px 12px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    &:hover::file-selector-button {
+      background-color: rgba(124, 76, 198, 1);
+      color: #fff;
+    }
+  }
 }
 
 .file-status-text {
@@ -171,7 +181,7 @@ input.ng-invalid.ng-touched {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: calc(100% - 175px);
+  max-width: calc(100% - 160px);
 }
 
 
