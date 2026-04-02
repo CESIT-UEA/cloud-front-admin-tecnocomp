@@ -1,4 +1,4 @@
-name: Deploy Angular App
+name: Deploy Angular com Docker
 
 on:
   push:
@@ -6,36 +6,41 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.17.1'
+      - name: Configurar SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.DEPLOY_SERVER }} >> ~/.ssh/known_hosts
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Deploy no servidor via SSH
+        run: |
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_SERVER }} << 'EOF'
 
-    - name: Build Project
-      run: npm run build
+            cd /home/kaue
 
-    - name: Set up SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.DEPLOY_SERVER }} >> ~/.ssh/known_hosts || true
+            if [ ! -d "frontend" ]; then
+              git clone https://github.com/CESIT-UEA/cloud-front-admin-tecnocomp.git frontend
+            fi
 
-    - name: Deploy to Server
-      env:
-        DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
-        DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-      run: |
-        ssh $DEPLOY_USER@$DEPLOY_SERVER "rm -rf $DEPLOY_PATH/*"
-        scp -r dist/cadastro_lms/* $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH
+            cd frontend
+
+            git pull origin main
+
+            docker stop frontend || true
+            docker rm frontend || true
+
+            docker rmi frontend || true
+
+            docker build -t frontend .
+
+            docker run -d -p 80:80 --name frontend frontend
+
+          EOF
