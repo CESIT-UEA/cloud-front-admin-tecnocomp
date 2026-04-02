@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build --prod
+RUN npm run build 
 
 # Etapa 2: servir arquivos estáticos com Nginx
 FROM nginx:alpine
