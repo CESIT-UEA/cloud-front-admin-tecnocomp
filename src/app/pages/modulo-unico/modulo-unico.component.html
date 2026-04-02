@@ -65,21 +65,20 @@
               >
                 Clonar Ficha Técnica
               </button>
-            </div>
-            <div class="coluna-gerenciar">
+
               <button routerLink="gerenciar-referencias">
                 Gerenciar Referências
               </button>
               <button routerLink="gerenciar-alunos">Gerenciar Alunos</button>
+              <button
+                routerLink="/modulo/topicos"
+                class="botao-vizualizar-topicos"
+                [queryParams]="{ id_modulo: modulo.id }"
+              >
+                Vizualizar tópicos
+              </button>
             </div>
           </div>
-          <a
-            routerLink="/modulo/topicos"
-            class="botao-vizualizar-topicos"
-            [queryParams]="{ id_modulo: modulo.id }"
-          >
-            Vizualizar tópicos
-          </a>
         </div>
       </div>
     </div>

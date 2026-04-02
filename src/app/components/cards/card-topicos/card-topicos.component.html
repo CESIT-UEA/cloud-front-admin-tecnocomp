@@ -21,9 +21,9 @@
         <div class="box-icon" (click)="abrirConfirmacaoExcluir()">
           <mat-icon class="card-icon">delete</mat-icon>
         </div>
+        <div class="box-icon" (click)="sincronizarTopico(topico.id || 0)">
+          <img src="../../../../assets/icons/icone-vizualizar-novo.svg" class="card-icon">
+        </div>
     </div>
-    <mat-card-actions>
-      <button class="btn" (click)="sincronizarTopico(topico.id || 0)">Ver mais</button>
-    </mat-card-actions>
   </div>
 </mat-card>
