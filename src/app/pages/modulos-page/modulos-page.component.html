@@ -7,19 +7,19 @@
     nomeCard="módulos"
   ></app-titulo-secao>
   <div class="container-cards" *ngIf="modulos.length > 0">
-    
+
     <div class="container-cards-modulos" [ngClass]="{'cards-modulos': !this.isOpenDrawer}">
       <div class="card" *ngFor="let modulo of modulos" >
         <app-cards-modulos [modulo]="modulo" (excluirModulo)="excluirModulo($event)"></app-cards-modulos>
       </div>
     </div>
   </div>
-  
+
   <!-- Componente de paginação reutilizável -->
-  <app-pagination 
+  <app-pagination
   class="pagination"
     [pagination]="pagination"
-    noItemsMessage="Nenhum módulo encontrado"
+    noItemsMessage="Nenhum módulo encontrado."
     itemsLabel="módulos"
     (pageChange)="onPageChange($event, this.quantidadeItens)">
   </app-pagination>

@@ -62,12 +62,13 @@
             <div class="cadastro-conteudo">
               <label for="iconfirmar">Confirmar senha</label>
               <div class="input-senha">
-                 <input
-                type="password"
-                id="iconfirmar"
-                placeholder="Confirme sua senha"
-                formControlName="confirmarSenha"
-              />
+                <input
+                  [type]="confirm ? 'password' : 'text'"
+                  type="password"
+                  id="iconfirmar"
+                  placeholder="Confirme sua senha"
+                  formControlName="confirmarSenha"
+                />
                 <button
                   type="button"
                   class="icon"
@@ -78,7 +79,7 @@
                     {{ confirm ? "visibility_off" : "visibility" }}
                   </mat-icon>
                 </button>
-              </div>  
+              </div>
             </div>
           </div>
         </div>

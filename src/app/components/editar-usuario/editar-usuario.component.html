@@ -9,7 +9,7 @@
       <div class="form-editar-usuario-campo">
         <label>Nome do Usuário <span class="obrigatorio">*</span></label>
         <input matInput [(ngModel)]="user.username" name="username" required placeholder="Digite o nome do usuário" />
-        
+
       </div>
 
       <!-- Email -->
@@ -21,7 +21,20 @@
       <!-- Senha Atual -->
       <div class="form-editar-usuario-campo">
         <label>Senha Administrador <span class="obrigatorio">*</span></label>
-        <input matInput [(ngModel)]="senhaAtual" name="senhaAtual" type="password" required placeholder="Digite a senha atual" />
+        <div class="input-senha">
+          <input  [type]="hide ? 'password' : 'text'"
+            id="idsenha"matInput [(ngModel)]="senhaAtual" name="senhaAtual" type="password" required placeholder="Digite a senha atual" />
+           <button
+            type="button"
+            class="icon"
+            (click)="hide= !hide"
+            [class.ativo]="!hide"
+          >
+            <mat-icon>
+              {{ hide? "visibility_off" : "visibility" }}
+            </mat-icon>
+          </button>
+        </div>
       </div>
 
       <!-- Tipo -->
@@ -33,7 +46,7 @@
         </select>
       </div>
     </section>
-    
+
     <!-- Botões -->
     <div class="botoes">
       <button [routerLink]="'/tecnocomp/usuarios'" id="botao-dois">Cancelar</button>

@@ -12,12 +12,12 @@
       <app-cards-usuarios [user]="usuario"  (excluirUsuario)="excluirUsuario($event)"></app-cards-usuarios>
     </div>
   </div>
-  
+
   <!-- Componente de paginação reutilizável -->
-  <app-pagination 
+  <app-pagination
     class="pagination"
     [pagination]="pagination"
-    noItemsMessage="Nenhum usuário encontrado"
+    noItemsMessage="Nenhum usuário encontrado."
     itemsLabel="usuários"
     (pageChange)="onPageChange($event)">
   </app-pagination>

@@ -13,6 +13,8 @@ import { noOnlyWhitespace, senhaForte } from '../validators/validators';
 export class EditarPerfilComponent {
   senhaAtual: string = '';
   novaSenha: string = '';
+  hide = true;
+  confirm = true;
 
   cadastroForm = new FormGroup({
       nome: new FormControl('', [Validators.required, Validators.minLength(4), noOnlyWhitespace()]),

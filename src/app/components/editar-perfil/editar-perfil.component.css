@@ -76,6 +76,33 @@ label {
     box-shadow: 0 0 0 0;
 }
 
+.input-senha {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-senha .icon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  left: 90%;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.input-senha .icon mat-icon {
+ color: #888888;
+}
+
+.input-senha .icon.ativo mat-icon {
+  color: #A879F2;
+}
+
+
 .botoes {
     display: flex;
     padding: 40px 0;
@@ -94,7 +121,7 @@ label {
 
 #botao-um {
     background-color: #7C4CC6;
-    
+
 }
 
 #botao-dois {

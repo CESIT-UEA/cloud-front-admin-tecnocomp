@@ -6,9 +6,9 @@
 
 .no-items-message p {
   margin: 0;
-  font-size: 1rem;
-  font-style: italic;
-  color: #A2A2A2;
+  font-size: 20px;
+  font-weight: 700;
+  color: #888888;
 }
 
 .container-botoes-navegacao {

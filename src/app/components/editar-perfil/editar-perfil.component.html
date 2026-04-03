@@ -3,76 +3,124 @@
   <form class="form-editar-perfil" [formGroup]="cadastroForm">
     <h2 id="form-editar-perfil-titulo">Editar Perfil</h2>
     <p class="obrigatorio">* Indica campos obrigatórios</p>
-        <section class="form-editar-perfil-campos">
-          <!-- Nome -->
-          <div class="form-editar-perfil-campo">
-            <label>Nome <span class="obrigatorio">*</span></label>
-            <input formControlName="nome" name="username" required placeholder="Digite seu nome" />
-            <div
-              *ngIf="
-                cadastroForm.get('nome')?.invalid &&
-                cadastroForm.get('nome')?.touched
-              "
-            >
-              <small class="mensagem-validacao">
-                Nome é obrigatório e deve ter pelo menos 4 caracteres.
-              </small>
-          </div>
-          </div>
-
-          <!-- Email -->
-          <div class="form-editar-perfil-campo">
-            <label>Email <span class="obrigatorio">*</span></label>
-            <input formControlName="email" name="email" required placeholder="Digite seu email"/>
-            <div
-              *ngIf="
-                cadastroForm.get('email')?.invalid &&
-                cadastroForm.get('email')?.touched
-              "
-            >
-              <small class="mensagem-validacao">
-                Digite um Email válido.
-              </small>
-            </div>
-          </div>
-
-          <!-- Senha Atual -->
-          <div class="form-editar-perfil-campo">
-            <label>Senha Atual <span class="obrigatorio">*</span></label>
-            <input formControlName="senhaAtual" name="senhaAtual" type="password" required placeholder="Digite a senha atual"/>
-            <div
-              class="caixa-validacao"
-              *ngIf="
-                cadastroForm.get('senhaAtual')?.invalid &&
-                cadastroForm.get('senhaAtual')?.touched
-              "
-            >
-              
+    <section class="form-editar-perfil-campos">
+      <!-- Nome -->
+      <div class="form-editar-perfil-campo">
+        <label>Nome <span class="obrigatorio">*</span></label>
+        <input
+          formControlName="nome"
+          name="username"
+          required
+          placeholder="Digite seu nome"
+        />
+        <div
+          *ngIf="
+            cadastroForm.get('nome')?.invalid &&
+            cadastroForm.get('nome')?.touched
+          "
+        >
+          <small class="mensagem-validacao">
+            Nome é obrigatório e deve ter pelo menos 4 caracteres.
+          </small>
         </div>
-          </div>
+      </div>
 
-          <!-- Nova Senha (opcional) -->
-          <div class="form-editar-perfil-campo">
-            <label>Nova Senha <span class="obrigatorio">*</span></label>
-            <input formControlName="novaSenha" name="novaSenha" type="password" placeholder="Digite a nova senha"/>
-            <div
-              class="caixa-validacao"
-              *ngIf="
-                cadastroForm.get('novaSenha')?.invalid &&
-                cadastroForm.get('novaSenha')?.touched
-              "
-            >
-              <small class="mensagem-validacao">
-                 Mín. 8 caracteres, com letra minúscula, número e símbolo.
-              </small>
+      <!-- Email -->
+      <div class="form-editar-perfil-campo">
+        <label>Email <span class="obrigatorio">*</span></label>
+        <input
+          formControlName="email"
+          name="email"
+          required
+          placeholder="Digite seu email"
+        />
+        <div
+          *ngIf="
+            cadastroForm.get('email')?.invalid &&
+            cadastroForm.get('email')?.touched
+          "
+        >
+          <small class="mensagem-validacao"> Digite um Email válido. </small>
         </div>
-          </div>
+      </div>
+
+      <!-- Senha Atual -->
+      <div class="form-editar-perfil-campo">
+        <label>Senha Atual <span class="obrigatorio">*</span></label>
+        <div class="input-senha">
+          <input
+            [type]="hide ? 'password' : 'text'"
+            id="idsenha"
+            formControlName="senha"
+            class="input-senha"
+            placeholder="Digite sua senha"
+          />
+          <button
+            type="button"
+            class="icon"
+            (click)="hide = !hide"
+            [class.ativo]="!hide"
+          >
+            <mat-icon>
+              {{ hide ? "visibility_off" : "visibility" }}
+            </mat-icon>
+          </button>
+        </div>
+
+        <div
+          class="caixa-validacao"
+          *ngIf="
+            cadastroForm.get('senhaAtual')?.invalid &&
+            cadastroForm.get('senhaAtual')?.touched
+          "
+        ></div>
+      </div>
+
+      <!-- Nova Senha (opcional) -->
+      <div class="form-editar-perfil-campo">
+        <label>Nova Senha<span class="obrigatorio">*</span></label>
+        <div class="input-senha">
+          <input
+            [type]="confirm ? 'password' : 'text'"
+            id="idsenha"
+            formControlName="novaSenha"
+            name="novaSenha"
+            type="password"
+            placeholder="Digite a nova senha"
+          />
+          <button
+            type="button"
+            class="icon"
+            (click)="confirm = !confirm"
+            [class.ativo]="!confirm"
+          >
+            <mat-icon>
+              {{ confirm ? "visibility_off" : "visibility" }}
+            </mat-icon>
+          </button>
+        </div>
+        <div
+          class="caixa-validacao"
+          *ngIf="
+            cadastroForm.get('novaSenha')?.invalid &&
+            cadastroForm.get('novaSenha')?.touched
+          "
+        >
+          <small class="mensagem-validacao">
+            Mín. 8 caracteres, com letra minúscula, número e símbolo.
+          </small>
+        </div>
+      </div>
     </section>
-    
+
     <!-- Botões -->
     <div class="botoes">
-      <button routerLink="/tecnocomp/meu-perfil" id="botao-dois">Cancelar</button>
-      <button type="submit" id="botao-um" (click)="atualizarPerfil()">Salvar</button>
+      <button routerLink="/tecnocomp/meu-perfil" id="botao-dois">
+        Cancelar
+      </button>
+      <button type="submit" id="botao-um" (click)="atualizarPerfil()">
+        Salvar
+      </button>
     </div>
-</form>
+  </form>
 </main>

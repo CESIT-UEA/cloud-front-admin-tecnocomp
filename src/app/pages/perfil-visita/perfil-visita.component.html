@@ -11,15 +11,15 @@
         <img src="../../../assets/icons/Editar.svg" alt="ícone de editar-perfil">
       </button>
     </div>
-  
-    
+
+
     <div class="perfil-dados">
       <p><strong class="txt-email">Email:</strong> <span id="email"> {{ dadosUsuario?.email }}</span></p>
       <p id="texto-cargo">{{ dadosUsuario?.tipo === 'adm' ? 'Administrador' : 'Professor' }}</p>
     </div>
       </div>
   </section>
-  <mat-divider></mat-divider> 
+  <mat-divider></mat-divider>
   <section class="minhas-plataformas">
     <div class="titulo">
       <h1>Plataformas: {{ paginationPlataformas.totalItems }}</h1>
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Componente de paginação para plataformas -->
-    <app-pagination 
+    <app-pagination
     class="pagination"
       [pagination]="paginationPlataformas"
       noItemsMessage="Nenhuma plataforma encontrada"
@@ -64,9 +64,9 @@
     </div>
 
     <!-- Componente de paginação para módulos -->
-    <app-pagination 
+    <app-pagination
       [pagination]="paginationModulos"
-      noItemsMessage="Nenhum módulo encontrado"
+      noItemsMessage="Nenhum módulo encontrado."
       itemsLabel="módulos"
       (pageChange)="onModuloPageChange($event)">
     </app-pagination>

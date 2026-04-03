@@ -23,6 +23,8 @@
     border-radius: 7px;
     font-size: 16px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .botao-add-ref:hover, .botao-acessar-referencia:hover, .editar-ref:hover, .excluir-ref:hover {
@@ -30,7 +32,8 @@
 }
 
 .sem-referencia {
-    font-size: 18px;
+    font-weight: 700;
+    font-size: 20px;
     color: #888888;
 }
 
