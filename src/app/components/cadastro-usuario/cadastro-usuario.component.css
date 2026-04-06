@@ -32,10 +32,15 @@
 
 .cadastro-usuario-titulo, .cadastro-usuario-label {
     color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
     padding: 10px 0;
 }
 
 .cadastro-usuario-titulo {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
   text-align: center;
   padding: 20px 0 20px 0;
   border-bottom: 2px solid #7C4CC6;
@@ -70,7 +75,7 @@ input.ng-invalid.ng-touched {
 
 
 .cadastro-usuario-label span, .cadastro-usuario-aviso {
-  color: #ff4d4f;
+  color: #C64C4C;
 }
 
 .campos {
@@ -83,6 +88,9 @@ input.ng-invalid.ng-touched {
   display: flex;
   flex-direction: column;
   width: 92%;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-family: 1rem;
   padding: 5px 0;
 }
 
@@ -90,7 +98,7 @@ input.ng-invalid.ng-touched {
   height: 35px;
   border: none;
   border-radius: 10px;
-  background-color: #3F3F40;
+  background-color: #424147;
   color: #FFFFFF;
   padding-left: 10px;
 }
@@ -160,17 +168,24 @@ mat-icon {
   color: #7C4CC6 !important;
 }
 
+#botao-dois {
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
+}
+
 #botao-um:hover {
   background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
   color: #fff !important;
 }
 
 
-#botao-dois {
-  border-radius: 10px;
-  background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
-}
-
 #botao-dois:hover {
   opacity: 50%;
+}
+
+#botao-um, 
+#botao-dois {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
 }
