@@ -38,7 +38,7 @@
         </div>
         <div class="forms-campo">
           <label for="idCliente" class="cadastro-plataforma-label">ID do Cliente <span class="obrigatorio">*</span></label>
-          <input class="cadastro-plataforma-input" type="text" formControlName="idCliente" placeholder="Id do cliente"/>
+          <input class="cadastro-plataforma-input" type="text" formControlName="idCliente" placeholder="ID do cliente"/>
           <div
             *ngIf="
               plataformaForm.get('idCliente')?.invalid &&
@@ -93,7 +93,7 @@
 
       <div class="buttons">
         <button (click)="voltarPagina()" id="botao-um">Cancelar</button>
-        <button type="submit" id="botao-dois" (click)="onSubmit()">Cadastrar</button>
+        <button type="submit" id="botao-dois" (click)="onSubmit()">Cadastrar Plataforma</button>
       </div>
     </form>
   </section>
