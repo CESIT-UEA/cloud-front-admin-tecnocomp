@@ -75,6 +75,7 @@ export class RegistroModuloComponent implements OnInit {
     formData.append('video_inicial', this.moduloForm.get('video_inicial')?.value || '');
     formData.append('usuario_id', String(this.authService.getUsuarioDados().id));
 
+    console.log("FILE:", this.selectedFile);
     formData.append('file', this.selectedFile);
 
     this.apiService.registerModulo(formData).subscribe({
