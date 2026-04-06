@@ -27,13 +27,13 @@
             </label>
             <div class="file-input-wrapper">
               <!-- <mat-label>Ebook do Tópico</mat-label> -->
-              <input type="file" id="ebookUrlGeral"  (change)="onSelectedFile($event)" class="cadastro-modulo-input"  required />
+              <input type="file" id="ebookUrlGeral"  (change)="onSelectedFile($event)" accept="application/pdf" class="cadastro-modulo-input"  required />
               <span class="file-status-text">{{ selectedFile?.name || nomeArquivo || 'Nenhum arquivo selecionado' }}</span>
             </div>
             </div>
 
             <div class="botoes passo1-botao-proximo">
-              <button mat-button class="salvar" (click)="onSubmit()">Salvar Alterações</button>
+              <button class="salvar" (click)="onSubmit()">Salvar Alterações</button>
               <button class="proximo" matStepperNext>Próximo <img src="../../../assets/icons/proximo.svg" alt="icone de próximo"></button>
             </div>
           </form>
@@ -73,7 +73,7 @@
               <button class="anterior" matStepperPrevious>
                 <img src="../../../assets/icons/voltar.png"> Anterior 
               </button>
-              <button mat-button class="salvar" (click)="onSubmit()">Salvar Edição</button>
+              <button class="salvar" (click)="onSubmit()">Salvar Edição</button>
               <button class="proximo" matStepperNext>Próximo <img src="../../../assets/icons/proximo.svg" alt="icone de próximo"></button>
             </div>
           </form>
@@ -116,7 +116,7 @@
                 <img src="../../../assets/icons/voltar.png">
                 Anterior
               </button>
-              <button mat-button class="salvar" (click)="onSubmit()">Salvar Edição</button>
+              <button class="salvar" (click)="onSubmit()">Salvar Edição</button>
               <button class="proximo" matStepperNext>Próximo <img src="../../../assets/icons/proximo.svg" alt="icone de próximo"></button>
             </div>
           </form>
@@ -214,7 +214,7 @@
                 <img src="../../../assets/icons/voltar.png">
                 Anterior
               </button>
-              <button mat-button class="salvar" (click)="onSubmit()">Salvar Edição</button>
+              <button class="salvar" (click)="onSubmit()">Salvar Edição</button>
               <button
                 *ngIf="!this.isQuestaoAberta"
                 class="proximo"
@@ -251,12 +251,12 @@
             <p>
               <strong class="txt-secao-um">Texto de Apoio:</strong>
             </p>
-            <a class="txt-caixa" [href]="dadosBasicosFormGroup.value.textoApoio">Link</a>
+            <a class="txt-caixa" [href]="dadosBasicosFormGroup.value.textoApoio" target="_blank">Link</a>
             <p>
               <strong class="txt-secao-um">Ebook Geral:</strong>
               
             </p>
-            <a class="txt-caixa" [href]="dadosBasicosFormGroup.value.ebookUrlGeral">Link</a>
+            <a class="txt-caixa" *ngIf="pdfPreviewUrl" [href]="pdfPreviewUrl" target="_blank">Link</a>
           </div>
 
           <mat-divider></mat-divider>
@@ -326,7 +326,7 @@
                 <img src="../../../assets/icons/voltar.png">
                 Anterior
               </button>
-            <button mat-button class="salvar salvar-edicao" (click)="onSubmit()">Salvar Edição</button>
+            <button class="salvar salvar-edicao" (click)="onSubmit()">Salvar Edição</button>
           </div>
         </div>
       </mat-step>

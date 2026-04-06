@@ -31,7 +31,7 @@
         <label for="ebook_url_Geral">Ebook Geral: <span>*</span></label>
         <div class="file-input-wrapper">
           <input formControlName="ebookUrlGeral" id="ebook_url_Geral" type="file" (change)="onSelectedFile($event)"
-            class="input">
+            class="input" accept="application/pdf">
           <span class="file-status-text">{{ selectedFile?.name || nomeArquivo || 'Nenhum arquivo selecionado' }}</span>
         
         </div>

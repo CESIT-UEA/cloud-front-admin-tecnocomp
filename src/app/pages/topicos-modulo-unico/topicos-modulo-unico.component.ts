@@ -31,7 +31,6 @@ export class TopicosModuloUnicoComponent implements OnInit {
     if (id) {
       this.carregarTopicos(+id, this.pagination.currentPage);
       this.idModulo = +id;
-      console.log('front idModulo', this.idModulo)
     }
   }
 

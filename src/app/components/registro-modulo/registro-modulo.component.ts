@@ -69,87 +69,50 @@ export class RegistroModuloComponent implements OnInit {
       return
     }
 
-    if (this.moduloForm.valid && this.selectedFile) {
-      const modulo = {
-        nome_modulo: this.moduloForm.get('nome_modulo')?.value,
-        nome_url: this.moduloForm.get('nome_url')?.value,
-        ebookUrlGeral: this.moduloForm.get('ebookUrlGeral')?.value,
-        video_inicial: this.moduloForm.get('video_inicial')?.value,
-        usuario_id: this.authService.getUsuarioDados().id,
-        filesDoModulo: this.moduloForm.get('nome_url')?.value
-      };
+    const formData = new FormData();
+    formData.append('nome_modulo', this.moduloForm.get('nome_modulo')?.value || '');
+    formData.append('nome_url', this.moduloForm.get('nome_url')?.value || '');
+    formData.append('video_inicial', this.moduloForm.get('video_inicial')?.value || '');
+    formData.append('usuario_id', String(this.authService.getUsuarioDados().id));
 
-      // verifica se tem arquivo e faz tratamento do nome
-      if (this.selectedFile){
-            const originalName = this.selectedFile.name;
-            const extension = originalName.substring(originalName.lastIndexOf('.'));
-            const nameWithoutExtension = originalName.substring(0, originalName.lastIndexOf('.'));
-            const uuid = uuidv4();
+    formData.append('file', this.selectedFile);
 
-            const sanitizedOriginalName = nameWithoutExtension
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')    
-                .replace(/\s+/g, '_')
-                .replace(/[^a-zA-Z0-9_-]/g, ''); 
-
-            const uniqueFileName = `${sanitizedOriginalName}-${uuid}${extension}`
-
-            this.renamedFile = new File([this.selectedFile], uniqueFileName, { type: this.selectedFile.type })
-
-            const nomeModuloAmigavel = this.moduloForm.get('nome_url')?.value || '';
-
-            this.nomePasta = `${nomeModuloAmigavel}-${uuid}`
-            modulo.filesDoModulo = this.nomePasta
-            modulo.ebookUrlGeral = `${this.baseUrlFile}/${this.nomePasta}/${this.renamedFile.name}`
-      }
-
-      this.apiService.registerModulo(modulo).subscribe({
-        next: response => {
-          
-           // verifica se tem arquivo e faz upload
-        if (this.selectedFile && this.renamedFile && this.nomePasta){
-            this.uploadService.uploadFile(
-              this.renamedFile, 
-              this.nomePasta, 
-              `${this.uploadService.baseURL}/api/modulos/upload`
-        ).subscribe({
-            next: () => {
-              // faz upload de arquivo para o fluxo do n8n vetorizar
-              this.uploadFileRAG(this.renamedFile, this.nomePasta, this.urlApiRag).subscribe({
-                next: () => {
-                  console.log(`Upload para RAG realizado com sucesso`)
-                }, error: (err) => {
-                  console.error(`Erro ao realizar upload para RAG`, err)
-              }})
-              console.log('Upload realizado com sucesso!');
-              
-            },
-            error: err => {
-              console.error('Erro no upload:', err);
-             
-          }
-        })
-        }
-        this.apiService.message("Módulo cadastrado com sucesso!")
-        this.navigateAfterRegisterModulo()
-        },
-        error: err => {
-          console.error('Erro ao cadastrar módulo:', err);
-        }
-    });
-
-      
-      
-    } else {
-      console.error('Formulário inválido. Verifique os campos obrigatórios.');
+    this.apiService.registerModulo(formData).subscribe({
+    next: (response) => {
+      this.apiService.message("Módulo cadastrado com sucesso!");
+      this.navigateAfterRegisterModulo();
+    },
+    error: (err) => {
+      console.error('Erro ao cadastrar módulo:', err);
     }
+  });
+
   }
 
   onSelectedFile(event: any){
     const file = event.target.files[0];
-    if (file){
-      this.selectedFile = file
+    if (!file) return
+
+    const input = event.target;
+    
+    if (file.type !== 'application/pdf') {
+      this.apiService.message('Apenas arquivos PDF são permitidos.');
+      this.selectedFile = null;
+
+      input.value = ''
+      return;
     }
+
+    const maxSize = 10 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      this.apiService.message('O arquivo deve ter no máximo 10MB.');
+      this.selectedFile = null;
+      input.value = ''
+      return;
+    }
+
+    this.selectedFile = file;
   }
 
 

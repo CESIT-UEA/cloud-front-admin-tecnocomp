@@ -9,6 +9,7 @@ import { ContinuarCadastrandoTopicoComponent } from '../continuar-cadastrando-to
 import { AuthService } from 'src/app/auth/auth.service';
 import { MatStepper } from '@angular/material/stepper';
 import { ViewChild } from '@angular/core';
+import { IndexedDBService } from 'src/app/services/indexed-db.service';
 
 
 
@@ -37,6 +38,8 @@ export class CadastroTopicoComponent {
   baseUrlFile: string = `https://apiadmin.tecnocomp.cloud/ebooks`;
   pastaModulo: string | null = null;
 
+  pdfPreviewUrl: string | null = null;
+
   idModulo!: number;
   letras: string[] = ['A','B','C','D']
   constructor(
@@ -46,13 +49,13 @@ export class CadastroTopicoComponent {
     private router: Router,
     private uploadService: UploadService,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private indexedDbService: IndexedDBService
   ) {
     // Inicializando os grupos de formulários
     this.dadosBasicosFormGroup = this.fb.group({
       nome_topico: ['', Validators.required],
-      textoApoio: [''],
-      
+      textoApoio: ['', Validators.required],
     });
 
     this.videoUrlsFormGroup = this.fb.group({
@@ -96,7 +99,7 @@ export class CadastroTopicoComponent {
   });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.route.queryParams.subscribe((params) => {
       this.idModulo = +params['id_modulo'];
       
@@ -105,6 +108,9 @@ export class CadastroTopicoComponent {
         this.router.navigate([this.voltar()])
       }
     });
+
+    
+
     this.abrirPopUp()
     
     
@@ -345,94 +351,49 @@ export class CadastroTopicoComponent {
   }
 
   onSubmit(): void {
-    const topicoCompleto = {
-      ...this.dadosBasicosFormGroup.value,
-      videoUrls: this.videoUrlsFormGroup.value.videoUrls,
-      saibaMais: this.saibaMaisFormGroup.value.saibaMais,
-      exercicios: this.exerciciosFormGroup.value.exercicios,
-      id_modulo: this.idModulo
-    };
-    
     if (!this.selectedFile) {
-    alert("Selecione um ebook antes de cadastrar o tópico.");
-    return;
-  }
-    // referencias: this.referenciasFormGroup.value.referencias,
-    
-    if (this.selectedFile){
-            const originalName = this.selectedFile.name;
-            const extension = originalName.substring(originalName.lastIndexOf('.'));
-            const uuid = uuidv4();
+      alert("Selecione um ebook antes de cadastrar o tópico.");
+      return;
+    }
 
-            const sanitizedOriginalName = originalName
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')    
-                .replace(/\s+/g, '_')
-                .replace(/[^a-zA-Z0-9_-]/g, ''); 
+      const formData = new FormData();
 
-            const uniqueFileName = `${sanitizedOriginalName}-${uuid}${extension}`
+      const dadosBasicos = this.dadosBasicosFormGroup.getRawValue();
 
-            this.renamedFile = new File([this.selectedFile], uniqueFileName, { type: this.selectedFile.type })
+      formData.append('nome_topico', dadosBasicos.nome_topico || '');
+      formData.append('textoApoio', dadosBasicos.textoApoio || '')
+      formData.append('id_modulo', String(this.idModulo));
 
-            this.apiService.obterModuloPorId(this.idModulo).subscribe({
-              next: (modulo) => {
-                this.pastaModulo = modulo.filesDoModulo!;
-                topicoCompleto.ebookUrlGeral = `${this.baseUrlFile}/${this.pastaModulo}/${this.renamedFile.name}`
-                this.apiService.cadastrarTopico(topicoCompleto).subscribe({
-                  next: () => {
-                    this.uploadService.uploadFile(this.renamedFile, this.pastaModulo!, `${this.uploadService.baseURL}/api/modulos/upload`).subscribe({
-                      next: () => {
-                        this.apiService.message('Tópico cadastrado com sucesso!')
-                         localStorage.removeItem(`dadosBasicosFormGroup_${this.idModulo}`);
-                          localStorage.removeItem(`videoUrls_${this.idModulo}`);
-                          localStorage.removeItem(`saibaMais_${this.idModulo}`);
-                          localStorage.removeItem(`exerciciosFormGroup_${this.idModulo}`);
-                        this.router.navigate(['/modulos', this.idModulo]);
-                      }
-                    })
-                  },
-                  error: (error) => {
-                    console.error('Erro ao cadastrar tópico:', error);
-                    this.apiService.message('Erro ao cadastrar tópico.')
-                  }}
-                );
-              },
-              error: (err) => {
-                console.error('Erro ', err)
-              }
-            })
+      formData.append('videoUrls', JSON.stringify(this.videoUrlsFormGroup.value.videoUrls || []));
+      formData.append('saibaMais', JSON.stringify(this.saibaMaisFormGroup.value.saibaMais || []));
+      formData.append('exercicios', JSON.stringify(this.exerciciosFormGroup.value.exercicios || []));
 
+      formData.append('file', this.selectedFile);
+
+      this.apiService.cadastrarTopico(formData).subscribe({
+        next: async () => {
+          this.apiService.message('Tópico cadastrado com sucesso!');
+
+          localStorage.removeItem(`dadosBasicosFormGroup_${this.idModulo}`);
+          localStorage.removeItem(`videoUrls_${this.idModulo}`);
+          localStorage.removeItem(`saibaMais_${this.idModulo}`);
+          localStorage.removeItem(`exerciciosFormGroup_${this.idModulo}`);
+          await this.indexedDbService.removerArquivo(`topico-${this.idModulo}`);
+
+          this.router.navigate(['/modulos', this.idModulo]);
+        },
+        error: (error) => {
+          console.error('Erro ao cadastrar tópico:', error);
+          this.apiService.message('Erro ao cadastrar tópico.');
       }
-  }
+      })
+    }
 
   criarQuestaoObjetiva(index: number){
     const questaoAtual = this.exercicios.at(index).get('questao')?.value;
-    console.log(questaoAtual)
+
 
     this.isQuestaoAberta = false;
-
-    
-    // this.removerExercicio(index)
-
-    // this.exercicios.push(this.fb.group({
-    //   exercicios: this.fb.array([
-    //     this.fb.group({
-    //       questao: [questaoAtual, Validators.required],
-    //       isQuestaoAberta: [this.isQuestaoAberta],
-    //       respostaEsperada: [''],
-    //       alternativas: this.fb.array(
-    //         new Array(4).fill(null).map(() =>
-    //           this.fb.group({
-    //             descricao: ['', Validators.required],
-    //             explicacao: ['', Validators.required],
-    //             correta: [false]
-    //           })
-    //         )
-    //       )
-    //     })
-    //   ])
-    // }));
-
 
     this.exercicios.setControl(
     index,
@@ -482,15 +443,37 @@ export class CadastroTopicoComponent {
   );
   }
 
-  onSelectedFile(event: any){
+  async onSelectedFile(event: any){
     const file = event.target.files[0];
-    if (file){
-      this.selectedFile = file
+    if (!file) return
+
+    const input = event.target;
+    
+    if (file.type !== 'application/pdf') {
+      this.apiService.message('Apenas arquivos PDF são permitidos.');
+      this.selectedFile = null;
+      input.value = ''
+      return;
     }
 
+    const maxSize = 10 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      this.apiService.message('O arquivo deve ter no máximo 10MB.');
+      this.selectedFile = null;
+      input.value = ''
+      return;
+    }
+
+    this.selectedFile = file;
+
+    await this.indexedDbService.salvarArquivo(file, `topico-${this.idModulo}`);
+
+    this.pdfPreviewUrl = URL.createObjectURL(file);
   }
 
-  abrirPopUp() {
+
+  async abrirPopUp() {
     const dadosBasicos = localStorage.getItem(`dadosBasicosFormGroup_${this.idModulo}`);
     const videoUrls = localStorage.getItem(`videoUrls_${this.idModulo}`);
     const saibaMais = localStorage.getItem(`saibaMais_${this.idModulo}`);
@@ -505,7 +488,12 @@ export class CadastroTopicoComponent {
 
     const temExercicios = exercicios && JSON.parse(exercicios).exercicios?.some((ex: any) => ex.questao?.trim());
 
-    if (temDadosBasicos || temVideos || temSaibaMais || temExercicios) {
+    const file = await this.indexedDbService.recuperarArquivo(`topico-${this.idModulo}`);
+
+   
+
+
+    if (temDadosBasicos || temVideos || temSaibaMais || temExercicios || file) {
 
       const dialogRef = this.dialog.open(ContinuarCadastrandoTopicoComponent, {
         width: '440px',
@@ -517,12 +505,14 @@ export class CadastroTopicoComponent {
         }
       });
 
-      dialogRef.afterClosed().subscribe((valor) => {
+      dialogRef.afterClosed().subscribe(async (valor) => {
         if (!valor) {
           localStorage.removeItem(`dadosBasicosFormGroup_${this.idModulo}`);
           localStorage.removeItem(`videoUrls_${this.idModulo}`);
           localStorage.removeItem(`saibaMais_${this.idModulo}`);
           localStorage.removeItem(`exerciciosFormGroup_${this.idModulo}`);
+          await this.indexedDbService.removerArquivo(`topico-${this.idModulo}`);
+          this.selectedFile = null;
           this.dadosBasicosFormGroup.reset();
          
           
@@ -547,6 +537,11 @@ export class CadastroTopicoComponent {
 
 
         } else {
+          if (file) {
+            this.selectedFile = file;
+
+            this.pdfPreviewUrl = URL.createObjectURL(file);
+          }
           this.getDadosBasicosFormStorage(this.idModulo);
           this.getVideoUrlsStorage(this.idModulo);
           this.getSaibaMaisStorage(this.idModulo);

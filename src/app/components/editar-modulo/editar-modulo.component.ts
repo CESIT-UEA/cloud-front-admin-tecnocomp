@@ -90,49 +90,23 @@ export class EditarModuloComponent {
       this.apiService.message('Por favor, preencha todos os campos corretamente.')
       return
     }
-    if (!this.moduloForm.valid) return
+    
+    const formData = new FormData();
+    const formValues = this.moduloForm.getRawValue();
 
-    const dadosModulo: any = {
-        nome_modulo: this.moduloForm.value.nome_modulo,
-        nome_url: this.moduloForm.value.nome_url,
-        video_inicial: this.moduloForm.value.video_inicial,
-        filesDoModulo: this.moduloAtual.filesDoModulo,
-        ebookUrlGeral: this.moduloAtual.ebookUrlGeral
-   };
+    formData.append('nome_modulo', formValues.nome_modulo || '');
+    formData.append('nome_url', formValues.nome_url || '');
+    formData.append('video_inicial', formValues.video_inicial || '');
+    formData.append('usuario_id', String(this.authService.getUsuarioDados().id));
 
-   if (this.selectedFile){
-      const originalName = this.selectedFile.name;
-      const extension = originalName.substring(originalName.lastIndexOf('.'));
-      const nameWithoutExtension = originalName.substring(0, originalName.lastIndexOf('.'));
-      const uuid = uuidv4();
-
-      const sanitizedOriginalName = nameWithoutExtension
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')    
-        .replace(/\s+/g, '_')
-        .replace(/[^a-zA-Z0-9_-]/g, ''); 
-
-      const uniqueFileName = `${sanitizedOriginalName}-${uuid}${extension}`
-
-      this.renamedFile = new File([this.selectedFile], uniqueFileName, { type: this.selectedFile.type })
-
-      dadosModulo.ebookUrlGeral = `${this.baseUrlFile}/${dadosModulo.filesDoModulo}/${this.renamedFile.name}`
-
-      this.uploadService.uploadFile(
-        this.renamedFile, 
-        dadosModulo.filesDoModulo, 
-        `${this.uploadService.baseURL}/api/modulos/upload`
-      ).subscribe({
-        next: () => this.atualizarModulo(this.moduloId, dadosModulo),
-        error:  err => console.error('Erro no upload', err)
-      })
-   } else {
-      this.atualizarModulo(this.moduloId, dadosModulo)
-   }
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
+    }
+    this.atualizarModulo(this.moduloId, formData)
   }
 
 
-  private atualizarModulo(id: number, dadosModulo: any): void {
+  private atualizarModulo(id: number, dadosModulo: FormData): void {
   this.apiService
     .atualizarModulo(id, dadosModulo)
     .subscribe(
@@ -175,9 +149,29 @@ export class EditarModuloComponent {
 
   onSelectedFile(event: any){
     const file = event.target.files[0];
-    if (file){
-      this.selectedFile = file
+    if (!file) return
+
+    const input = event.target;
+    
+    if (file.type !== 'application/pdf') {
+      this.apiService.message('Apenas arquivos PDF são permitidos.');
+      this.selectedFile = null;
+
+      input.value = ''
+      return;
     }
+
+    const maxSize = 10 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      this.apiService.message('O arquivo deve ter no máximo 10MB.');
+      this.selectedFile = null;
+
+      input.value = ''
+      return;
+    }
+
+    this.selectedFile = file;
   }
 
   // voltar(){

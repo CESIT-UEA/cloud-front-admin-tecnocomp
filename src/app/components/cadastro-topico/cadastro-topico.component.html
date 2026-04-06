@@ -37,7 +37,7 @@
             </label>
             <div class="file-input-wrapper">
               <!-- <mat-label>Ebook do Tópico</mat-label> -->
-              <input type="file" id="ebookUrlGeral"  (change)="onSelectedFile($event)" class="cadastro-modulo-input"  required />
+              <input type="file" id="ebookUrlGeral"  (change)="onSelectedFile($event)" accept="application/pdf" class="cadastro-modulo-input"  required />
               <span class="file-status-text">{{ selectedFile ? selectedFile.name : 'Nenhum arquivo selecionado' }}</span>
             </div>
             </div>
@@ -344,12 +344,12 @@
             <p>
               <strong class="txt-secao-um">Texto de Apoio:</strong>
             </p>
-            <a class="txt-caixa" [href]="dadosBasicosFormGroup.value.textoApoio">Link</a>
+            <a class="txt-caixa" [href]="dadosBasicosFormGroup.value.textoApoio" target="_blank">Link</a>
             <p>
               <strong class="txt-secao-um">Ebook Geral:</strong>
               
             </p>
-            <a class="txt-caixa" [href]="dadosBasicosFormGroup.value.ebookUrlGeral">Link</a>
+            <a class="txt-caixa" [href]="pdfPreviewUrl" target="_blank">Link</a>
           </div>
 
           <mat-divider></mat-divider>

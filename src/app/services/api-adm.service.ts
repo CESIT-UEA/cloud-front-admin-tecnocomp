@@ -52,7 +52,7 @@ export class ApiAdmService {
     return this.http.post(`${this.baseUrl}/api/plataforma`, data);
   }
 
-  registerModulo(data: any) {
+  registerModulo(data: FormData) {
     return this.http.post(`${this.baseUrl}/api/modulo`, data);
   }
 
@@ -117,7 +117,7 @@ export class ApiAdmService {
     }>(`${this.baseUrl}/api/topicos/${idModulo}?page=${page}`);
   }
 
-  atualizarModulo(id: number, dadosAtualizados: Modulo) {
+  atualizarModulo(id: number, dadosAtualizados: FormData) {
     return this.http.put(`${this.baseUrl}/api/modulos/${id}`, dadosAtualizados);
   }
 
@@ -135,7 +135,7 @@ export class ApiAdmService {
     );
   }
 
-  cadastrarTopico(dadosTopico: any): Observable<any> {
+  cadastrarTopico(dadosTopico: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/topicos`, dadosTopico);
   }
 

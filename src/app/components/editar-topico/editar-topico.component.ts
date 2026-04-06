@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApiAdmService } from 'src/app/services/api-adm.service';
 import { ExercicioService } from 'src/app/services/exercicio.service';
+import { IndexedDBService } from 'src/app/services/indexed-db.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { Modulo } from 'src/interfaces/modulo/Modulo';
 import { Topico } from 'src/interfaces/topico/Topico';
@@ -27,6 +28,7 @@ export class EditarTopicoComponent implements OnInit{
   
   // relacionados a arquivo
   selectedFile: File | null = null
+  pdfPreviewUrl: string | null = null;
   nomeArquivo: string | undefined = ''
   renamedFile!: File;
   pastaModulo: string | null = null;
@@ -40,11 +42,12 @@ export class EditarTopicoComponent implements OnInit{
     private router: Router,
     private exercicioService: ExercicioService,
     private authService: AuthService,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private indexedDbService: IndexedDBService
   ) {
     this.dadosBasicosFormGroup = this.fb.group({
       nome_topico: ['', Validators.required],
-      textoApoio: [''],
+      textoApoio: ['', Validators.required],
       ebookUrlGeral: [''],
     });
 
@@ -93,6 +96,8 @@ export class EditarTopicoComponent implements OnInit{
         this.router.navigate([this.voltar()])
       }
     });
+
+    
   }
 
   voltar(){
@@ -112,10 +117,6 @@ export class EditarTopicoComponent implements OnInit{
     return this.saibaMaisFormGroup.get('saibaMais') as FormArray;
   }
 
-  // get referencias(): FormArray {
-  //   return this.referenciasFormGroup.get('referencias') as FormArray;
-  // }
-
   get exercicios(): FormArray {
     return this.exerciciosFormGroup.get('exercicios') as FormArray;
   }
@@ -126,7 +127,7 @@ export class EditarTopicoComponent implements OnInit{
 
   carregarDadosDoTopico(id: number): void {
     this.apiService.obterTopicoPorId(id).subscribe(
-      (topico: Topico) => {
+      async (topico: Topico) => {
         this.dadosBasicosFormGroup.patchValue({
           nome_topico: topico.nome_topico,
           textoApoio: topico.textoApoio
@@ -134,11 +135,22 @@ export class EditarTopicoComponent implements OnInit{
 
         if (topico.ebookUrlGeral){
           this.nomeArquivo = topico.ebookUrlGeral.split('/').pop();
+          const file = await this.indexedDbService.recuperarArquivo(`topico-${this.idModulo}`);
+
+            if (file) {
+              // usuário já selecionou novo arquivo
+              this.selectedFile = file;
+              this.pdfPreviewUrl = URL.createObjectURL(file);
+
+            } else {
+              //  usa arquivo do servidor
+              this.pdfPreviewUrl = topico.ebookUrlGeral;
+              
+            }
         }
 
         this.setVideoUrls(topico.VideoUrls);
         this.setSaibaMais(topico.SaibaMais);
-        // this.setReferencias(topico.Referencias);
       
 
         if (!topico.Exercicios[0].aberta) {
@@ -185,17 +197,6 @@ export class EditarTopicoComponent implements OnInit{
     );
   }
 
-  // setReferencias(referencias: any[]): void {
-  //   this.referencias.clear();
-  //   referencias.forEach((ref) =>
-  //     this.referencias.push(
-  //       this.fb.group({
-  //         caminhoDaImagem: [ref.caminhoDaImagem, Validators.required],
-  //         referencia: [ref.referencia, Validators.required],
-  //       })
-  //     )
-  //   );
-  // }
 
   setExercicios(exercicios: any[]): void {
     this.exercicios.clear();
@@ -291,61 +292,35 @@ export class EditarTopicoComponent implements OnInit{
   }
 
   onSubmit(): void {
-    const topicoEditado = {
-      ...this.dadosBasicosFormGroup.value,
-      videoUrls: this.videoUrls.value,
-      saibaMais: this.saibaMais.value,
-      exercicios: this.exercicios.value,
-    };
 
-    if (!this.selectedFile) {
-      this.apiService.message("Selecione um ebook antes de cadastrar o tópico.");
-      return;
+    const formData = new FormData();
+
+    const dadosBasicos = this.dadosBasicosFormGroup.getRawValue();
+
+    formData.append('nome_topico', dadosBasicos.nome_topico || '');
+    formData.append('textoApoio', dadosBasicos.textoApoio || '')
+    formData.append('id_modulo', String(this.idModulo));
+
+    formData.append('videoUrls', JSON.stringify(this.videoUrls.value || []));
+    formData.append('saibaMais', JSON.stringify(this.saibaMais.value || []));
+    formData.append('exercicios', JSON.stringify(this.exercicios.value || []));
+
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
     }
 
-    const originalName = this.selectedFile.name;
-    const extension = originalName.substring(originalName.lastIndexOf('.'));
-    const uuid = uuidv4();
+    this.apiService.editarTopico(this.idTopico, formData).subscribe({
+      next: (response) => {
+        this.apiService.message('Tópico atualizado com sucesso!');
 
-    const sanitizedOriginalName = originalName
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')    
-                .replace(/\s+/g, '_')
-                .replace(/[^a-zA-Z0-9_-]/g, ''); 
-
-    const uniqueFileName = `${sanitizedOriginalName}-${uuid}${extension}`
-    this.renamedFile = new File([this.selectedFile], uniqueFileName, { type: this.selectedFile.type })
-
-    this.apiService.obterModuloPorId(this.idModulo).subscribe({
-      next: (modulo: Modulo) => {
-        this.pastaModulo = modulo.filesDoModulo!;
-        topicoEditado.ebookUrlGeral = `${this.baseUrlFile}/${this.pastaModulo}/${this.renamedFile.name}`;
-
-        this.apiService.editarTopico(this.idTopico, topicoEditado).subscribe(
-        (response) => {
-          this.uploadService.uploadFile(this.renamedFile, this.pastaModulo!, `${this.uploadService.baseURL}/api/modulos/upload`).
-            subscribe({
-              next: () => {
-                this.apiService.message('Tópico atualizado com sucesso!')
-                const idModulo = response.id_modulo;
-                this.router.navigate(['/modulos', idModulo]);
-              },
-              error: (error) => {
-                 this.apiService.message('Erro ao atualizar tópico.')
-              }
-            })
-        },
-        (error) => {
-          console.error('Erro ao atualizar tópico:', error);
-          this.apiService.message('Erro ao atualizar tópico.')
-        }
-      );
-      error: (error: any) => {
-        console.log(error)
-        this.apiService.message('Erro ao atualizar tópico.')
+        const idModulo = response.id_modulo;
+        this.router.navigate(['/modulos', idModulo]);
+      },
+      error: (error) => {
+        console.error('Erro ao atualizar tópico:', error);
+        this.apiService.message('Erro ao atualizar tópico.');
       }
-      }
-    })
+    });
   }
 
 
@@ -397,9 +372,27 @@ export class EditarTopicoComponent implements OnInit{
 
   onSelectedFile(event: any){
     const file = event.target.files[0];
-    if (file){
-      this.selectedFile = file
+    if (!file) return
+
+    const input = event.target;
+    
+    if (file.type !== 'application/pdf') {
+      this.apiService.message('Apenas arquivos PDF são permitidos.');
+      this.selectedFile = null;
+      input.value = ''
+      return;
     }
 
+    const maxSize = 10 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      this.apiService.message('O arquivo deve ter no máximo 10MB.');
+      this.selectedFile = null;
+      input.value = ''
+      return;
+    }
+
+    this.selectedFile = file;
+    this.pdfPreviewUrl = URL.createObjectURL(file);
   }
 }

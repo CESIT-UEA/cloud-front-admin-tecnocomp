@@ -30,7 +30,7 @@
           </label>
 
           <div class="file-input-wrapper">
-            <input id="ebookUrlGeral" type="file" (change)="onSelectedFile($event)" class="cadastro-modulo-input"
+            <input id="ebookUrlGeral" type="file" (change)="onSelectedFile($event)" accept="application/pdf" class="cadastro-modulo-input"
               formControlName="ebookUrlGeral" />
             <span class="file-status-text">{{ selectedFile ? selectedFile.name : 'Nenhum arquivo selecionado' }}</span>
           </div>

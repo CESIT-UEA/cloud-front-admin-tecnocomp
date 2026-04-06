@@ -111,19 +111,19 @@ export class CadastroModuloComponent implements OnInit {
     alternativas.removeAt(altIndex);
   }
 
-  onSubmit(): void {
-    if (this.moduloForm.valid) {
-      this.apiService.registerModulo(this.moduloForm.value).subscribe(
-        response => {
-          console.log('Módulo cadastrado com sucesso:', response);
-          this.irParaPageModulos()
-        },
-        error => {
-          console.error('Erro ao cadastrar módulo:', error);
-        }
-      );
-    }
-  }
+  // onSubmit(): void {
+  //   if (this.moduloForm.valid) {
+  //     this.apiService.registerModulo(this.moduloForm.value).subscribe(
+  //       response => {
+  //         console.log('Módulo cadastrado com sucesso:', response);
+  //         this.irParaPageModulos()
+  //       },
+  //       error => {
+  //         console.error('Erro ao cadastrar módulo:', error);
+  //       }
+  //     );
+  //   }
+  // }
 
   getFormArrayControls(formGroup: AbstractControl, formArrayName: string): AbstractControl[] {
     const formArray = formGroup.get(formArrayName) as FormArray;
