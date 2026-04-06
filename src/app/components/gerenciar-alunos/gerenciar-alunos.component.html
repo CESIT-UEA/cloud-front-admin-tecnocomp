@@ -1,108 +1,100 @@
 <app-header-voltar [texto]="'Gerenciar Alunos do Módulo'"></app-header-voltar>
 
 <div class="container" style="padding: 16px">
-  <form
-    (ngSubmit)="aplicarFiltros()"
-    style="margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 8px"
-  >
-    <div class="container-todos-inputs">
-      <div class="container-input">
-      <input [(ngModel)]="filtros.nome" name="nome" placeholder="nome" />
-    </div>
+  <div class="gerenciar-alunos-wrapper" style="max-width: 1092px; width: 100%">
+    <form (ngSubmit)="aplicarFiltros()" style="margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 8px">
+      <div class="container-todos-inputs">
+        <div class="container-input">
+          <input [(ngModel)]="filtros.nome" name="nome" placeholder="Nome" />
+        </div>
 
-    <div class="container-input">
-      <input [(ngModel)]="filtros.email" name="email" placeholder="E-mail"/>
-    </div>
+        <div class="container-input">
+          <input [(ngModel)]="filtros.email" name="email" placeholder="E-mail" />
+        </div>
 
-    <div class="container-input">
-      <input
-        type="number"
-        [(ngModel)]="filtros.progressoMin"
-        name="progressoMin"
-        placeholder="Progresso Mín (%)"
-      />
-    </div>
-      <div class="container-input">
-        <input
-          type="number"
-          [(ngModel)]="filtros.notaMin"
-          name="notaMin"
-          placeholder="Nota Mínima"
-        />
-      </div>
-    </div>
-    
-    <mat-slide-toggle class="toggle-ativos" [(ngModel)]="filtros.ativo" name="ativo" style="padding-top: 8px;" >
-      <p class="ativos">Somente ativos</p>
-    </mat-slide-toggle>
-
-    <div style="margin-top: 8px; width: 100%">
-      <button
-        type="submit"
-        style="margin-right: 8px"
-        class="botao-aplicar-filtro"
-      >
-        Aplicar Filtros
-      </button>
-      <button class="botao-limpar-filtro" type="button" (click)="limparFiltros()">
-        Limpar Filtros
-      </button>
-      <div class="texto">
-        <p class="quantidade-alunos">Quantidade: {{ this.alunos?.length }}</p>
-        <div class="meio">
-          <h1 class="titulo-alunos">Alunos</h1>
+        <div class="container-input">
+          <input type="number" [(ngModel)]="filtros.progressoMin" name="progressoMin" placeholder="Progresso mín (%)" />
+          <div class="input-arrows">
+            <div class="arrow-up" (click)="alterarValorFiltro('progressoMin', 1)"></div>
+            <div class="arrow-down" (click)="alterarValorFiltro('progressoMin', -1)"></div>
+          </div>
+        </div>
+        <div class="container-input">
+          <input type="number" [(ngModel)]="filtros.notaMin" name="notaMin" placeholder="Nota mínima" />
+          <div class="input-arrows">
+            <div class="arrow-up" (click)="alterarValorFiltro('notaMin', 1)"></div>
+            <div class="arrow-down" (click)="alterarValorFiltro('notaMin', -1)"></div>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
-  <div class="tabela-alunos">
 
-  <table mat-table [dataSource]="alunos" class="mat-elevation-z8">
-    <!-- Nome -->
-    <ng-container matColumnDef="nome">
-      <th mat-header-cell *matHeaderCellDef>Nome</th>
-      <td mat-cell *matCellDef="let aluno" class="nome">{{ aluno.Aluno?.nome }}</td>
-    </ng-container>
+      <mat-slide-toggle class="toggle-ativos" [(ngModel)]="filtros.ativo" name="ativo" style="padding-top: 8px;">
+        <p class="ativos">Somente ativos</p>
+      </mat-slide-toggle>
 
+      <div style="margin-top: 8px; width: 100%">
+        <button type="submit" style="margin-right: 8px" class="botao-aplicar-filtro">
+          Aplicar filtros
+        </button>
+        <button class="botao-limpar-filtro" type="button" (click)="limparFiltros()">
+          Limpar filtros
+        </button>
+        <div class="texto">
+          <p class="quantidade-alunos">Quantidade: {{ this.alunos?.length }}</p>
+          <div class="meio">
+            <h1 class="titulo-alunos">Alunos</h1>
+          </div>
+        </div>
+      </div>
+    </form>
     
-    <!-- Email -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>E-mail</th>
-      <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno.Aluno?.email }}</td>
-    </ng-container>
+    <div class="tabela-alunos">
+      <table mat-table [dataSource]="alunos" class="mat-elevation-z8">
+        <!-- Nome -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let aluno" class="nome">{{ aluno.Aluno?.nome }}</td>
+        </ng-container>
 
-    <!-- Id -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>Id</th>
-      <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.id_aluno }}</td>
-    </ng-container>
 
-    <!-- Nota -->
-    <ng-container matColumnDef="nota">
-      <th mat-header-cell *matHeaderCellDef>Nota</th>
-      <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.nota }}</td>
-    </ng-container>
+        <!-- Email -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>E-mail</th>
+          <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno.Aluno?.email }}</td>
+        </ng-container>
 
-    <!-- Progresso -->
-    <ng-container matColumnDef="progresso">
-      <th mat-header-cell *matHeaderCellDef>Progresso</th>
-      <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.progresso }}%</td>
-    </ng-container>
+        <!-- Id -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>Id</th>
+          <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.id_aluno }}</td>
+        </ng-container>
 
-    <!-- Avaliação -->
-    <ng-container matColumnDef="avaliacao">
-      <th mat-header-cell *matHeaderCellDef>Avaliação</th>
-      <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.avaliacao || "-" }}</td>
-    </ng-container>
+        <!-- Nota -->
+        <ng-container matColumnDef="nota">
+          <th mat-header-cell *matHeaderCellDef>Nota</th>
+          <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.nota }}</td>
+        </ng-container>
 
-    <!-- Comentário -->
-    <ng-container matColumnDef="comentario">
-      <th mat-header-cell *matHeaderCellDef>Comentário</th>
-      <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.comentario || "-" }}</td>
-    </ng-container>
+        <!-- Progresso -->
+        <ng-container matColumnDef="progresso">
+          <th mat-header-cell *matHeaderCellDef>Progresso</th>
+          <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.progresso }}%</td>
+        </ng-container>
 
-    <!-- Ações -->
-    <!-- <ng-container matColumnDef="acoes">
+        <!-- Avaliação -->
+        <ng-container matColumnDef="avaliacao">
+          <th mat-header-cell *matHeaderCellDef>Avaliação</th>
+          <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.avaliacao || "-" }}</td>
+        </ng-container>
+
+        <!-- Comentário -->
+        <ng-container matColumnDef="comentario">
+          <th mat-header-cell *matHeaderCellDef>Comentário</th>
+          <td mat-cell *matCellDef="let aluno" class="dados">{{ aluno?.comentario || "-" }}</td>
+        </ng-container>
+
+      <!-- Ações -->
+      <!-- <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef>Ações</th>
       <td mat-cell *matCellDef="let aluno">
         <button mat-icon-button color="primary" (click)="editarAluno(aluno)">
@@ -114,23 +106,7 @@
       </td>
     </ng-container> -->
 
-    <tr
-      mat-header-row
-      *matHeaderRowDef="[
-        'nome',
-        'email',
-        'id',
-        'nota',
-        'progresso',
-        'avaliacao',
-        'comentario'
-      ]"
-    ></tr>
-    <tr
-      mat-row
-      *matRowDef="
-        let row;
-        columns: [
+        <tr mat-header-row *matHeaderRowDef="[
           'nome',
           'email',
           'id',
@@ -138,16 +114,24 @@
           'progresso',
           'avaliacao',
           'comentario'
-        ]
-      "
-    ></tr>
-  </table>
+        ]"></tr>
+        <tr mat-row *matRowDef="
+          let row;
+          columns: [
+            'nome',
+            'email',
+            'id',
+            'nota',
+            'progresso',
+            'avaliacao',
+            'comentario'
+          ]
+        "></tr>
+      </table>
+    </div>
+
+    <app-pagination class="pagination" [pagination]="pagination" noItemsMessage="Nenhum aluno encontrado"
+      itemsLabel="alunos" (pageChange)="onPageChange($event)">
+    </app-pagination>
   </div>
-  <app-pagination 
-  class="pagination"
-    [pagination]="pagination"
-    noItemsMessage="Nenhum aluno encontrado"
-    itemsLabel="alunos"
-    (pageChange)="onPageChange($event)">
-  </app-pagination>
 </div>

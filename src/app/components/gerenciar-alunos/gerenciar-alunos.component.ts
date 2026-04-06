@@ -115,4 +115,13 @@ export class GerenciarAlunosComponent {
     this.filtros = {};
     this.carregarAlunos(this.pagination.currentPage);
   }
+
+  // Assunto --> Altera o valor dos filtros numéricos manualmente (Soma ou Subtração)
+  alterarValorFiltro(campo: 'progressoMin' | 'notaMin', delta: number): void {
+    const valorAtual = this.filtros[campo] ?? 0;
+    const novoValor = valorAtual + delta;
+    
+    // Assunto --> Impede que o valor seja menor que zero (Filtros de progresso/nota não são negativos)
+    this.filtros[campo] = novoValor < 0 ? 0 : novoValor;
+  }
 }
