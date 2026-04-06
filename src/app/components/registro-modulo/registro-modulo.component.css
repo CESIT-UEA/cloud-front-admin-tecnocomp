@@ -32,11 +32,16 @@ input.ng-invalid.ng-touched {
 
 .cadastro-modulo-titulo,
 .cadastro-modulo-label {
+  font-family:  'Inter';
+  font-weight: 500;
   color: #FFFFFF;
   padding: 10px 0;
 }
 
 .cadastro-modulo-titulo {
+  font-family:  'Inter';
+  font-weight: 600;
+  font-size: 20px;
   text-align: center;
   padding: 20px 0 20px 0;
   border-bottom: 2px solid #7C4CC6;
@@ -76,7 +81,7 @@ input.ng-invalid.ng-touched {
   height: 35px;
   border: none;
   border-radius: 10px;
-  background-color: #3F3F40;
+  background-color: #424147;
   color: #FFFFFF;
   align-content: center;
   padding-left: 10px;
@@ -122,6 +127,13 @@ input.ng-invalid.ng-touched {
 
 #botao-dois:hover {
   opacity: 50%;
+}
+
+#botao-um,
+#botao-dois {
+  font-family:  'Inter';
+  font-weight: 700;
+  font-size: 15px;
 }
 
 
@@ -215,7 +227,7 @@ button[disabled] {
 .file-input-wrapper {
   display: flex;
   align-items: center;
-  background-color: #3F3F40;
+  background-color: #424147;
   border-radius: 10px;
   height: 35px;
   gap: 10px;
