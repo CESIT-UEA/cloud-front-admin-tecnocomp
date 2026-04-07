@@ -7,7 +7,7 @@
   <form id="form" class="form" [formGroup]="cadastroForm" >
     <div class="campos">
       <div class="form-conteudo">
-        <label for="Nome-usuario" class="cadastro-usuario-label">Nome<span> *</span></label>
+        <label for="Nome-usuario" class="cadastro-usuario-label">Nome<span>*</span></label>
         <input type="text" formControlName="nome" class="cadastro-usuario-input" id="nome" placeholder="Digite seu nome">
         <div
           *ngIf="
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="form-conteudo">
-        <label for="email" class="cadastro-usuario-label">Email<span> *</span></label>
+        <label for="email" class="cadastro-usuario-label">Email<span>*</span></label>
         <input type="email" formControlName="email" class="cadastro-usuario-input" id="nome" placeholder="exemplo@gmail.com">
         <div
           *ngIf="
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="form-conteudo">
-          <label for="senha" class="cadastro-usuario-label">Senha<span> *</span></label>
+          <label for="senha" class="cadastro-usuario-label">Senha<span>*</span></label>
           <input [type]="hide ? 'password' : 'text'"  formControlName="senha" class="cadastro-usuario-input" type="password" formControlName="senha" placeholder="Digite sua senha">
           
           <button  class="icon" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="form-conteudo">
-          <label for="confirmar-senha" class="cadastro-usuario-label">Confirmação de senha<span> *</span></label>
+          <label for="confirmar-senha" class="cadastro-usuario-label">Confirmação de senha<span>*</span></label>
           <input type="password" formControlName="confirmarSenha" class="cadastro-usuario-input" id="confirmar-senha" placeholder="Digite sua senha novamente">
           <div
           *ngIf="
@@ -69,7 +69,7 @@
     </div>
 
     <div class="form-conteudo-tipo">
-      <label for="tipo" class="cadastro-usuario-label">Tipo de usuário<span> *</span></label>
+      <label for="tipo" class="cadastro-usuario-label">Tipo de usuário<span class="roxo">*</span></label>
       <mat-radio-group class="radio-group" formControlName="tipo">
         <mat-radio-button *ngIf="isAdminUser()" class="check-administrador" value="adm">Administrador</mat-radio-button>
         <mat-radio-button class="check-professor" value="professor">Professor</mat-radio-button>

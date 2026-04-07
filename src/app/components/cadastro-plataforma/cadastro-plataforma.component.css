@@ -11,7 +11,7 @@
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.25));
   width: 50%;
   border-radius: 40px;
-  padding: 0 2.5rem;
+  padding: 0 4rem;
   border-top: 8px solid #7C4CC6;
 }
 
@@ -90,15 +90,22 @@ input.ng-invalid.ng-touched {
 }
 
 #botao-um {
-  background-color: transparent;
-  border: 3px solid #7C4CC6;
-  
-  color: #7C4CC6 !important;
+  background: transparent;
+  border: 3px solid #7c4cc6;
+  color: #7c4cc6;
+  position: relative;
 }
 
 #botao-um:hover {
-  background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
-  color: #fff !important;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(124, 76, 198, 0.5) 0%,
+      rgba(83, 0, 249, 0.5) 100%
+    ),
+    #7c4cc6;
+  color: #ffffff ;
+  border: none;
 }
 
 
