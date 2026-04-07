@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.development';
 import { User } from 'src/interfaces/user';
-import { catchError, map, switchMap, throwError } from 'rxjs';
+import { catchError, map, switchMap, throwError, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +23,6 @@ export class AuthService {
 
   getUsuarioId(): number {
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-    console.log(usuario);
-    console.log(usuario.id);
     return usuario.id;
   }
 
@@ -101,12 +99,12 @@ export class AuthService {
 
   refreshAccessToken() {
     const refreshToken = this.getRefreshToken();
+
     return this.http
       .post(`${this.apiUrl}/auth/refresh-token`, { refreshToken })
       .pipe(
-        switchMap((response: any) => {
-          this.setToken(response.accessToken);
-          return response;
+        tap((response: any) => {
+          this.setToken(response.accessToken); // 🔥 salva corretamente
         }),
         catchError((error: HttpErrorResponse) => {
           if (error.status === 401 || error.status === 403) {
@@ -115,7 +113,7 @@ export class AuthService {
           return throwError(() => error);
         })
       );
-  }
+}
 
   logout() {
     localStorage.removeItem('accessToken');
