@@ -20,6 +20,8 @@ export class RegistroModuloComponent implements OnInit {
   baseUrlFile: string = `https://apiadmin.tecnocomp.cloud/ebooks`;
   urlApiRag: string = 'https://tecnocomp.uea.edu.br:5678/webhook/upload-file'
   tentouSubmeter = false
+  carregando: boolean = false;
+
 
   moduloForm = new FormGroup({
     nome_modulo: new FormControl('', Validators.required),
@@ -69,6 +71,8 @@ export class RegistroModuloComponent implements OnInit {
       return
     }
 
+    this.carregando = true;
+
     const formData = new FormData();
     formData.append('nome_modulo', this.moduloForm.get('nome_modulo')?.value || '');
     formData.append('nome_url', this.moduloForm.get('nome_url')?.value || '');
@@ -82,9 +86,11 @@ export class RegistroModuloComponent implements OnInit {
     next: (response) => {
       this.apiService.message("Módulo cadastrado com sucesso!");
       this.navigateAfterRegisterModulo();
+      this.carregando = false;
     },
     error: (err) => {
       console.error('Erro ao cadastrar módulo:', err);
+      this.carregando = false;
     }
   });
 

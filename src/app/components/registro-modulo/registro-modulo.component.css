@@ -234,3 +234,12 @@ button[disabled] {
   text-overflow: ellipsis;
   max-width: calc(100% - 175px);
 }
+
+
+.carregando-registro {
+  height: 88vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

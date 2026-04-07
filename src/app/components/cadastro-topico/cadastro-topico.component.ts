@@ -30,6 +30,7 @@ export class CadastroTopicoComponent {
   tentouAvancarVideos = false;
   tentouAvancarSaibaMais = false;
   tentouAvancarExercicio = false;
+  carregando: boolean = false;
 
   arquivoSelecionado: File | null = null;
 
@@ -370,6 +371,9 @@ export class CadastroTopicoComponent {
 
       formData.append('file', this.selectedFile);
 
+
+      this.carregando = true;
+
       this.apiService.cadastrarTopico(formData).subscribe({
         next: async () => {
           this.apiService.message('Tópico cadastrado com sucesso!');
@@ -380,10 +384,14 @@ export class CadastroTopicoComponent {
           localStorage.removeItem(`exerciciosFormGroup_${this.idModulo}`);
           await this.indexedDbService.removerArquivo(`topico-${this.idModulo}`);
 
-          this.router.navigate(['/modulos', this.idModulo]);
+          this.router.navigate(['/modulo/topicos'], {
+              queryParams: { id_modulo: this.idModulo }
+          });
+          this.carregando = false;
         },
         error: (error) => {
           console.error('Erro ao cadastrar tópico:', error);
+          this.carregando = false;
           this.apiService.message('Erro ao cadastrar tópico.');
       }
       })
