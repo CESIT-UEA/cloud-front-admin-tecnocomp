@@ -104,7 +104,10 @@ input.ng-invalid.ng-touched {
   border: none;
   border-radius: 10px;
   background-color: #424147;
-  color: #FFFFFF;
+  color: #A2A2A2;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
   padding-left: 10px;
 }
 
