@@ -1,92 +1,131 @@
 <app-header-voltar texto="Cadastrar Usuário"></app-header-voltar>
 <div class="container-background">
   <div class="cadastro-usuario-pagina">
-  <div class="cadastro-usuario-container">
-    <h2 class="cadastro-usuario-titulo">Formulário de cadastro de usuário</h2>
-    <p class="cadastro-usuario-aviso">* Indica campos obrigatórios</p>
-  <form id="form" class="form" [formGroup]="cadastroForm" >
-    <div class="campos">
-      <div class="form-conteudo">
-        <label for="Nome-usuario" class="cadastro-usuario-label">Nome<span>*</span></label>
-        <input type="text" formControlName="nome" class="cadastro-usuario-input" id="nome" placeholder="Digite seu nome">
-        <div
-          *ngIf="
-            cadastroForm.get('nome')?.invalid &&
-            cadastroForm.get('nome')?.touched
-          "
-        >
-          <small class="mensagem-validacao">
-            Nome é obrigatório e deve ter pelo menos 4 caracteres.
-          </small>
-        </div>
-      </div>
-      <div class="form-conteudo">
-        <label for="email" class="cadastro-usuario-label">Email<span>*</span></label>
-        <input type="email" formControlName="email" class="cadastro-usuario-input" id="nome" placeholder="exemplo@gmail.com">
-        <div
-          *ngIf="
-            cadastroForm.get('email')?.invalid &&
-            cadastroForm.get('email')?.touched
-          "
-        >
-          <small class="mensagem-validacao">
-            Digite um Email válido.
-          </small>
-        </div>
-      </div>
-      <div class="form-conteudo">
-          <label for="senha" class="cadastro-usuario-label">Senha<span>*</span></label>
-          <input [type]="hide ? 'password' : 'text'"  formControlName="senha" class="cadastro-usuario-input" type="password" formControlName="senha" placeholder="Digite sua senha">
-          
-          <button  class="icon" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            
-          </button>
-          <div class="caixa"
-          *ngIf="
-            cadastroForm.get('senha')?.invalid &&
-            cadastroForm.get('senha')?.touched
-          "
-        >
-          <small class="mensagem-validacao senha-validacao">
-            Mín. 8 caracteres, com letra minúscula, número e símbolo.
-          </small>
-        </div>
-      </div>
-      <div class="form-conteudo">
-          <label for="confirmar-senha" class="cadastro-usuario-label">Confirmação de senha<span>*</span></label>
-          <input type="password" formControlName="confirmarSenha" class="cadastro-usuario-input" id="confirmar-senha" placeholder="Digite sua senha novamente">
-          <div
-          *ngIf="
-            cadastroForm.get('confirmarSenha')?.invalid &&
-            cadastroForm.get('confirmarSenha')?.touched
-          "
-        >
-          <small class="mensagem-validacao">
-            Confirme sua senha.
-          </small>
-        </div>
-        </div>
-    </div>
-
-    <div class="form-conteudo-tipo">
-      <label for="tipo" class="cadastro-usuario-label">Tipo de usuário<span class="roxo">*</span></label>
-      <mat-radio-group class="radio-group" formControlName="tipo">
-        <mat-radio-button *ngIf="isAdminUser()" class="check-administrador" value="adm">Administrador</mat-radio-button>
-        <mat-radio-button class="check-professor" value="professor">Professor</mat-radio-button>
-      </mat-radio-group>
-    </div>
-    <div class="buttons">
-        <button (click)="voltarPagina()" id="botao-um">Cancelar</button>
-          <button
-              type="submit"
-              id="botao-dois"
-              (click)="onSubmit()"
+    <div class="cadastro-usuario-container">
+      <h2 class="cadastro-usuario-titulo">Formulário de cadastro de usuário</h2>
+      <p class="cadastro-usuario-aviso">* Indica campos obrigatórios</p>
+      <form id="form" class="form" [formGroup]="cadastroForm">
+        <div class="campos">
+          <div class="form-conteudo">
+            <label for="Nome-usuario" class="cadastro-usuario-label"
+              >Nome<span>*</span></label
             >
-              Confirmar
+            <input
+              type="text"
+              formControlName="nome"
+              class="cadastro-usuario-input"
+              id="nome"
+              placeholder="Digite seu nome"
+            />
+            <div
+              *ngIf="
+                cadastroForm.get('nome')?.invalid &&
+                cadastroForm.get('nome')?.touched
+              "
+            >
+              <small class="mensagem-validacao">
+                Nome é obrigatório e deve ter pelo menos 4 caracteres.
+              </small>
+            </div>
+          </div>
+          <div class="form-conteudo">
+            <label for="email" class="cadastro-usuario-label"
+              >Email<span>*</span></label
+            >
+            <input
+              type="email"
+              formControlName="email"
+              class="cadastro-usuario-input"
+              id="nome"
+              placeholder="exemplo@gmail.com"
+            />
+            <div
+              *ngIf="
+                cadastroForm.get('email')?.invalid &&
+                cadastroForm.get('email')?.touched
+              "
+            >
+              <small class="mensagem-validacao">
+                Digite um Email válido.
+              </small>
+            </div>
+          </div>
+          <div class="form-conteudo">
+            <label for="senha" class="cadastro-usuario-label"
+              >Senha<span>*</span></label
+            >
+            <input
+              [type]="hide ? 'password' : 'text'"
+              formControlName="senha"
+              class="cadastro-usuario-input"
+              type="password"
+              formControlName="senha"
+              placeholder="Digite sua senha"
+            />
+
+            <button
+              class="icon"
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            ></button>
+            <div
+              class="caixa"
+              *ngIf="
+                cadastroForm.get('senha')?.invalid &&
+                cadastroForm.get('senha')?.touched
+              "
+            >
+              <small class="mensagem-validacao senha-validacao">
+                Mín. 8 caracteres, com letra minúscula, número e símbolo.
+              </small>
+            </div>
+          </div>
+          <div class="form-conteudo">
+            <label for="confirmar-senha" class="cadastro-usuario-label"
+              >Confirmação de senha<span>*</span></label
+            >
+            <input
+              type="password"
+              formControlName="confirmarSenha"
+              class="cadastro-usuario-input"
+              id="confirmar-senha"
+              placeholder="Digite sua senha novamente"
+            />
+            <div
+              *ngIf="
+                cadastroForm.get('confirmarSenha')?.invalid &&
+                cadastroForm.get('confirmarSenha')?.touched
+              "
+            >
+              <small class="mensagem-validacao"> Confirme sua senha. </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-conteudo-tipo">
+          <label for="tipo" class="cadastro-usuario-label"
+            >Tipo de usuário<span class="roxo">*</span></label
+          >
+          <mat-radio-group class="radio-group" formControlName="tipo">
+            <mat-radio-button
+              *ngIf="isAdminUser()"
+              class="check-administrador"
+              value="adm"
+              >Administrador</mat-radio-button
+            >
+            <mat-radio-button class="check-professor" value="professor"
+              >Professor</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+        <div class="buttons">
+          <button (click)="voltarPagina()" id="botao-um">Cancelar</button>
+          <button type="submit" id="botao-dois" (click)="onSubmit()">
+            Confirmar
           </button>
         </div>
-    </form>
-  </div>
-  
+      </form>
+    </div>
   </div>
 </div>

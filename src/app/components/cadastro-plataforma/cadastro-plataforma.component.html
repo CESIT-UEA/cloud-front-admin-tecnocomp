@@ -1,55 +1,76 @@
 <app-header-voltar texto="Cadastrar Plataforma"></app-header-voltar>
 <div class="container-background">
   <div class="cadastro-plataforma-pagina">
-  <section class="cadastro-plataforma-container">
-    <h2 class="cadastro-plataforma-titulo">Cadastro de Plataforma</h2>
-    <p class="cadastro-plaforma-aviso">*Indica uma pergunta obrigatória</p>
-    <form
-      [formGroup]="plataformaForm"
-      class="forms"
-      #formDir="ngForm"
-    >
-      <div class="forms-campo">
-        <label for="plataformaNome" class="cadastro-plataforma-label">Nome da Ferramenta <span class="obrigatorio">*</span></label>
-        <input class="cadastro-plataforma-input" type="text" formControlName="plataformaNome" placeholder="Nome da ferramenta"/>
-        <div
-          *ngIf="
-            plataformaForm.get('plataformaNome')?.invalid &&
-            plataformaForm.get('plataformaNome')?.touched
-          "
-        >
-          <small class="mensagem-validacao">
-            Nome é obrigatório e deve ter pelo menos 3 caracteres.
-          </small>
-        </div>
-      </div>
-      <section class="campos-inline">
+    <section class="cadastro-plataforma-container">
+      <h2 class="cadastro-plataforma-titulo">Cadastro de Plataforma</h2>
+      <p class="cadastro-plaforma-aviso">*Indica uma pergunta obrigatória</p>
+      <form [formGroup]="plataformaForm" class="forms" #formDir="ngForm">
         <div class="forms-campo">
-          <label for="plataformaUrl" class="cadastro-plataforma-label">URL da Plataforma <span class="obrigatorio">*</span></label>
-          <input class="cadastro-plataforma-input" type="text" formControlName="plataformaUrl" placeholder="URL da plataforma"/>
+          <label for="plataformaNome" class="cadastro-plataforma-label"
+            >Nome da Ferramenta <span class="obrigatorio">*</span></label
+          >
+          <input
+            class="cadastro-plataforma-input"
+            type="text"
+            formControlName="plataformaNome"
+            placeholder="Nome da ferramenta"
+          />
           <div
             *ngIf="
-              plataformaForm.get('plataformaUrl')?.invalid &&
-              plataformaForm.get('plataformaUrl')?.touched
+              plataformaForm.get('plataformaNome')?.invalid &&
+              plataformaForm.get('plataformaNome')?.touched
             "
           >
-            <small class="mensagem-validacao">URL é obrigatória e deve ser válida.</small>
+            <small class="mensagem-validacao">
+              Nome é obrigatório e deve ter pelo menos 3 caracteres.
+            </small>
           </div>
         </div>
-        <div class="forms-campo">
-          <label for="idCliente" class="cadastro-plataforma-label">ID do Cliente <span class="obrigatorio">*</span></label>
-          <input class="cadastro-plataforma-input" type="text" formControlName="idCliente" placeholder="ID do cliente"/>
-          <div
-            *ngIf="
-              plataformaForm.get('idCliente')?.invalid &&
-              plataformaForm.get('idCliente')?.touched
-            "
-          >
-            <small class="mensagem-validacao">ID do cliente é obrigatório.</small>
+        <section class="campos-inline">
+          <div class="forms-campo">
+            <label for="plataformaUrl" class="cadastro-plataforma-label"
+              >URL da Plataforma <span class="obrigatorio">*</span></label
+            >
+            <input
+              class="cadastro-plataforma-input"
+              type="text"
+              formControlName="plataformaUrl"
+              placeholder="URL da plataforma"
+            />
+            <div
+              *ngIf="
+                plataformaForm.get('plataformaUrl')?.invalid &&
+                plataformaForm.get('plataformaUrl')?.touched
+              "
+            >
+              <small class="mensagem-validacao"
+                >URL é obrigatória e deve ser válida.</small
+              >
+            </div>
           </div>
-        </div>
-      </section>
-      <!-- <div class="forms-campo">
+          <div class="forms-campo">
+            <label for="idCliente" class="cadastro-plataforma-label"
+              >ID do Cliente <span class="obrigatorio">*</span></label
+            >
+            <input
+              class="cadastro-plataforma-input"
+              type="text"
+              formControlName="idCliente"
+              placeholder="ID do cliente"
+            />
+            <div
+              *ngIf="
+                plataformaForm.get('idCliente')?.invalid &&
+                plataformaForm.get('idCliente')?.touched
+              "
+            >
+              <small class="mensagem-validacao"
+                >ID do cliente é obrigatório.</small
+              >
+            </div>
+          </div>
+        </section>
+        <!-- <div class="forms-campo">
         <label for="temaTipo"
           >Tema Visual <span class="obrigatorio">*</span></label
         >
@@ -61,8 +82,8 @@
         </select>
       </div> -->
 
-      <!-- Campos de cor visíveis apenas se temaTipo === 'customizado' -->
-      <!-- <div
+        <!-- Campos de cor visíveis apenas se temaTipo === 'customizado' -->
+        <!-- <div
         *ngIf="plataformaForm.get('temaTipo')?.value === 'customizado'"
         class="forms-campo"
       >
@@ -91,12 +112,13 @@
         />
       </div> -->
 
-      <div class="buttons">
-        <button (click)="voltarPagina()" id="botao-um">Cancelar</button>
-        <button type="submit" id="botao-dois" (click)="onSubmit()">Cadastrar Plataforma</button>
-      </div>
-    </form>
-  </section>
-</div>
-
+        <div class="buttons">
+          <button (click)="voltarPagina()" id="botao-um">Cancelar</button>
+          <button type="submit" id="botao-dois" (click)="onSubmit()">
+            Cadastrar Plataforma
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
 </div>

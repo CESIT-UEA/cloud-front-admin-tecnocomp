@@ -7,58 +7,93 @@
       <form [formGroup]="moduloForm">
         <div class="cadastro-modulo-campos-inline">
           <div class="cadastro-modulo-campo">
-            <label for="nome_modulo" class="cadastro-modulo-label">Nome do Módulo<span>*</span></label>
-            <input id="nome_modulo"  class="cadastro-modulo-input"
-              formControlName="nome_modulo" (input)="gerarUrlAmigavel()" />
-              <div
-            *ngIf="
-              moduloForm.get('nome_modulo')?.invalid &&
-              moduloForm.get('nome_modulo')?.touched
-            "
-          >
-            <small class="mensagem-validacao">Nome do módulo é obrigatório</small>
-          </div>
+            <label for="nome_modulo" class="cadastro-modulo-label"
+              >Nome do Módulo<span>*</span></label
+            >
+            <input
+              id="nome_modulo"
+              class="cadastro-modulo-input"
+              formControlName="nome_modulo"
+              (input)="gerarUrlAmigavel()"
+            />
+            <div
+              *ngIf="
+                moduloForm.get('nome_modulo')?.invalid &&
+                moduloForm.get('nome_modulo')?.touched
+              "
+            >
+              <small class="mensagem-validacao"
+                >Nome do módulo é obrigatório</small
+              >
+            </div>
           </div>
           <div class="cadastro-modulo-campo">
-            <label for="nome_url" class="cadastro-modulo-label">URL do Módulo<span>*</span></label>
-            <input id="nome_url" class="cadastro-modulo-input" formControlName="nome_url" readonly />
+            <label for="nome_url" class="cadastro-modulo-label"
+              >URL do Módulo<span>*</span></label
+            >
+            <input
+              id="nome_url"
+              class="cadastro-modulo-input"
+              formControlName="nome_url"
+              readonly
+            />
           </div>
         </div>
         <div class="cadastro-modulo-campo file-field">
-          <label for="ebookUrlGeral" class="cadastro-modulo-label upload-btn file-bnt">
+          <label
+            for="ebookUrlGeral"
+            class="cadastro-modulo-label upload-btn file-bnt"
+          >
             Ebook URL Geral:<span>*</span>
           </label>
 
           <div class="file-input-wrapper">
-            <input id="ebookUrlGeral" type="file" (change)="onSelectedFile($event)" class="cadastro-modulo-input"
-              formControlName="ebookUrlGeral" />
-            <span class="file-status-text">{{ selectedFile ? selectedFile.name : 'Nenhum arquivo selecionado' }}</span>
+            <input
+              id="ebookUrlGeral"
+              type="file"
+              (change)="onSelectedFile($event)"
+              class="cadastro-modulo-input"
+              formControlName="ebookUrlGeral"
+            />
+            <span class="file-status-text">{{
+              selectedFile ? selectedFile.name : "Nenhum arquivo selecionado"
+            }}</span>
           </div>
         </div>
-        <div
-            *ngIf="!selectedFile && tentouSubmeter"
+        <div *ngIf="!selectedFile && tentouSubmeter">
+          <small class="mensagem-validacao"
+            >Upload do arquivo é obrigatório</small
           >
-            <small class="mensagem-validacao">Upload do arquivo é obrigatório</small>
-          </div>
+        </div>
         <div class="cadastro-modulo-campo">
-          <label for="video_inicial" class="cadastro-modulo-label">Vídeo Inicial<span>*</span></label>
-          <input id="video_inicial" class="cadastro-modulo-input"
-            formControlName="video_inicial" />
-            <div
+          <label for="video_inicial" class="cadastro-modulo-label"
+            >Vídeo Inicial<span>*</span></label
+          >
+          <input
+            id="video_inicial"
+            class="cadastro-modulo-input"
+            formControlName="video_inicial"
+          />
+          <div
             *ngIf="
               moduloForm.get('video_inicial')?.invalid &&
               moduloForm.get('video_inicial')?.touched
             "
           >
-            <small class="mensagem-validacao">URL do vídeo inicial é obrigatório</small>
+            <small class="mensagem-validacao"
+              >URL do vídeo inicial é obrigatório</small
+            >
           </div>
         </div>
         <div class="cadastro-modulo-buttons">
-          <button type="button" (click)="voltarPagina()" id="botao-um">Cancelar</button>
-          <button type="submit"  id="botao-dois" (click)="onSubmit()">Criar novo módulo</button>
+          <button type="button" (click)="voltarPagina()" id="botao-um">
+            Cancelar
+          </button>
+          <button type="submit" id="botao-dois" (click)="onSubmit()">
+            Criar novo módulo
+          </button>
         </div>
       </form>
     </div>
   </div>
-
 </div>

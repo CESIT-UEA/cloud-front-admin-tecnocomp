@@ -2,40 +2,60 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(112deg, rgba(18, 0, 96, 0.10) 16.83%, rgba(0, 0, 0, 0.09) 47.11%, rgba(66, 0, 146, 0.05) 81.73%, rgba(95, 0, 211, 0.05) 95.21%), #131313;
+  background:
+    linear-gradient(
+      112deg,
+      rgba(18, 0, 96, 0.1) 16.83%,
+      rgba(0, 0, 0, 0.09) 47.11%,
+      rgba(66, 0, 146, 0.05) 81.73%,
+      rgba(95, 0, 211, 0.05) 95.21%
+    ),
+    #131313;
   height: 88vh;
 }
 
 .cadastro-plataforma-container {
-  background: linear-gradient(112deg, rgba(18, 0, 96, 0.10) 0%, rgba(0, 0, 0, 0.09) 32.21%, rgba(19, 0, 41, 0.09) 55.29%, rgba(95, 0, 211, 0.05) 95.21%, rgba(66, 0, 146, 0.05) 100%), #2B2A2E;
+  background:
+    linear-gradient(
+      112deg,
+      rgba(18, 0, 96, 0.1) 0%,
+      rgba(0, 0, 0, 0.09) 32.21%,
+      rgba(19, 0, 41, 0.09) 55.29%,
+      rgba(95, 0, 211, 0.05) 95.21%,
+      rgba(66, 0, 146, 0.05) 100%
+    ),
+    #2b2a2e;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.25));
   width: 50%;
   border-radius: 40px;
   padding: 0 4rem;
-  border-top: 8px solid #7C4CC6;
+  border-top: 8px solid #7c4cc6;
 }
 
 .cadastro-plaforma-aviso {
   padding: 25px 0 10px 0;
 }
 
-.cadastro-plataforma-titulo, .cadastro-plataforma-label {
-  color: #FFFFFF;
-  font-family:  'Inter';
+.cadastro-plataforma-titulo,
+.cadastro-plataforma-label {
+  color: #ffffff;
+  font-family: "Inter";
   font-weight: 500;
   padding: 10px 0;
 }
 
-.cadastro-plataforma-titulo{
+.cadastro-plataforma-titulo {
   font-size: 20px;
-  font-weight: 600; 
+  font-weight: 600;
   text-align: center;
   padding: 20px 0 20px 0;
-  border-bottom: 2px solid #7C4CC6;
+  border-bottom: 2px solid #7c4cc6;
 }
 
-.cadastro-plataforma-label span, .cadastro-plaforma-aviso, .validators {
-  color: #F84C4C;
+.cadastro-plataforma-label span,
+.cadastro-plaforma-aviso,
+.validators {
+  color: #f84c4c;
 }
 
 .forms-campo {
@@ -55,8 +75,8 @@
   border: none;
   border-radius: 10px;
   background-color: #424147;
-  color: #A2A2A2;
-  font-family: 'Inter', sans-serif;
+  color: #a2a2a2;
+  font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 15px;
   padding-left: 10px;
@@ -65,14 +85,14 @@
 
 .mensagem-validacao {
   font-size: 11px;
-  color: #F84C4C;
+  color: #f84c4c;
   margin-top: -6px; /* puxa a mensagem para cima */
   line-height: 1;
   min-height: 12px;
 }
 
 input.ng-invalid.ng-touched {
-  border: 1px solid #F84C4C;
+  border: 1px solid #f84c4c;
   outline: none;
 }
 
@@ -87,7 +107,7 @@ input.ng-invalid.ng-touched {
   padding: 7px;
   width: 145px;
   border: none;
-  color: #FFFFFF;
+  color: #ffffff;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -114,12 +134,16 @@ input.ng-invalid.ng-touched {
   background-clip: padding-box;
 }
 
-
 #botao-dois {
   border-radius: 10px;
   width: 22%;
-  background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
-  
+  background:
+    linear-gradient(
+      90deg,
+      rgba(124, 76, 198, 0.5) 0%,
+      rgba(83, 0, 249, 0.5) 100%
+    ),
+    #7c4cc6;
 }
 
 #botao-dois:hover {
@@ -128,12 +152,12 @@ input.ng-invalid.ng-touched {
 
 #botao-um,
 #botao-dois {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 15px;
 }
 
- .validators {
+.validators {
   text-align: center;
   padding-bottom: 10px;
- }
+}
