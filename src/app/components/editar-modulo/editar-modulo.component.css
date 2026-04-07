@@ -106,8 +106,11 @@ span {
       rgba(83, 0, 249, 0.5) 100%
     ),
     #7c4cc6;
-  color: #ffffff ;
-  border: none;
+
+  color: #ffffff !important;
+  border: 3px solid transparent;
+
+  background-clip: padding-box;
 }
 
 .btn-salvar {

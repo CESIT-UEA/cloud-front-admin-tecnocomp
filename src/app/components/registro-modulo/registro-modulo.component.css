@@ -116,9 +116,18 @@ input.ng-invalid.ng-touched {
 }
 
 #botao-um:hover {
-  background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
-  color: #fff !important;
-  border: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(124, 76, 198, 0.5) 0%,
+      rgba(83, 0, 249, 0.5) 100%
+    ),
+    #7c4cc6;
+
+  color: #ffffff !important;
+  border: 3px solid transparent;
+
+  background-clip: padding-box;
 }
 
 #botao-dois {
