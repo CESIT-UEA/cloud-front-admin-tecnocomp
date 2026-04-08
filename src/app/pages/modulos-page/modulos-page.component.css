@@ -26,9 +26,9 @@
 
 .container-cards-modulos{
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 265px);
   gap: 10px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   margin: 0 auto;
@@ -172,4 +172,10 @@
 
 .pagination {
   padding-top: 1.63rem;
+}
+
+@media (min-width: 1920px) {
+  .container-cards-modulos {
+    grid-template-columns: repeat(3, 340px); /* ocupa toda a largura */
+  }
 }

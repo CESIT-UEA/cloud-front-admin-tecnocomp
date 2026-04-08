@@ -1,35 +1,60 @@
 <div class="card-wrapper">
   <mat-card class="container-card">
-  <mat-card-header>
-    <mat-card-title class="title" [title]="modulo.nome_modulo">{{ modulo.nome_modulo | truncate:30}}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="content">
-    <div class="status" style="display: flex; justify-content: center; column-gap: 10px;">
-      <img [src]="modulo.publicado ? '../../../../assets/icons/check-publicado.svg' : '../../../../assets/icons/check-nao-publicado.svg'" alt="">
-      <p  
-        [ngClass]="
-          modulo.publicado ? 'status-publicado' : 'status-nao-publicado'
-        "
+    <mat-card-header>
+      <mat-card-title class="title" [title]="modulo.nome_modulo">{{
+        modulo.nome_modulo | truncate: 30
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <div
+        class="status"
+        style="display: flex; justify-content: center; column-gap: 10px"
       >
-        {{ modulo.publicado ? "Publicado" : "Não publicado" }}
-      </p>
-    </div>
-    <div class="box-content">
-      <div class="box-icon" [routerLink]="['/tecnocomp','editar-modulo', modulo.id]">
-        <img src="../../../../assets/icons/icone-editar-novo.svg" class="card-icon">
+        <img
+          [src]="
+            modulo.publicado
+              ? '../../../../assets/icons/check-publicado.svg'
+              : '../../../../assets/icons/check-nao-publicado.svg'
+          "
+          alt=""
+        />
+        <p
+          [ngClass]="
+            modulo.publicado ? 'status-publicado' : 'status-nao-publicado'
+          "
+        >
+          {{ modulo.publicado ? "Publicado" : "Não publicado" }}
+        </p>
       </div>
-      <div class="box-icon" (click)="abrirConfirmacaoExcluir()">
-        <img src="../../../../assets/icons/icone-lixeira-nova.svg" alt="" class="card-icon">
+      <div class="box-content">
+        <div
+          class="box-icon"
+          [routerLink]="['/tecnocomp', 'editar-modulo', modulo.id]"
+        >
+          <img
+            src="../../../../assets/icons/icone-editar-novo.svg"
+            class="card-icon"
+          />
+        </div>
+        <div class="box-icon" (click)="abrirConfirmacaoExcluir()">
+          <img
+            src="../../../../assets/icons/icone-lixeira-nova.svg"
+            alt=""
+            class="card-icon"
+          />
+        </div>
+        <div class="box-icon" [routerLink]="['/ver-ao-vivo', modulo.id]">
+          <img
+            src="../../../../assets/icons/icone-vizualizar-novo.svg"
+            class="card-icon"
+          />
+        </div>
       </div>
-      <div class="box-icon" [routerLink]="['/ver-ao-vivo', modulo.id]">
-        <img src="../../../../assets/icons/icone-vizualizar-novo.svg" class="card-icon">
-      </div>
-    </div>
-    <mat-card-actions>
-    <button class="btn" [routerLink]="['/modulos', modulo?.id]">Ver Mais</button>
-    </mat-card-actions>
-  </mat-card-content>
-  
-</mat-card>
-
+      <mat-card-actions>
+        <button class="btn" [routerLink]="['/modulos', modulo?.id]">
+          Ver Mais
+        </button>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
 </div>

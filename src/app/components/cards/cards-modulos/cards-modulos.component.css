@@ -1,9 +1,11 @@
 .card-wrapper {
-  width: 260px;
+  max-width: 265px;
+  width: 100%;
   border-radius: 15px;
   border-radius: 15px;
-background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
+  background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6;
   padding-top: 8px; /* espessura da "borda" */
+
 }
 
 .container-card {
@@ -11,7 +13,8 @@ background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249,
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 260px;
+  max-width: 265px;
+  width: 100%;
   border: none;
   border-radius: 15px;
   background: linear-gradient(112deg, rgba(18, 0, 96, 0.10) 0%, rgba(0, 0, 0, 0.09) 32.21%, rgba(19, 0, 41, 0.09) 55.29%, rgba(95, 0, 211, 0.05) 95.21%, rgba(66, 0, 146, 0.05) 100%), #2B2A2E;
@@ -22,8 +25,9 @@ background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249,
   margin: 0 auto;
   /* margin-bottom: 75px; */
   font-size: 16px;
-  height: 230px;
+  height: 250px;
 }
+
 
 /* border-radius: 15px;
 background: linear-gradient(90deg, rgba(124, 76, 198, 0.50) 0%, rgba(83, 0, 249, 0.50) 100%), #7C4CC6; */
@@ -101,4 +105,55 @@ button {
   font-weight: 600;
   line-height: normal;
   font-size: 14px;
+}
+
+
+@media (min-width: 1920px) {
+  .card-wrapper {
+    max-width: 340px;
+    width: 340px;
+  }
+
+  .container-card {
+    max-width: 340px;
+    width: 340px;
+    height: 300px;
+    padding: 20px;
+    margin: 0;
+  }
+   .title {
+    font-size: 25px;
+    font-weight: 600;
+  }
+
+  .status {
+    font-size: 20px;
+  }
+
+  .btn {
+    height: 42px;
+    font-size: 17px;
+    border-radius: 10px;
+    margin: 12px 0 0 0;
+  }
+
+  .box-content {
+    gap: 40px;
+    margin-top: 15px;
+  }
+
+  .box-icon {
+    width: 31.736px;
+    height: 27.358px;
+    padding: 4px 8px;
+    border-radius: 3.94px;
+  }
+
+  .box-content .box-icon mat-icon {
+    font-size: 26px;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+  }
+
 }
