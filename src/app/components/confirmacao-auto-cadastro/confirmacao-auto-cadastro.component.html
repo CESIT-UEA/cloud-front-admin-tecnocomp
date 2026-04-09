@@ -4,20 +4,20 @@
             <h2 class="confirmacao-titulo">Insira o código</h2>
             <p class="confirmacao-subtitulo">
                 Não recebeu o código no seu E-mail?
-                <span class="confirmacao-link">Reenviar código.</span>
+                <span class="confirmacao-link" (click)="reenviarCodigo()">Reenviar código.</span>
             </p>
         </div>
 
         <form id="form" class="confirmacao-form" [formGroup]="formConfirmarCadastro">
             <div class="campo-form">
                 <label for="email" class="campo-label">E-mail</label>
-                <input type="password" id="email" name="email" class="campo-input" placeholder="Digite seu nome E-mail"
-                    formControlName="email" />
+                <input type="text" id="email" name="email" class="campo-input" placeholder="Digite seu nome E-mail"
+                    formControlName="email" readonly />
             </div>
 
             <div class="campo-form">
                 <label for="codigo" class="campo-label">Código de acesso</label>
-                <input type="password" id="codigo" name="codigo" class="campo-input" placeholder="Digite seu código"
+                <input type="text" id="codigo" name="codigo" class="campo-input" placeholder="Digite seu código"
                     formControlName="codigo" />
             </div>
 

@@ -46,6 +46,10 @@
   color: #ffffff;
 }
 
+.confirmacao-link:hover {
+  cursor: pointer;
+}
+
 .confirmacao-subtitulo {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;

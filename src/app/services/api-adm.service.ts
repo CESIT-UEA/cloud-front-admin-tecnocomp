@@ -243,6 +243,9 @@ export class ApiAdmService {
     return this.http.post(`${this.baseUrl}/api/valida_autoRegister`, dados)
   }
 
+  reenviarCodigoEmail(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/reenviar_codigo`, { email });
+  }
 
   clonarTemplate(id: number) {
     const params = new HttpParams().set('id', id.toString());

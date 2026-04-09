@@ -50,7 +50,7 @@ const routes: Routes = [
  
   { path: 'login', component: LoginComponent },
   { path: 'cadastrar', component: AutoCadastroComponent},
-  { path: 'cadastrar/teste', component: ConfirmacaoAutoCadastroComponent},
+  { path: 'cadastrar/confirmar', component: ConfirmacaoAutoCadastroComponent},
   { path: 'cadastrar/codigo', component: CadastrarCodigoComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [resetPasswordGuard]},

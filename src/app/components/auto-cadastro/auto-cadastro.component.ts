@@ -82,12 +82,18 @@ export class AutoCadastroComponent {
         }
         if (!this.camposSenhaInvalida() && this.cadastroForm.valid){
           const dados = {nome: this.nome.value, email: this.email.value, senha: this.senha.value}
-          
+          const email = dados.email;
+
           this.apiService.autoRegister(dados).subscribe({
             next: (dados) => {
                 if (dados.sucess){
                   this.cadastroForm.reset()
-                  this.router.navigate(['/cadastrar/teste'])
+                  this.router.navigate(
+                    ['/cadastrar/confirmar'],
+                    {
+                      queryParams: { email: email }
+                    }
+                  )
                   this.apiService.message("Código de verificação enviado para o email!")
                 }
             },
