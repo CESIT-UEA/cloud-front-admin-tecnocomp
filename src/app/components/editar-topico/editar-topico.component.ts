@@ -33,7 +33,7 @@ export class EditarTopicoComponent implements OnInit{
   renamedFile!: File;
   pastaModulo: string | null = null;
   baseUrlFile: string = `https://apiadmin.tecnocomp.cloud/ebooks`;
-
+  carregando: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -309,14 +309,19 @@ export class EditarTopicoComponent implements OnInit{
       formData.append('file', this.selectedFile);
     }
 
+    this.carregando = true
+
     this.apiService.editarTopico(this.idTopico, formData).subscribe({
       next: (response) => {
         this.apiService.message('Tópico atualizado com sucesso!');
-
+        this.carregando = false
         const idModulo = response.id_modulo;
-        this.router.navigate(['/modulos', idModulo]);
+        this.router.navigate(['/modulo/topicos'], {
+              queryParams: { id_modulo: idModulo }
+          });
       },
       error: (error) => {
+        this.carregando = false
         console.error('Erro ao atualizar tópico:', error);
         this.apiService.message('Erro ao atualizar tópico.');
       }

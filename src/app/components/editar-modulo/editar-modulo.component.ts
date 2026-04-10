@@ -29,6 +29,7 @@ export class EditarModuloComponent {
   baseUrlFile: string = `https://apiadmin.tecnocomp.cloud/ebooks`;
   urlApiRag: string = 'https://tecnocomp.uea.edu.br:5678/webhook/upload-file'
   nomeArquivo: string | undefined = ''
+  carregando: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -118,27 +119,30 @@ export class EditarModuloComponent {
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);
     }
+
     this.atualizarModulo(this.moduloId, formData)
   }
 
 
   private atualizarModulo(id: number, dadosModulo: FormData): void {
-  this.apiService
-    .atualizarModulo(id, dadosModulo)
-    .subscribe(
-      () => {
-        this.apiService.message('Módulo atualizado com sucesso!');
-
-        if (this.authService.isAdmin()) {
-          this.router.navigate(['/tecnocomp/modulos']);
-        } else if (this.authService.isProfessor()) {
-          this.router.navigate(['/tecnocomp/meus-modulos']);
+    this.carregando = true
+    this.apiService
+      .atualizarModulo(id, dadosModulo)
+      .subscribe(
+        () => {
+          this.apiService.message('Módulo atualizado com sucesso!');
+          this.carregando = false;
+          if (this.authService.isAdmin()) {
+            this.router.navigate(['/tecnocomp/modulos']);
+          } else if (this.authService.isProfessor()) {
+            this.router.navigate(['/tecnocomp/meus-modulos']);
+          }
+        },
+        (error) => {
+          this.carregando = false;
+          this.apiService.message(error.error.error)
         }
-      },
-      (error) => {
-        this.apiService.message(error.error.error)
-      }
-    );
+      );
 }
 
   gerarUrlAmigavel(): void {

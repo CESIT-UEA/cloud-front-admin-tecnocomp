@@ -111,3 +111,12 @@ input.ng-invalid.ng-touched {
   text-align: center;
   padding-bottom: 10px;
  }
+
+ 
+.carregando-registro {
+  height: 88vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

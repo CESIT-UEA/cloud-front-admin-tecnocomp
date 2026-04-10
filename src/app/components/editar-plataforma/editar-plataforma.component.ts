@@ -14,6 +14,7 @@ import { Plataforma } from 'src/interfaces/Plataforma';
 export class EditarPlataformaComponent implements OnInit {
   plataformaForm!: FormGroup;
   plataformaId!: number;
+  carregando: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -75,14 +76,19 @@ export class EditarPlataformaComponent implements OnInit {
 
     const plataformaAtualizada = this.plataformaForm.value;
 
+
+    this.carregando = true
+
     this.apiService
       .editarPlataforma(this.plataformaId, plataformaAtualizada)
       .subscribe(
         () => {
           this.apiService.message('Plataforma atualizada com sucesso!');
+          this.carregando = false;
           this.navegarPlataforma()
         },
         (error) => {
+          this.carregando = false;
           console.error('Erro ao atualizar a plataforma:', error);
           this.apiService.message('Erro ao atualizar a plataforma.');
         }

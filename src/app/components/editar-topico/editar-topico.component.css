@@ -506,6 +506,15 @@ ul {
 }
 
 
+.carregando-registro {
+  height: 88vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 /* Responsividade */
 @media (max-width: 1100px) {
   .formulario {

@@ -190,3 +190,11 @@ color: #ffffff;
 .btn-salvar:hover {
   opacity: 50%;
 }
+
+.carregando-registro {
+  height: 88vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

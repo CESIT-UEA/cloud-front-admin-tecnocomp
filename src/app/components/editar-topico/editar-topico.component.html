@@ -1,6 +1,6 @@
 <app-header-voltar texto="Editar Tópico"></app-header-voltar>
 <div class="container-pagina">
-  <div class="formulario">
+  <div class="formulario" *ngIf="!carregando; else tela">
     <mat-horizontal-stepper linear #stepper>
       <!-- Etapa 1: Dados Básicos -->
       <mat-step [stepControl]="dadosBasicosFormGroup">
@@ -332,5 +332,10 @@
       </mat-step>
     </mat-horizontal-stepper>
   </div>
+  <ng-template #tela>
+    <div class="carregando-registro">
+      <h2 class="">Atualizando tópico...</h2>
+    </div>
+  </ng-template>
 </div>
 

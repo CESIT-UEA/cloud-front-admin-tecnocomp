@@ -24,6 +24,8 @@ export class CadastroPlataformaComponent {
     customQuintenaria: new FormControl(''),
   });
 
+  carregando: boolean = false;
+
   constructor(
     private apiService: ApiAdmService,
     private authService: AuthService,
@@ -59,14 +61,19 @@ export class CadastroPlataformaComponent {
       return
     }
 
+    this.carregando = true
+
     if (this.plataformaForm.valid) {
       this.apiService.registerPlataforma(this.plataformaForm.value).subscribe(
         (response) => {
           this.apiService.message("Plataforma cadastrada com sucesso!")
           this.navegarPlataforma()
+          this.carregando = false
         },
         (error) => {
           console.error('Erro ao registrar plataforma:', error);
+          this.apiService.message('Erro ao cadastrar plataforma');
+          this.carregando = false
         }
       );
     }

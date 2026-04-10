@@ -1,7 +1,7 @@
 <app-header-voltar texto="Editar Plataforma"></app-header-voltar>
 
 <main class="page-editar-plataforma">
-  <section class="card-editar-plataforma">
+  <section class="card-editar-plataforma" *ngIf="!carregando; else tela">
     <header class="card-header">
       <h2 class="card-title">Editar Plataforma</h2>
       <div class="card-divider"></div>
@@ -92,4 +92,9 @@
       </div>
     </form>
   </section>
+  <ng-template #tela>
+    <div class="carregando-registro">
+      <h2 class="">Atualizando plataforma...</h2>
+    </div>
+  </ng-template>
 </main>

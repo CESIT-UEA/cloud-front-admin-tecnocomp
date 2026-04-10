@@ -1,6 +1,6 @@
 <app-header-voltar texto="Editar Módulo"></app-header-voltar>
 <main class="container">
-  <form class="forms" [formGroup]="moduloForm">
+  <form class="forms" [formGroup]="moduloForm" *ngIf="!carregando; else tela" >
     <div class="form-campos">
       <div class="titulo-formulario">
         <h1>Editar Módulo</h1>
@@ -57,6 +57,11 @@
     </div>
 
   </form>
+  <ng-template #tela>
+    <div class="carregando-registro">
+      <h2 class="">Atualizando módulo...</h2>
+    </div>
+  </ng-template>
 </main>
 
 
