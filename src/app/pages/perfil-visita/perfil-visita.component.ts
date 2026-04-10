@@ -70,19 +70,19 @@ export class PerfilVisitaComponent implements OnInit {
       }) {
         this.apiService.excluirModulo(idExcluir, idUsuario, palavraConfirmacao).subscribe(
           () => {
-            alert('Modulo excluído com sucesso!');
+            this.apiService.message('Modulo excluído com sucesso!');
             this.modulos = this.modulos.filter((modulo) => modulo.id !== idExcluir);
           },
           (error) => {
             console.log(error);
             if (error.status === 401) {
-              alert('Senha de administrador incorreta.');
+              this.apiService.message('Senha de administrador incorreta.');
             } else if (error.status === 403) {
-              alert('Você não tem permissão para realizar essa ação.');
+              this.apiService.message('Você não tem permissão para realizar essa ação.');
             } else if (error.status === 404) {
-              alert('Modulo não encontrado.');
+              this.apiService.message('Modulo não encontrado.');
             } else {
-              alert('Erro ao excluir modulo.');
+              this.apiService.message(error.error.error);
             }
           }
         );
@@ -91,19 +91,21 @@ export class PerfilVisitaComponent implements OnInit {
       excluirPlataforma({ idUsuario, palavraConfirmacao, idExcluir }: { idUsuario: number; palavraConfirmacao: string; idExcluir: number }) {
         this.apiService.excluirPlataforma(idUsuario, palavraConfirmacao, idExcluir).subscribe(
           () => {
-            alert('Plataforma excluída com sucesso!');
+            this.apiService.message('Plataforma excluída com sucesso!');
             this.plataformas = this.plataformas.filter((plataforma) => plataforma.id !== idExcluir);
           },
           (error) => {
             console.error('Erro ao excluir plataforma:', error);
             if (error.status === 401) {
-              alert('Senha de administrador incorreta.');
+              this.apiService.message('Senha de administrador incorreta.');
             } else if (error.status === 403) {
-              alert('Você não tem permissão para realizar essa ação.');
+              this.apiService.message('Você não tem permissão para realizar essa ação.');
             } else if (error.status === 404) {
-              alert('Plataforma não encontrada.');
+              this.apiService.message('Plataforma não encontrada.')}
+              else if (error.status === 409) {
+            this.apiService.message('Não é possível excluir a plataforma porque existem alunos vinculados.');
             } else {
-              alert('Erro ao excluir plataforma.');
+              this.apiService.message(error.error.error);
             }
           }
         );
