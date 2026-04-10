@@ -64,11 +64,12 @@
             />
 
             <button
+              type="button"
               class="icon"
               (click)="hide = !hide"
               [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide"
-            ></button>
+            ><mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon></button>
             <div
               class="caixa"
               *ngIf="
@@ -86,19 +87,27 @@
               >Confirmação de senha<span>*</span></label
             >
             <input
-              type="password"
+              [type]="hideConfirmarSenha ? 'password' : 'text'"
               formControlName="confirmarSenha"
               class="cadastro-usuario-input"
               id="confirmar-senha"
               placeholder="Digite sua senha novamente"
             />
+            <button
+              type="button"
+              class="icon"
+              (click)="hideConfirmarSenha = !hideConfirmarSenha"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hideConfirmarSenha"
+            ><mat-icon>{{hideConfirmarSenha ? 'visibility_off' : 'visibility'}}</mat-icon></button>
             <div
+              class="caixa"
               *ngIf="
                 cadastroForm.get('confirmarSenha')?.invalid &&
                 cadastroForm.get('confirmarSenha')?.touched
               "
             >
-              <small class="mensagem-validacao"> Confirme sua senha. </small>
+              <small class="mensagem-validacao senha-validacao"> Confirme sua senha.</small>
             </div>
           </div>
         </div>

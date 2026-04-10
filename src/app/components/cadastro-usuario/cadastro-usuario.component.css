@@ -65,7 +65,7 @@
 .mensagem-validacao {
   font-size: 11px;
   color: #ff4d4f;
-  margin-top: -6px; /* puxa a mensagem para cima */
+  margin-top: -36px; /* puxa a mensagem para cima */
   line-height: 1;
   min-height: 12px;
 }
@@ -101,6 +101,7 @@ input.ng-invalid.ng-touched {
 
 .campos {
   display: grid;
+  padding-bottom: 10px;
   grid-template-columns: 50% 50%;
 }
 
@@ -149,7 +150,7 @@ input.ng-invalid.ng-touched {
 }
 
 mat-icon {
-  color: #7c4cc6;
+  color: #888888;
 }
 
 .form-conteudo-tipo {

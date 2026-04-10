@@ -17,6 +17,7 @@ export class CadastroUsuarioComponent implements OnInit {
   errorCadastro: boolean = false;
   buttonDisabled = true;
   hide = true;
+  hideConfirmarSenha = true;
 
   cadastroForm = new FormGroup({
     nome: new FormControl('', [Validators.required, Validators.minLength(4), noOnlyWhitespace()]),
