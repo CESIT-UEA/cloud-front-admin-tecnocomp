@@ -60,15 +60,15 @@ export class PerfilVisitaComponent implements OnInit {
       }
     
       excluirModulo({
-        idAdm,
-        senhaAdm,
+        idUsuario,
+        palavraConfirmacao,
         idExcluir,
       }: {
-        idAdm: number;
-        senhaAdm: string;
+        idUsuario: number;
+        palavraConfirmacao: string;
         idExcluir: number;
       }) {
-        this.apiService.excluirModulo(idExcluir, idAdm, senhaAdm).subscribe(
+        this.apiService.excluirModulo(idExcluir, idUsuario, palavraConfirmacao).subscribe(
           () => {
             alert('Modulo excluído com sucesso!');
             this.modulos = this.modulos.filter((modulo) => modulo.id !== idExcluir);
@@ -88,8 +88,8 @@ export class PerfilVisitaComponent implements OnInit {
         );
       }
     
-      excluirPlataforma({ idAdm, senhaAdm, idExcluir }: { idAdm: number; senhaAdm: string; idExcluir: number }) {
-        this.apiService.excluirPlataforma(idAdm, senhaAdm, idExcluir).subscribe(
+      excluirPlataforma({ idUsuario, palavraConfirmacao, idExcluir }: { idUsuario: number; palavraConfirmacao: string; idExcluir: number }) {
+        this.apiService.excluirPlataforma(idUsuario, palavraConfirmacao, idExcluir).subscribe(
           () => {
             alert('Plataforma excluída com sucesso!');
             this.plataformas = this.plataformas.filter((plataforma) => plataforma.id !== idExcluir);

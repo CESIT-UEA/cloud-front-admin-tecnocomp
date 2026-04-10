@@ -15,8 +15,8 @@ export class CardsModulosComponent implements OnInit {
   @Input() modulo!: Modulo;
   @Input() moduloParaAdmin!: boolean;
   @Output() excluirModulo = new EventEmitter<{
-    idAdm: number;
-    senhaAdm: string;
+    idUsuario: number;
+    palavraConfirmacao: string;
     idExcluir: number;
   }>();
 
@@ -31,8 +31,7 @@ export class CardsModulosComponent implements OnInit {
   }
 
   abrirConfirmacaoExcluir(): void {
-    if (this.authService.isAdmin()){
-       const dialogRef = this.dialog.open(ConfirmacaoExclusaoComponent, {
+    const dialogRef = this.dialog.open(ConfirmacaoExclusaoComponent, {
           width: '484px',
           height: '219.952px',
           panelClass: 'cardExclusao',
@@ -41,40 +40,17 @@ export class CardsModulosComponent implements OnInit {
           }
           
       });
-      dialogRef.afterClosed().subscribe((senhaAdm) => {
-      if (senhaAdm) {
+      dialogRef.afterClosed().subscribe((palavraConfirmacao) => {
+      if (palavraConfirmacao) {
         if (this.modulo.id != null) {
           this.excluirModulo.emit({
-            idAdm: this.authService.getUsuarioDados().id,
-            senhaAdm: senhaAdm,
+            idUsuario: this.authService.getUsuarioDados().id,
+            palavraConfirmacao: palavraConfirmacao,
             idExcluir: this.modulo.id,
           });
         }
       }
       });
-    } else {
-      const dialogRef = this.dialog.open(ConfirmacaoExclusaoProfessorComponent, {
-          width: '484px',
-          height: '190.952px',
-          panelClass: 'cardExclusao',
-          data: {
-            titulo: "o módulo",
-            componente: this.modulo.nome_modulo
-          }
-          
-      });
-      dialogRef.afterClosed().subscribe((senhaAdm) => {
-      if (senhaAdm) {
-        if (this.modulo.id != null) {
-          this.excluirModulo.emit({
-            idAdm: this.authService.getUsuarioDados().id,
-            senhaAdm: '',
-            idExcluir: this.modulo.id,
-          });
-        }
-      }
-      });
-    }
    
   }
 

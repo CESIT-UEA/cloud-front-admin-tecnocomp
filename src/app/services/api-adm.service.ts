@@ -98,10 +98,10 @@ export class ApiAdmService {
   listarTemplates(): Observable<Modulo[]> {
     return this.http.get<Modulo[]>(`${this.baseUrl}/api/templates`);
   }
-  excluirModulo(id: number, idAdm: number, senhaAdm: string): Observable<any> {
+  excluirModulo(id: number, idUsuario: number, palavraConfirmacao: string): Observable<any> {
     const params = new HttpParams()
-      .set('idAdm', idAdm.toString())
-      .set('senhaAdm', senhaAdm);
+      .set('idUsuario', idUsuario.toString())
+      .set('palavraConfirmacao', palavraConfirmacao);
 
     return this.http.delete(`${this.baseUrl}/api/modulos/${id}`, { params });
   }
@@ -165,14 +165,14 @@ export class ApiAdmService {
   }
 
   excluirPlataforma(
-    idAdm: number,
-    senhaAdm: string,
+    idUsuario: number,
+    palavraConfirmacao: string,
     idExcluir: number
   ): Observable<void> {
     const params = new HttpParams()
-      .set('idAdm', idAdm.toString())
-      .set('senhaAdm', senhaAdm);
-
+      .set('idUsuario', idUsuario.toString())
+      .set('palavraConfirmacao', palavraConfirmacao);
+    console.log(palavraConfirmacao)
     return this.http.delete<void>(
       `${this.baseUrl}/api/plataforma/${idExcluir}`,
       { params }

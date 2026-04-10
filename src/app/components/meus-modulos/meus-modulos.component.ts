@@ -32,15 +32,15 @@ export class MeusModulosComponent {
   }
 
   excluirModulo({
-    idAdm,
-    senhaAdm,
+    idUsuario,
+    palavraConfirmacao,
     idExcluir,
   }: {
-    idAdm: number;
-    senhaAdm: string;
+    idUsuario: number;
+    palavraConfirmacao: string;
     idExcluir: number;
   }) {
-    this.apiService.excluirModulo(idExcluir, idAdm, senhaAdm).subscribe(
+    this.apiService.excluirModulo(idExcluir, idUsuario, palavraConfirmacao).subscribe(
       () => {
         this.apiService.message('Modulo excluído com sucesso!')
         this.modulos = this.modulos.filter((modulo) => modulo.id !== idExcluir);
@@ -56,7 +56,7 @@ export class MeusModulosComponent {
         } else if (error.status === 404) {
           this.apiService.message('Modulo não encontrado.')
         } else {
-          this.apiService.message('Erro ao excluir modulo.')
+          this.apiService.message(error.error.error)
         }
       }
     );

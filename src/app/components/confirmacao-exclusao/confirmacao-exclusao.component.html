@@ -6,11 +6,11 @@
 
   <div>
     <div class="senha-adm" >
-      <p class="p_senha">Senha</p>
-      <input placeholder="Digite sua senha" [formControl]="senhaAdm"  type="password" autocomplete="new-password" />
+      <p class="p_senha">Para confirmar, digite o nome do(a) {{ data.titulo }} abaixo:</p>
+      <input [placeholder]="placeholder" [formControl]="palavraConfirmacao"  type="text" />
       <div class="caixa-validacao">
         <span class="mensagem-validacao"
-        *ngIf="senhaAdm.invalid && senhaAdm.touched">
+        *ngIf="palavraConfirmacao.invalid && palavraConfirmacao.touched">
         Preencha o campo
     </span>
       </div>

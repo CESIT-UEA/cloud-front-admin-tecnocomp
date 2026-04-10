@@ -13,16 +13,15 @@ import { ConfirmacaoExclusaoProfessorComponent } from '../../confirmacao-exclusa
 export class CardsPlataformasComponent {
   @Input() plataforma!: Plataforma;
   @Output() excluirPlataforma = new EventEmitter<{
-    idAdm: number;
-    senhaAdm: string;
+    idUsuario: number;
+    palavraConfirmacao: string;
     idExcluir: number;
   }>();
 
   constructor(private dialog: MatDialog, private authService: AuthService) {}
 
   abrirConfirmacaoExcluir() {
-    if (this.authService.isAdmin()){
-      const dialogRef = this.dialog.open(ConfirmacaoExclusaoComponent, {
+    const dialogRef = this.dialog.open(ConfirmacaoExclusaoComponent, {
           width: '484px',
           height: '219.952px',
           panelClass: 'cardExclusao',
@@ -31,42 +30,18 @@ export class CardsPlataformasComponent {
           }
   });
 
-    dialogRef.afterClosed().subscribe((senhaAdm) => {
-      if (senhaAdm) {
+    dialogRef.afterClosed().subscribe((palavraConfirmacao) => {
+      if (palavraConfirmacao) {
         if (this.plataforma.id != null) {
           this.excluirPlataforma.emit({
-            idAdm: this.getUsuarioDados().id,
-            senhaAdm: senhaAdm,
-            idExcluir: this.plataforma.id,
-          });
-        }
-      }
-    });
-  } else {
-    const dialogRef = this.dialog.open(ConfirmacaoExclusaoProfessorComponent, {
-          width: '484px',
-          height: '190.952px',
-          panelClass: 'cardExclusao',
-          data: {
-            titulo: "a plataforma",
-            componente: this.plataforma.plataformaNome
-          }
-  });
-
-    dialogRef.afterClosed().subscribe((senhaAdm) => {
-      if (senhaAdm) {
-        if (this.plataforma.id != null) {
-          this.excluirPlataforma.emit({
-            idAdm: this.getUsuarioDados().id,
-            senhaAdm: "",
+            idUsuario: this.getUsuarioDados().id,
+            palavraConfirmacao: palavraConfirmacao,
             idExcluir: this.plataforma.id,
           });
         }
       }
     });
   }
-
-    }
     
   getUsuarioDados() {
     return this.authService.getUsuarioDados();
