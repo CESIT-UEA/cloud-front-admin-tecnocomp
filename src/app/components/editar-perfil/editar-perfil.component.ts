@@ -13,6 +13,7 @@ import { noOnlyWhitespace, senhaForte } from '../validators/validators';
 export class EditarPerfilComponent {
   senhaAtual: string = '';
   novaSenha: string = '';
+  isGoogleUser!: boolean;
 
   cadastroForm = new FormGroup({
       nome: new FormControl('', [Validators.required, Validators.minLength(4), noOnlyWhitespace()]),
@@ -33,6 +34,9 @@ export class EditarPerfilComponent {
     // this.usuario = this.authService.getUsuarioDados();
     console.log(this.authService.getUsuarioDados())
     const dados = this.authService.getUsuarioDados()
+    if (dados.provedor){
+      this.isGoogleUser = dados.provedor === 'google';
+    }
     this.cadastroForm.patchValue({
       nome: dados.username,
       email: dados.email
@@ -42,7 +46,8 @@ export class EditarPerfilComponent {
 
   atualizarPerfil(): void {
     const senhaAtual = this.cadastroForm.value.senhaAtual
-    if (!senhaAtual) {
+    
+    if (!senhaAtual && !this.isGoogleUser) {
       this.cadastroForm.markAllAsTouched()
       this.apiService.message('Você precisa informar sua senha atual para atualizar o perfil.');
       return;
@@ -53,6 +58,10 @@ export class EditarPerfilComponent {
       email: this.cadastroForm.value.email,
     };
 
+    if (senhaAtual){
+      dadosAtualizados.senhaAtual = senhaAtual;
+    }
+
     const novaSenha = this.cadastroForm.value.novaSenha
 
     // Adiciona a nova senha ao payload, se fornecida
@@ -60,7 +69,7 @@ export class EditarPerfilComponent {
       dadosAtualizados.novaSenha = novaSenha;
     }
 
-    this.userService.updateSelf(this.authService.getUsuarioDados().id, senhaAtual, dadosAtualizados).subscribe(
+    this.userService.updateSelf(this.authService.getUsuarioDados().id, dadosAtualizados).subscribe(
       (res) => {
         if (dadosAtualizados.novaSenha) {
           this.apiService.message('Senha alterada com sucesso! Por favor, faça login novamente.');

@@ -37,7 +37,7 @@
           </div>
 
           <!-- Senha Atual -->
-          <div class="form-editar-perfil-campo">
+          <div class="form-editar-perfil-campo" *ngIf="!isGoogleUser">
             <label>Senha Atual <span class="obrigatorio">*</span></label>
             <input formControlName="senhaAtual" name="senhaAtual" type="password" required placeholder="Digite a senha atual"/>
             <div

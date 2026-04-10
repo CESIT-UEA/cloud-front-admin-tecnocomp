@@ -195,13 +195,9 @@ export class ApiAdmService {
 
   updateSelf(
     userId: number,
-    senhaAtual: string,
     dadosAtualizados: any
   ): Observable<any> {
-    return this.http.patch(`${this.baseUrl}/api/users/${userId}/self`, {
-      senhaAtual,
-      ...dadosAtualizados,
-    });
+    return this.http.patch(`${this.baseUrl}/api/users/${userId}/self`, dadosAtualizados);
   }
 
   listarModulosPeloIdUsuario(id: number, page: number): Observable<{ modulos: Modulo[], infoModulos: InfoPaginacao}> {

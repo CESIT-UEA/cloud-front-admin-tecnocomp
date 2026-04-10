@@ -51,7 +51,8 @@ export class AuthService {
       username: payload.username, 
       email: payload.email,
       tipo: payload.tipo,
-      url_foto: payload.url_foto
+      url_foto: payload.url_foto,
+      provedor: payload.provedor
     } as User;
   } catch (error) {
     console.error("Erro ao decodificar token:", error);
