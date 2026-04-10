@@ -11,7 +11,7 @@
       rgba(95, 0, 211, 0.05) 95.21%
     ),
     #131313;
-  height: 88vh;
+  height: 80vh;
 }
 
 .cadastro-plataforma-container {
@@ -41,14 +41,14 @@
   color: #ffffff;
   font-family: "Inter";
   font-weight: 500;
-  padding: 10px 0;
+  padding: 10px 0 3px 0;
 }
 
 .cadastro-plataforma-titulo {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
   text-align: center;
-  padding: 20px 0 20px 0;
+  padding: 56px 0 34px 0;
   border-bottom: 2px solid #7c4cc6;
 }
 
@@ -104,7 +104,7 @@ input.ng-invalid.ng-touched {
 }
 
 .buttons button {
-  padding: 7px;
+  padding: 5px;
   width: 145px;
   border: none;
   color: #ffffff;
@@ -136,7 +136,7 @@ input.ng-invalid.ng-touched {
 
 #botao-dois {
   border-radius: 10px;
-  width: 22%;
+  width: 23.5%;
   background:
     linear-gradient(
       90deg,

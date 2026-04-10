@@ -48,17 +48,17 @@
 .cadastro-usuario-titulo,
 .cadastro-usuario-label {
   color: #ffffff;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif; 
   font-weight: 600;
-  padding: 10px 0;
+  padding-bottom: 9px;
 }
 
 .cadastro-usuario-titulo {
   font-family: "Inter", sans-serif;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 22px;
   text-align: center;
-  padding: 20px 0 20px 0;
+  padding: 56px 0 37px 0;
   border-bottom: 2px solid #7c4cc6;
 }
 
@@ -93,6 +93,7 @@ input.ng-invalid.ng-touched {
 .cadastro-usuario-aviso {
   color: #c64c4c;
   margin-left: 2px;
+  margin-bottom: 23px;
 }
 
 .roxo {
@@ -101,6 +102,7 @@ input.ng-invalid.ng-touched {
 
 .campos {
   display: grid;
+  gap: 19px 15px;
   padding-bottom: 10px;
   grid-template-columns: 50% 50%;
 }
@@ -108,7 +110,7 @@ input.ng-invalid.ng-touched {
 .form-conteudo {
   display: flex;
   flex-direction: column;
-  width: 92%;
+  width: 97%;
   font-family: "Inter", sans-serif;
   font-weight: 600;
   font-family: 1rem;
@@ -144,9 +146,10 @@ input.ng-invalid.ng-touched {
 
 .icon {
   position: relative;
-  top: -35px;
+  top: -39px;
   margin-left: auto;
-  margin-right: 10px;
+  margin-top: 5px;
+  margin-right: 15px;
 }
 
 mat-icon {
@@ -157,6 +160,7 @@ mat-icon {
   display: flex;
   flex-direction: column;
   position: relative;
+  padding: 10px 0 39px 0px;
   top: -20px;
 }
 
@@ -171,7 +175,7 @@ mat-icon {
   display: flex;
   justify-content: center;
   column-gap: 20px;
-  padding: 10px 0;
+  padding: 10px 0 20px 0px;
   position: relative;
   top: -20px;
 }

@@ -87,7 +87,7 @@
               >Confirmação de senha<span>*</span></label
             >
             <input
-              [type]="hideConfirmarSenha ? 'password' : 'text'"
+              [type]="hide ? 'password' : 'text'"
               formControlName="confirmarSenha"
               class="cadastro-usuario-input"
               id="confirmar-senha"
@@ -96,10 +96,10 @@
             <button
               type="button"
               class="icon"
-              (click)="hideConfirmarSenha = !hideConfirmarSenha"
+              (click)="hide = !hide"
               [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hideConfirmarSenha"
-            ><mat-icon>{{hideConfirmarSenha ? 'visibility_off' : 'visibility'}}</mat-icon></button>
+              [attr.aria-pressed]="hide"
+            ><mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon></button>
             <div
               class="caixa"
               *ngIf="
