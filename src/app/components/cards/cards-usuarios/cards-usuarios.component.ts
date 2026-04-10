@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class CardsUsuariosComponent {
   @Input() user!: User;
-  @Output() excluirUsuario = new EventEmitter<{ idAdm: number; senhaAdm: string; idExcluir: number }>();
+  @Output() excluirUsuario = new EventEmitter<{ idAdm: number; palavraConfirmacao: string; idExcluir: number }>();
 
   constructor(private dialog: MatDialog, private authService: AuthService) {}
 
@@ -25,10 +25,10 @@ export class CardsUsuariosComponent {
           }
   });
         
-    dialogRef.afterClosed().subscribe((senhaAdm) => {
+    dialogRef.afterClosed().subscribe((palavraConfirmacao) => {
 
-      if (senhaAdm) {
-        this.excluirUsuario.emit({idAdm: this.getUsuarioDados().id , senhaAdm: senhaAdm , idExcluir: this.user.id});
+      if (palavraConfirmacao) {
+        this.excluirUsuario.emit({idAdm: this.getUsuarioDados().id , palavraConfirmacao: palavraConfirmacao , idExcluir: this.user.id});
       }
     });
   }

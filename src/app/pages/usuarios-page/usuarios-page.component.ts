@@ -31,8 +31,8 @@ export class UsuariosPageComponent implements OnInit {
     this.carregarUsuariosPaginados(page);
   }
 
-  excluirUsuario({ idAdm, senhaAdm, idExcluir }: { idAdm: number; senhaAdm: string; idExcluir: number }) {
-    this.userService.excluirUsuario(idAdm, senhaAdm, idExcluir).subscribe(
+  excluirUsuario({ idAdm, palavraConfirmacao, idExcluir }: { idAdm: number; palavraConfirmacao: string; idExcluir: number }) {
+    this.userService.excluirUsuario(idAdm, palavraConfirmacao, idExcluir).subscribe(
       () => {
         this.userService.message('Usuário excluído com sucesso!')
         
@@ -42,15 +42,7 @@ export class UsuariosPageComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-        if (error.status === 401) {
-          this.userService.message('Senha de administrador incorreta.')
-        } else if (error.status === 403) {
-          this.userService.message('Você não tem permissão para realizar essa ação.')
-        } else if (error.status === 404) {
-          this.userService.message('Usuário não encontrado.')
-        } else {
-          this.userService.message('Erro ao excluir usuário.')
-        }
+        this.userService.message(error.error.error)
       }
     );
   }

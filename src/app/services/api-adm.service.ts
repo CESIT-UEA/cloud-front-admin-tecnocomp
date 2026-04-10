@@ -84,11 +84,11 @@ export class ApiAdmService {
 
   excluirUsuario(
     idAdm: number,
-    senhaAdm: string,
+    palavraConfirmacao: string,
     idExcluir: number
   ): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/api/users`, {
-      body: { idAdm, senhaAdm, idExcluir },
+      body: { idAdm, palavraConfirmacao, idExcluir },
     });
   }
 
