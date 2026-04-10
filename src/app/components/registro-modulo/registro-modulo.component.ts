@@ -63,12 +63,27 @@ export class RegistroModuloComponent implements OnInit {
   }
 
 
+  isYoutubeEmbed(url: string): boolean {
+    const regex = /^https:\/\/(www\.)?youtube\.com\/embed\/[a-zA-Z0-9_-]+(\?.*)?$/;
+    return regex.test(url);
+  }
+
+
   onSubmit(): void {
     if (this.moduloForm.invalid || !this.selectedFile){
       this.moduloForm.markAllAsTouched()
       this.tentouSubmeter = true
       this.apiService.message('Por favor, preencha todos os campos corretamente.')
       return
+    }
+
+    const video_inicial = this.moduloForm.get('video_inicial')?.value
+
+    if (video_inicial){
+      if (!this.isYoutubeEmbed(video_inicial)){
+        this.apiService.message('O link deve ser um link incorporado do YouTube (embed)')
+        return 
+      }
     }
 
     this.carregando = true;
@@ -90,6 +105,7 @@ export class RegistroModuloComponent implements OnInit {
     },
     error: (err) => {
       console.error('Erro ao cadastrar módulo:', err);
+      this.apiService.message(err.error.error)
       this.carregando = false;
     }
   });

@@ -84,11 +84,27 @@ export class EditarModuloComponent {
     );
   }
 
+  isYoutubeEmbed(url: string): boolean {
+    const regex = /^https:\/\/(www\.)?youtube\.com\/embed\/[a-zA-Z0-9_-]+(\?.*)?$/;
+    return regex.test(url);
+  }
+
+
+
   onSubmit(): void {
     if (this.moduloForm.invalid){
       this.moduloForm.markAllAsTouched()
       this.apiService.message('Por favor, preencha todos os campos corretamente.')
       return
+    }
+
+    const video_inicial = this.moduloForm.get('video_inicial')?.value
+
+    if (video_inicial){
+      if (!this.isYoutubeEmbed(video_inicial)){
+        this.apiService.message('O link deve ser um link incorporado do YouTube (embed)')
+        return 
+      }
     }
     
     const formData = new FormData();
@@ -120,15 +136,7 @@ export class EditarModuloComponent {
         }
       },
       (error) => {
-        if (error.status === 404) {
-          this.apiService.message('Módulo não encontrado ou você não tem permissão.');
-        } else if (error.status === 401) {
-          this.apiService.message('Sessão expirada. Faça login novamente.');
-        } else if (error.status === 403) {
-          this.apiService.message('Você não tem permissão para essa ação.');
-        } else {
-          this.apiService.message('Erro ao atualizar módulo.');
-        }
+        this.apiService.message(error.error.error)
       }
     );
 }
