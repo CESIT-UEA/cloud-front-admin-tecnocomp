@@ -91,16 +91,16 @@ export class TopicosModuloUnicoComponent implements OnInit {
   }
 
   excluirTopico({
-    idAdm,
-    senhaAdm,
+    idUsuario,
+    palavraConfirmacao,
     idExcluir,
   }: {
-    idAdm: number;
-    senhaAdm: string;
+    idUsuario: number;
+    palavraConfirmacao: string;
     idExcluir: number;
   }) {
     
-    this.apiService.excluirTopico(idExcluir, idAdm, senhaAdm).subscribe(
+    this.apiService.excluirTopico(idExcluir, idUsuario, palavraConfirmacao).subscribe(
       () => {
         this.apiService.message('Tópico excluído com sucesso!')
         this.topicos = this.topicos.filter((topico) => topico.id !== idExcluir);

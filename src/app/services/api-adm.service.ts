@@ -143,10 +143,10 @@ export class ApiAdmService {
     return this.http.put(`${this.baseUrl}/api/topico/${id}`, dadosAtualizados);
   }
 
-  excluirTopico(idExcluir: number, idAdm: number, senhaAdm: string) {
+  excluirTopico(idExcluir: number, idUsuario: number, palavraConfirmacao: string) {
     const params = new HttpParams()
-      .set('idAdm', idAdm.toString())
-      .set('senhaAdm', senhaAdm);
+      .set('idUsuario', idUsuario.toString())
+      .set('palavraConfirmacao', palavraConfirmacao);
 
     return this.http.delete(`${this.baseUrl}/api/topico/${idExcluir}`, {
       params,
