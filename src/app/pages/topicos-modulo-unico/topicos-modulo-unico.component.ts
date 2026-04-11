@@ -109,15 +109,7 @@ export class TopicosModuloUnicoComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-        if (error.status === 401) {
-          this.apiService.message('Senha de administrador incorreta.')
-        } else if (error.status === 403) {
-          this.apiService.message('Você não tem permissão para realizar essa ação.')
-        } else if (error.status === 404) {
-          this.apiService.message('Tópico não encontrado.')
-        } else {
-          this.apiService.message('Erro ao excluir tópico.')
-        }
+        this.apiService.message(error.error.error)
       }
     );
   }
