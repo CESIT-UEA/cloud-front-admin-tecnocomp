@@ -60,8 +60,9 @@
               <button routerLink="gerenciar-ficha-tecnica">
                 Gerenciar Ficha Técnica
               </button>
-              <button
-                routerLink="/modulo/clonar-ficha-tecnica/{{ modulo?.id }}"
+              <button  [ngClass]="{'desabilitar-clonagem-ficha': fichaTecnicaIsEmpty}"
+              (click)="mostrarMensagem()"
+                [routerLink]="!fichaTecnicaIsEmpty ? ['/modulo/clonar-ficha-tecnica', modulo?.id] : null"
               >
                 Clonar Ficha Técnica
               </button>

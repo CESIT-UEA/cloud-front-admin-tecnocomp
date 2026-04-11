@@ -291,6 +291,10 @@ a {
   animation: loading 1s forwards;
 }
 
+.desabilitar-clonagem-ficha {
+  opacity: 50%;
+}
+
 @keyframes loading {
   0% {
     width: 0%;

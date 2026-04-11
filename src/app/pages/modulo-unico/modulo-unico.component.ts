@@ -6,6 +6,7 @@ import { Topico } from 'src/interfaces/topico/Topico';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UploadService } from 'src/app/services/upload.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { FichaTecnica } from 'src/interfaces/modulo/FichaTecnica';
 
 @Component({
   selector: 'app-modulo-unico',
@@ -16,6 +17,8 @@ export class ModuloUnicoComponent implements OnInit {
   modulo!: Modulo | null;
   topicos: Topico[] = [];
   idModulo!: number;
+
+  fichaTecnicaIsEmpty!: boolean;
 
   progress = 0;
 
@@ -33,8 +36,7 @@ export class ModuloUnicoComponent implements OnInit {
     if (id) {
 
       this.carregarModulo(+id);
-      // this.carregarTopicos(+id);
-      console.log('teste', this.modulo?.ebookUrlGeral)
+      
     }
     if (this.modulo?.id != null) {
       this.idModulo = this.modulo.id;
@@ -47,9 +49,11 @@ export class ModuloUnicoComponent implements OnInit {
 
   carregarModulo(id: number): void {
     this.apiService.obterModuloPorId(id).subscribe(
-      (response) => {
+      (response: any) => {
         this.modulo = response;
-        console.log(response)
+        console.log(this.modulo)
+
+        this.validaFichaEmpty(response.FichaTecnica);
       },
       (error) => {
          if (error.status === 404) {
@@ -63,40 +67,13 @@ export class ModuloUnicoComponent implements OnInit {
     );
   }
 
-  // carregarTopicos(moduloId: number): void {
-  //   this.apiService.obterTopicoCompleto(moduloId).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       this.topicos = response.map((topico) => ({
-  //         ...topico,
-  //         videoUrls: [],
-  //         saibaMais: [],
-  //         referencias: [],
-  //         exercicios: [],
-  //       }));
+  validaFichaEmpty(ficha: any){
+    if (ficha === null) this.fichaTecnicaIsEmpty = true;
+    if (ficha && ficha?.Equipes){
+      this.fichaTecnicaIsEmpty = ficha.Equipes.length === 0
+    }
+  }
 
-  //       // Para cada tópico, buscar os dados completos
-  //       this.topicos.forEach((topico, index) => {
-  //         if (topico.id != null) {
-  //           this.apiService.obterTopicoCompleto(topico.id).subscribe(
-  //             (topicoCompleto) => {
-  //               this.topicos[index] = {
-  //                 ...this.topicos[index],
-  //                 ...topicoCompleto,
-  //               };
-  //             },
-  //             (error) =>
-  //               console.error(
-  //                 'Erro ao carregar dados completos do tópico:',
-  //                 error
-  //               )
-  //           );
-  //         }
-  //       });
-  //     },
-  //     (error) => console.error('Erro ao carregar tópicos:', error)
-  //   );
-  // }
 
   cadastrarTopico(): void {
     this.router.navigate(['/modulos', this.modulo?.id, 'cadastrar-topico']);
@@ -197,5 +174,10 @@ export class ModuloUnicoComponent implements OnInit {
         this.apiService.message('UUID copiado com sucesso!');
       })
       .catch((err) => console.error('Erro ao copiar UUID:', err));
+  }
+
+  mostrarMensagem(){
+    if (!this.fichaTecnicaIsEmpty) return
+    this.apiService.message('Este módulo não possui ficha técnica')
   }
 }
