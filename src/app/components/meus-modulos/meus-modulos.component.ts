@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApiAdmService } from 'src/app/services/api-adm.service';
 import { Modulo } from 'src/interfaces/modulo/Modulo';
@@ -10,7 +10,7 @@ import { PaginationState, PaginationService } from 'src/app/services/pagination.
   templateUrl: './meus-modulos.component.html',
   styleUrls: ['./meus-modulos.component.css']
 })
-export class MeusModulosComponent {
+export class MeusModulosComponent implements OnInit {
   modulos: Modulo[] = [];
   pagination: PaginationState;
   totalModulos: number = 0; 
@@ -23,11 +23,16 @@ export class MeusModulosComponent {
     this.pagination = this.paginationService.createPaginationState();
   }
 
+
   dadosUsuario(): User {
     return this.authService.getUsuarioDados();
   }
 
   ngOnInit(): void {
+    const pageStorage = this.getPageStorage();
+    if (pageStorage){
+      this.pagination.currentPage = pageStorage;
+    }
     this.carregarMeusModulosPaginados(this.dadosUsuario().id, this.pagination.currentPage)
   }
 
@@ -81,6 +86,20 @@ export class MeusModulosComponent {
   }
 
   onPageChange(page: number): void {
+    this.setPageStorage(page);
     this.carregarMeusModulosPaginados(this.dadosUsuario().id, page);
+  }
+
+
+  getPageStorage(){
+    const pageMod = localStorage.getItem('pageModP');
+    if (pageMod){
+      return Number(pageMod);
+    }
+    return null
+  }
+
+  setPageStorage(page: number){
+    localStorage.setItem('pageModP', JSON.stringify(page));
   }
 }

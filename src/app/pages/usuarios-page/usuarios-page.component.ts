@@ -23,11 +23,14 @@ export class UsuariosPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const pageStorage = this.getPageStorage();
+    this.pagination.currentPage = pageStorage;
     this.carregarUsuariosPaginados(this.pagination.currentPage);
   }
 
   // Handler para mudanças de página
   onPageChange(page: number): void {
+    this.setPageStorage(page)
     this.carregarUsuariosPaginados(page);
   }
 
@@ -37,7 +40,6 @@ export class UsuariosPageComponent implements OnInit {
         this.userService.message('Usuário excluído com sucesso!')
         
         this.usuarios = this.usuarios.filter((user) => user.id !== idExcluir);
-        this.pagination = this.paginationService.createPaginationState();
         this.carregarUsuariosPaginados(this.pagination.currentPage)
       },
       (error) => {
@@ -52,7 +54,16 @@ export class UsuariosPageComponent implements OnInit {
       (response) => {
         this.usuarios = response.users;
         this.totalPaginas = response.infoUsers.totalPaginas
+        
+        if (page > this.totalPaginas && this.totalPaginas > 0){
+          this.pagination.currentPage = this.totalPaginas;
+          this.setPageStorage(this.totalPaginas)
+          this.carregarUsuariosPaginados(this.totalPaginas)
+          return
+        }
+        
         this.totalRegistro = response.infoUsers.totalRegistros
+
         this.paginationService.updatePaginationState(
           this.pagination,
           response.infoUsers.totalPaginas,
@@ -63,5 +74,15 @@ export class UsuariosPageComponent implements OnInit {
         console.error('Erro ao carregar usuários:', error);
       }
     );
+  }
+
+  getPageStorage(){
+    const pageUser = localStorage.getItem('pageUser') || 1;
+    return Number(pageUser);
+    
+  }
+
+  setPageStorage(page: number){
+    localStorage.setItem('pageUser', JSON.stringify(page));
   }
 }

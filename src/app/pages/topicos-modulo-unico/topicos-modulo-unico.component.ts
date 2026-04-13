@@ -29,13 +29,22 @@ export class TopicosModuloUnicoComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.queryParamMap.get('id_modulo');
     if (id) {
+      const pageStorage = this.getPageStorage(id);
+      if (pageStorage){
+        this.pagination.currentPage = pageStorage;
+      }
       this.carregarTopicos(+id, this.pagination.currentPage);
       this.idModulo = +id;
+
+      
     }
+
+
   }
 
   // Handler para mudanças de página
   onPageChange(page: number): void {
+    this.setPageStorage(page, String(this.idModulo))
     this.carregarTopicos(this.idModulo, page);
   }
 
@@ -112,5 +121,17 @@ export class TopicosModuloUnicoComponent implements OnInit {
         this.apiService.message(error.error.error)
       }
     );
+  }
+
+  getPageStorage(chave: string){
+    const pageTop = localStorage.getItem(`pageTop-${chave}-${this.authService.getUsuarioDados().id}`);
+    if (pageTop){
+      return Number(pageTop);
+    }
+    return null
+  }
+
+  setPageStorage(page: number, chave: string){
+    localStorage.setItem(`pageTop-${chave}-${this.authService.getUsuarioDados().id}`, JSON.stringify(page));
   }
 }

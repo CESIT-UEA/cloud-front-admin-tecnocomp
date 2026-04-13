@@ -19,6 +19,7 @@ export class ModulosPageComponent implements OnInit {
   isOpenDrawer: boolean = true;
   quantidadeItens!: number;
   infoModulos: InfoPaginacao = {totalPaginas: 1, totalRegistros: 1}
+  pageStorage: number = 0;
 
   constructor(
     private apiService: ApiAdmService,
@@ -30,20 +31,19 @@ export class ModulosPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const pageStorage = this.getPageStorage();
+    if (pageStorage){
+      this.pagination.currentPage = pageStorage;
+    }
+
     this.apiService.setValor(this.isOpenDrawer)
     this.apiService.valor$
     .subscribe(valor => {
       this.isOpenDrawer = valor
-      console.log(this.isOpenDrawer)
       this.quantidadeItens = this.isOpenDrawer ? 3 : 4;
 
-      if (this.pagination.currentPage > this.infoModulos.totalPaginas){
-        this.carregarModulosPaginados(this.infoModulos.totalPaginas, this.quantidadeItens)
-      } else {
-        this.carregarModulosPaginados(this.pagination.currentPage, this.quantidadeItens);
-      }
+      this.carregarModulosPaginados(this.pagination.currentPage, this.quantidadeItens)
     
-
   });
 
 
@@ -52,6 +52,7 @@ export class ModulosPageComponent implements OnInit {
 
   // Handler para mudanças de página
   onPageChange(page: number, quantidadeItens: number): void {
+    this.setPageStorage(page);
     this.carregarModulosPaginados(page, quantidadeItens);
   }
 
@@ -77,12 +78,11 @@ export class ModulosPageComponent implements OnInit {
   carregarModulosPaginados(page: number, quantidadeItens: number) {
     this.apiService.listarModulos(page, quantidadeItens).subscribe(
       (response) => {
-        console.log(response)
         const totalPaginas = response.infoModulos.totalPaginas;
         if (page > totalPaginas && totalPaginas > 0) {
-        this.pagination.currentPage = totalPaginas;
-        this.carregarModulosPaginados(totalPaginas, quantidadeItens);
-        return;
+          this.pagination.currentPage = totalPaginas;
+          this.carregarModulosPaginados(totalPaginas, quantidadeItens);
+          return;
       }
 
         this.modulos = response.modulos;
@@ -99,5 +99,17 @@ export class ModulosPageComponent implements OnInit {
         console.error('Erro ao carregar módulos:', error);
       }
     );
+  }
+
+  getPageStorage(){
+    const pageMod = localStorage.getItem('pageMod');
+    if (pageMod){
+      return Number(pageMod);
+    }
+    return null
+  }
+
+  setPageStorage(page: number){
+    localStorage.setItem('pageMod', JSON.stringify(page));
   }
 }
