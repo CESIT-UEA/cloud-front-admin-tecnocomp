@@ -20,11 +20,17 @@ export class PlataformaPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const pageStorage = this.getPageStorage();
+    if (pageStorage){
+      this.pagination.currentPage = pageStorage;
+    }
+
     this.carregarPlataformasPaginadas(this.pagination.currentPage);
   }
 
   // Handler para mudanças de página
   onPageChange(page: number): void {
+    this.setPageStorage(page);
     this.carregarPlataformasPaginadas(page);
   }
 
@@ -71,5 +77,17 @@ export class PlataformaPageComponent implements OnInit {
         console.error('Erro ao carregar plataformas:', error);
       }
     );
+  }
+
+  getPageStorage(){
+    const pagePlat = localStorage.getItem('pagePlat');
+    if (pagePlat){
+      return Number(pagePlat);
+    }
+    return null
+  }
+
+  setPageStorage(page: number){
+    localStorage.setItem('pagePlat', JSON.stringify(page));
   }
 }

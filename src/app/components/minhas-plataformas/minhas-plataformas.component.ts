@@ -28,6 +28,10 @@ export class MinhasPlataformasComponent {
   }
 
   ngOnInit(): void {
+    const pageStorage = this.getPageStorage();
+    if (pageStorage){
+      this.pagination.currentPage = pageStorage;
+    }
     this.carregarMinhasPlataformasPaginadas(this.dadosUsuario().id, this.pagination.currentPage)
   }
 
@@ -78,6 +82,19 @@ export class MinhasPlataformasComponent {
   }
 
   onPageChange(page: number): void {
+    this.setPageStorage(page);
     this.carregarMinhasPlataformasPaginadas(this.dadosUsuario().id, page);
+  }
+
+  getPageStorage(){
+    const pagePlat = localStorage.getItem('pagePlatP');
+    if (pagePlat){
+      return Number(pagePlat);
+    }
+    return null
+  }
+
+  setPageStorage(page: number){
+    localStorage.setItem('pagePlatP', JSON.stringify(page));
   }
 }
