@@ -44,19 +44,21 @@ export class AppComponent {
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/close.svg')
     );
 
-    this.router.events
-    .pipe(
-      filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
-    )
-    .subscribe(event => {
-      const url = event.urlAfterRedirects;
-      this.mostrarChat = url.startsWith('/ver-ao-vivo');
-    });
+    // this.router.events
+    // .pipe(
+    //   filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
+    // )
+    // .subscribe(event => {
+    //   const url = event.urlAfterRedirects;
+    //   this.mostrarChat = url.startsWith('/ver-ao-vivo');
+    // });
   }
 
   ngOnInit(): void {
     this.themeService.aplicarTemaSalvo();
     const url = this.router.url;
+    console.log(`URL: ${url}`)
     this.mostrarChat = url.startsWith('/ver-ao-vivo');
+    console.log(`MOSTRAR_CHAT: ${this.mostrarChat}`)
   }
 }
