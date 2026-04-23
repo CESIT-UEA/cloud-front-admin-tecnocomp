@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ThemeService } from './services/theme.service';
 import { MatIconRegistry } from '@angular/material/icon'; // Importe aqui
 import { DomSanitizer } from '@angular/platform-browser';
+import { ChatPersonalizadoService } from './pages/ver-ao-vivo/chat-personalizado.service';
+import { Router, NavigationEnd, Event as RouterEvent } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +13,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class AppComponent {
   title = 'cadastro_lms';
-  
+
+  mostrarChat: boolean = false;
+
   constructor(
     private themeService: ThemeService,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    public chatPersonalizado: ChatPersonalizadoService,
+    private router: Router
   ) {
     this.matIconRegistry.addSvgIcon(
       'estrela',
@@ -36,6 +43,15 @@ export class AppComponent {
       'close',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/close.svg')
     );
+
+    this.router.events
+    .pipe(
+      filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
+    )
+    .subscribe(event => {
+      const url = event.urlAfterRedirects;
+      this.mostrarChat = url.startsWith('/ver-ao-vivo');
+    });
   }
 
   ngOnInit(): void {

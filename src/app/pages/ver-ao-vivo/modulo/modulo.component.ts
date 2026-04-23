@@ -6,6 +6,7 @@ import { ApiAdmService } from 'src/app/services/api-adm.service';
 import { VerAoVivoService } from 'src/app/services/ver-ao-vivo.service';
 import { Modulo } from 'src/interfaces/modulo/Modulo';
 import { Topico } from 'src/interfaces/topico/Topico';
+import { ChatPersonalizadoService } from '../chat-personalizado.service';
 
 @Component({
   selector: 'app-modulo',
@@ -23,7 +24,8 @@ export class ModuloComponent implements OnInit {
     private verAoVivo: VerAoVivoService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private chatPersonalizado: ChatPersonalizadoService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +43,8 @@ export class ModuloComponent implements OnInit {
     if (this.modulo?.id != null) {
       this.idModulo = this.modulo.id;
     }
+    
+   
   }
 
   carregarModulo(id: number): void {
@@ -50,6 +54,7 @@ export class ModuloComponent implements OnInit {
         this.modulo = response;
         this.verAoVivo.removeDadosCompletos();
         this.verAoVivo.setDadosCompletos(response);
+        this.chatPersonalizado.getDadosCompletosAsObservable()
       },
       (error) => {
         if (error.status === 404){

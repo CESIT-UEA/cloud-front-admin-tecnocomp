@@ -28,6 +28,7 @@ export class ApiAdmService {
   private baseUrl = environment.baseUrl;
   private valorSource = new BehaviorSubject<boolean>(true);
   valor$ = this.valorSource.asObservable();
+  
 
   setValor(valor: boolean) {
     this.valorSource.next(valor);
@@ -252,5 +253,8 @@ export class ApiAdmService {
   voltar(): void {
     this.location.back();
   }
+
+
+  
 
 }

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { VerAoVivoService } from 'src/app/services/ver-ao-vivo.service';
+import { ChatPersonalizadoService } from '../chat-personalizado.service';
 
 @Component({
   selector: 'app-topico',
@@ -8,7 +9,7 @@ import { VerAoVivoService } from 'src/app/services/ver-ao-vivo.service';
 })
 export class TopicoComponent implements OnInit, AfterViewInit {
   idTopico!: number;
-  constructor(public verAoVivoService: VerAoVivoService){}
+  constructor(public verAoVivoService: VerAoVivoService, private chatPersonalizado: ChatPersonalizadoService){}
 
   ngOnInit(): void {
     this.verAoVivoService.getDadosCompletos();
@@ -16,6 +17,7 @@ export class TopicoComponent implements OnInit, AfterViewInit {
     this.idTopico = this.verAoVivoService.getIdTopico()
     this.verAoVivoService.controll_topico = this.idTopico
     this.verAoVivoService.salvarIdTopico();
+
   }
 
 

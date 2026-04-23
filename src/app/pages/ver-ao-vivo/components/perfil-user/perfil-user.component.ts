@@ -2,6 +2,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { VerAoVivoService } from './../../../../services/ver-ao-vivo.service';
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { User } from 'src/interfaces/user';
+import { ChatPersonalizadoService } from '../../chat-personalizado.service';
 
 @Component({
   selector: 'app-perfil-user',
@@ -12,7 +13,8 @@ export class PerfilUserComponent {
   constructor(
     private eRef: ElementRef,
     public verAoVivoService: VerAoVivoService,
-    private authService: AuthService
+    private authService: AuthService,
+    private chatPersonalizado: ChatPersonalizadoService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -28,4 +30,6 @@ export class PerfilUserComponent {
   getUsuarioDados(): User {
     return this.authService.getUsuarioDados();
   }
+
+  
 }

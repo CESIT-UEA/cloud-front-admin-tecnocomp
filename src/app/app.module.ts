@@ -106,6 +106,7 @@ import { QuestaoAbertaComponent } from './pages/ver-ao-vivo/components/questao-a
 
 import { CadastrarCodigoComponent } from './pages/cadastrar-codigo/cadastrar-codigo.component';
 import { ConfirmacaoExclusaoProfessorComponent } from './components/confirmacao-exclusao-professor/confirmacao-exclusao-professor.component';
+import { ChatPersonalizadoComponent } from './pages/ver-ao-vivo/chat-personalizado/chat-personalizado.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -191,6 +192,7 @@ import { ConfirmacaoExclusaoProfessorComponent } from './components/confirmacao-
 
     CadastrarCodigoComponent,
       ConfirmacaoExclusaoProfessorComponent,
+      ChatPersonalizadoComponent,
   ],
   imports: [
     MatSlideToggleModule,
