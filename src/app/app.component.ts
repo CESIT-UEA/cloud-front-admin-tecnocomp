@@ -56,5 +56,7 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.themeService.aplicarTemaSalvo();
+    const url = this.router.url;
+    this.mostrarChat = url.startsWith('/ver-ao-vivo');
   }
 }
