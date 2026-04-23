@@ -4,7 +4,7 @@ import { MatIconRegistry } from '@angular/material/icon'; // Importe aqui
 import { DomSanitizer } from '@angular/platform-browser';
 import { ChatPersonalizadoService } from './pages/ver-ao-vivo/chat-personalizado.service';
 import { Router, NavigationEnd, Event as RouterEvent } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -44,22 +44,14 @@ export class AppComponent {
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/close.svg')
     );
 
-    this.router.events
+     this.router.events
     .pipe(
-      filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     )
-    .subscribe(event => {
-      const url = event.urlAfterRedirects;
-      this.mostrarChat = url.startsWith('/ver-ao-vivo');
-      console.log(`URL: ${url}`)
-    });this.router.events
-    .pipe(
-      filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
-    )
-    .subscribe(event => {
-      const url = event.urlAfterRedirects;
-      this.mostrarChat = url.startsWith('/ver-ao-vivo');
-      console.log(`URL: ${url}`)
+    .subscribe((event) => {
+      const url = event?.urlAfterRedirects;
+      this.mostrarChat = url.includes('/ver-ao-vivo');
+      console.log('URL:', url);
     });
   }
 
