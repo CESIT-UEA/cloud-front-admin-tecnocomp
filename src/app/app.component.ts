@@ -44,19 +44,6 @@ export class AppComponent {
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/close.svg')
     );
 
-    // this.router.events
-    // .pipe(
-    //   filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
-    // )
-    // .subscribe(event => {
-    //   const url = event.urlAfterRedirects;
-    //   this.mostrarChat = url.startsWith('/ver-ao-vivo');
-    // });
-  }
-
-  ngOnInit(): void {
-    this.themeService.aplicarTemaSalvo();
-    
     this.router.events
     .pipe(
       filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
@@ -65,6 +52,20 @@ export class AppComponent {
       const url = event.urlAfterRedirects;
       this.mostrarChat = url.startsWith('/ver-ao-vivo');
       console.log(`URL: ${url}`)
+    });this.router.events
+    .pipe(
+      filter((event: RouterEvent): event is NavigationEnd => event instanceof NavigationEnd)
+    )
+    .subscribe(event => {
+      const url = event.urlAfterRedirects;
+      this.mostrarChat = url.startsWith('/ver-ao-vivo');
+      console.log(`URL: ${url}`)
     });
+  }
+
+  ngOnInit(): void {
+    this.themeService.aplicarTemaSalvo();
+    
+    
   }
 }
