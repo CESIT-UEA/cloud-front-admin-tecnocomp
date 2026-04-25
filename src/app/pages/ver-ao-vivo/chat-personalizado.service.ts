@@ -2,15 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, Observable } from 'rxjs';
 import { ApiAdmService } from 'src/app/services/api-adm.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatPersonalizadoService {
-  private chatUrl =  "https://n8n.tecnocomp.cloud/webhook/chat-personalizado";
+  private urlApi =  environment.baseUrl;
   private sessionId!: string;
   private moduloAtual!: string;
   private storageKey = 'dados_completos_do_modulo';
+  private idModulo!: number;
 
   private dadosCompletosSource = new BehaviorSubject<any>(null);
   dadosCompletos$ = this.dadosCompletosSource.asObservable();
@@ -20,15 +22,15 @@ export class ChatPersonalizadoService {
   }
 
   enviarMensagemParaChat(mensagem: string): Observable<any>{
-    console.log(this.moduloAtual, 'modulo atual')
     if (!this.sessionId) {
       throw new Error('Sessão do chat ainda não inicializada');
     }
 
-    return this.http.post<any>(this.chatUrl, { 
+    return this.http.post<any>(`${this.urlApi}/api/enviar-mensagem-agente`, { 
       mensagem, 
+      nomeModulo: this.moduloAtual,
       sessionId: this.sessionId,
-      modulo: this.moduloAtual
+      idModulo: this.idModulo
     });
   }
 
@@ -39,7 +41,7 @@ export class ChatPersonalizadoService {
       )
       .subscribe(dados => {
         const modulo = dados.nome_modulo;
-        console.log('Aqui')
+        this.idModulo = dados.id
         if (this.moduloAtual === modulo) return;
 
         this.moduloAtual = modulo;
